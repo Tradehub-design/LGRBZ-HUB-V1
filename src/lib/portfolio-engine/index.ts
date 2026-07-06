@@ -1,4 +1,5 @@
 export * from "./allocations";
+export * from "./buildPortfolio";
 export * from "./cash";
 export * from "./contributions";
 export * from "./date";
