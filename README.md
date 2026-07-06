@@ -1,9 +1,17 @@
-# LGRBZ
+export type ReportType =
+  | "Portfolio"
+  | "Tax"
+  | "Dividend"
+  | "Performance"
+  | "Allocation";
 
-Premium portfolio operating system for stocks, ETFs, crypto, dividends, tax, research and investor reporting.
+export type ReportStatus = "Ready" | "Generating" | "Completed" | "Failed";
 
-## Run locally
-
-```bash
-npm install
-npm run dev
+export type ReportItem = {
+  id: string;
+  name: string;
+  type: ReportType;
+  createdAt: string;
+  format: "PDF" | "Excel" | "CSV";
+  status: ReportStatus;
+};
