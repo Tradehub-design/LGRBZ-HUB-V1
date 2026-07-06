@@ -1,16 +1,14 @@
-import { DividendTable } from "@/features/dividends/components/dividend-table";
-import { DividendSummaryCards } from "@/features/dividends/components/dividend-summary-cards";
-import { DividendsHeader } from "@/features/dividends/components/dividends-header";
+import { dividendRecords } from "../mock-data";
+import { formatDividendMoney } from "../format";
 
-export default function DividendsPage() {
+export function DividendTable() {
   return (
-    <div className="space-y-6">
-      <DividendsHeader />
-      <DividendSummaryCards />
-      <DividendTable />
-    </div>
-  );
-}
+    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="border-b border-slate-200 px-5 py-4">
+        <h2 className="text-base font-semibold text-slate-950">
+          Dividend History
+        </h2>
+      </div>
 
       <table className="min-w-full divide-y divide-slate-200 text-sm">
         <thead className="bg-slate-50">
