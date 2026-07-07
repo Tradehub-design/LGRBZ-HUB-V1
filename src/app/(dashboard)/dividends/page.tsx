@@ -1,17 +1,18 @@
 "use client";
 
-import Link from "next/link";
 import { useMemo } from "react";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { useDashboardData } from "@/features/dashboard/useDashboardData";
-
-function money(value: number) {
-  return new Intl.NumberFormat("en-AU", {
-    style: "currency",
-    currency: "AUD",
-    maximumFractionDigits: 2,
-  }).format(value || 0);
-}
+import { formatMoney } from "@/lib/portfolio-engine/format";
+import {
+  MetricTile,
+  ProgressRow,
+  Workspace,
+  WorkspaceGrid,
+  WorkspaceHeader,
+  WorkspaceLink,
+  WorkspacePanel,
+} from "@/components/workspace";
 
 export default function DividendsPage() {
   useSeedPortfolio();
@@ -44,37 +45,29 @@ export default function DividendsPage() {
   }, [data.dividends]);
 
   const averageMonthly =
-    byMonth.length > 0
-      ? byMonth.reduce((sum, row) => sum + row.amount, 0) / byMonth.length
-      : 0;
+    byMonth.length > 0 ? byMonth.reduce((sum, row) => sum + row.amount, 0) / byMonth.length : 0;
+
+  const maxTicker = Math.max(...byTicker.map((item) => item.amount), 1);
+  const maxMonth = Math.max(...byMonth.map((item) => item.amount), 1);
 
   return (
-    <div className="min-h-screen space-y-5 bg-[#061421] text-slate-100">
-      <section className="rounded-xl border border-[#173047] bg-[#071827] p-5 shadow-2xl">
-        <div className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
-          <div>
-            <p className="text-xs uppercase tracking-[0.24em] text-sky-300">Income Engine</p>
-            <h1 className="mt-2 text-3xl font-semibold tracking-tight text-white">Dividends</h1>
-            <p className="mt-2 max-w-3xl text-sm text-slate-400">
-              Dividend income calculated from your real transaction ledger.
-            </p>
-          </div>
+    <Workspace>
+      <WorkspaceHeader
+        eyebrow="Income Engine"
+        title="Dividends"
+        description="Dividend income calculated from your real transaction ledger."
+        actions={<WorkspaceLink href="/dividend-forecast">Forecast Income</WorkspaceLink>}
+      />
 
-          <Link href="/dividend-forecast" className="rounded-lg border border-[#173047] bg-[#0b1e30] px-4 py-2 text-sm font-semibold text-slate-200 hover:border-sky-500">
-            Forecast Income
-          </Link>
-        </div>
-      </section>
-
-      <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        <Metric label="Total Dividends" value={money(data.totalDividendsAud)} />
-        <Metric label="Dividend Records" value={String(data.dividends.length)} />
-        <Metric label="Average Monthly" value={money(averageMonthly)} />
-        <Metric label="Income Holdings" value={String(byTicker.length)} />
-      </section>
+      <WorkspaceGrid columns="xl:grid-cols-4">
+        <MetricTile label="Total Dividends" value={formatMoney(data.totalDividendsAud, 2)} />
+        <MetricTile label="Dividend Records" value={String(data.dividends.length)} />
+        <MetricTile label="Average Monthly" value={formatMoney(averageMonthly, 2)} />
+        <MetricTile label="Income Holdings" value={String(byTicker.length)} />
+      </WorkspaceGrid>
 
       <section className="grid gap-4 xl:grid-cols-[1.3fr_0.7fr]">
-        <Panel title="Dividend History">
+        <WorkspacePanel title="Dividend History">
           <div className="overflow-hidden rounded-xl border border-[#173047]">
             <table className="w-full text-left text-xs">
               <thead className="bg-[#0b1e30] text-slate-400">
@@ -97,7 +90,7 @@ export default function DividendsPage() {
                       <td className="px-3 py-3 text-slate-400">{dividend.platform}</td>
                       <td className="px-3 py-3 text-slate-400">{dividend.sector}</td>
                       <td className="px-3 py-3 text-right font-medium text-white">
-                        {money(dividend.amountAud)}
+                        {formatMoney(dividend.amountAud, 2)}
                       </td>
                     </tr>
                   ))}
@@ -112,60 +105,38 @@ export default function DividendsPage() {
               </tbody>
             </table>
           </div>
-        </Panel>
+        </WorkspacePanel>
 
         <div className="space-y-4">
-          <Panel title="Top Dividend Payers">
+          <WorkspacePanel title="Top Dividend Payers">
             <div className="space-y-3">
               {byTicker.slice(0, 10).map((row) => (
-                <IncomeRow key={row.ticker} label={row.ticker} value={row.amount} max={byTicker[0]?.amount ?? 1} />
+                <ProgressRow
+                  key={row.ticker}
+                  label={row.ticker}
+                  value={formatMoney(row.amount, 2)}
+                  percent={(row.amount / maxTicker) * 100}
+                  tone="emerald"
+                />
               ))}
             </div>
-          </Panel>
+          </WorkspacePanel>
 
-          <Panel title="Monthly Income">
+          <WorkspacePanel title="Monthly Income">
             <div className="space-y-3">
               {byMonth.slice(0, 8).map((row) => (
-                <IncomeRow key={row.month} label={row.month} value={row.amount} max={Math.max(...byMonth.map((item) => item.amount), 1)} />
+                <ProgressRow
+                  key={row.month}
+                  label={row.month}
+                  value={formatMoney(row.amount, 2)}
+                  percent={(row.amount / maxMonth) * 100}
+                  tone="emerald"
+                />
               ))}
             </div>
-          </Panel>
+          </WorkspacePanel>
         </div>
       </section>
-    </div>
-  );
-}
-
-function Metric({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-xl border border-[#173047] bg-[#071827] p-4 shadow-xl">
-      <p className="text-xs text-slate-400">{label}</p>
-      <p className="mt-2 text-2xl font-semibold text-white">{value}</p>
-    </div>
-  );
-}
-
-function Panel({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div className="rounded-xl border border-[#173047] bg-[#071827] p-4 shadow-xl">
-      <h2 className="mb-4 text-base font-semibold text-white">{title}</h2>
-      {children}
-    </div>
-  );
-}
-
-function IncomeRow({ label, value, max }: { label: string; value: number; max: number }) {
-  const percent = max > 0 ? (value / max) * 100 : 0;
-
-  return (
-    <div>
-      <div className="mb-1 flex items-center justify-between text-xs">
-        <span className="text-slate-300">{label}</span>
-        <span className="text-slate-400">{money(value)}</span>
-      </div>
-      <div className="h-2 overflow-hidden rounded-full bg-slate-800">
-        <div className="h-full rounded-full bg-emerald-500" style={{ width: `${Math.min(percent, 100)}%` }} />
-      </div>
-    </div>
+    </Workspace>
   );
 }
