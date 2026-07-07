@@ -17,25 +17,19 @@ export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const variantClasses: Record<ButtonVariant, string> = {
-  primary:
-    "bg-white text-slate-950 shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_16px_40px_rgba(255,255,255,0.08)] hover:bg-slate-100",
-  secondary:
-    "bg-slate-900/80 text-slate-100 ring-1 ring-white/10 hover:bg-slate-800",
-  ghost:
-    "bg-transparent text-slate-300 hover:bg-white/5 hover:text-white",
-  danger:
-    "bg-rose-500/90 text-white shadow-[0_14px_40px_rgba(244,63,94,0.22)] hover:bg-rose-400",
-  success:
-    "bg-emerald-500/90 text-slate-950 shadow-[0_14px_40px_rgba(16,185,129,0.22)] hover:bg-emerald-400",
-  outline:
-    "bg-transparent text-slate-200 ring-1 ring-white/15 hover:bg-white/5",
+  primary: "bg-[#1f8cff] text-white shadow-[0_10px_28px_rgba(31,140,255,0.28)] hover:bg-sky-500",
+  secondary: "bg-[#0b1e30] text-slate-100 ring-1 ring-[#173047] hover:border-sky-600 hover:bg-[#10263b]",
+  ghost: "bg-transparent text-slate-300 hover:bg-[#10263b] hover:text-white",
+  danger: "bg-rose-500 text-white hover:bg-rose-400",
+  success: "bg-emerald-500 text-slate-950 hover:bg-emerald-400",
+  outline: "bg-transparent text-slate-200 ring-1 ring-[#173047] hover:bg-[#10263b]",
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
-  sm: "h-9 rounded-xl px-3 text-xs",
-  md: "h-10 rounded-2xl px-4 text-sm",
-  lg: "h-12 rounded-2xl px-5 text-sm",
-  icon: "h-10 w-10 rounded-2xl p-0",
+  sm: "h-8 rounded-lg px-3 text-xs",
+  md: "h-10 rounded-lg px-4 text-sm",
+  lg: "h-12 rounded-xl px-5 text-sm",
+  icon: "h-10 w-10 rounded-lg p-0",
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -58,9 +52,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         disabled={disabled || loading}
         className={cn(
-          "inline-flex shrink-0 items-center justify-center gap-2 font-medium tracking-[-0.01em] transition-all duration-200",
+          "inline-flex shrink-0 items-center justify-center gap-2 font-medium transition",
           "disabled:pointer-events-none disabled:opacity-50",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/40",
           variantClasses[variant],
           sizeClasses[size],
           className,
