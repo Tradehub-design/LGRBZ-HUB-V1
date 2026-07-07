@@ -1,6 +1,11 @@
 "use client";
 
 import { useMemo } from "react";
+import {
+  calculatePortfolioHealth,
+  calculatePortfolioPerformance,
+  calculatePortfolioRisk,
+} from "@/lib/portfolio-engine/insights";
 import { usePortfolioStore } from "@/store/portfolioStore";
 import { percentage, round } from "@/utils/math";
 
@@ -42,7 +47,7 @@ export function useDashboardData() {
 
     const topHoldings = [...openHoldings]
       .sort((a, b) => b.totalCostAud - a.totalCostAud)
-      .slice(0, 6)
+      .slice(0, 10)
       .map((holding) => ({
         ...holding,
         weightPercent: round(percentage(holding.totalCostAud, Math.max(totalCostAud, 1)), 2),
@@ -50,9 +55,47 @@ export function useDashboardData() {
 
     const recentTransactions = [...transactions]
       .sort((a, b) => b.date.localeCompare(a.date))
-      .slice(0, 8);
+      .slice(0, 12);
 
-    const latestDividends = [...dividends].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 6);
+    const latestDividends = [...dividends]
+      .sort((a, b) => b.date.localeCompare(a.date))
+      .slice(0, 10);
+
+    const allocation = engine?.allocation ?? {
+      assetClass: [],
+      sector: [],
+      country: [],
+      risk: [],
+      currency: [],
+      platform: [],
+    };
+
+    const performance = calculatePortfolioPerformance({
+      openHoldings,
+      holdings,
+      cashAccounts,
+      dividends,
+      transactions,
+    });
+
+    const risk = calculatePortfolioRisk({
+      openHoldings,
+      totalCostAud,
+      totalCashAud,
+      sectorAllocation: allocation.sector,
+      countryAllocation: allocation.country,
+      riskAllocation: allocation.risk,
+    });
+
+    const health = calculatePortfolioHealth({
+      openHoldings,
+      totalCostAud,
+      totalCashAud,
+      totalDividendsAud,
+      sectorAllocation: allocation.sector,
+      countryAllocation: allocation.country,
+      risk,
+    });
 
     return {
       loaded,
@@ -73,14 +116,10 @@ export function useDashboardData() {
       topHoldings,
       recentTransactions,
       latestDividends,
-      allocation: engine?.allocation ?? {
-        assetClass: [],
-        sector: [],
-        country: [],
-        risk: [],
-        currency: [],
-        platform: [],
-      },
+      allocation,
+      performance,
+      risk,
+      health,
       summary: engine?.summary ?? null,
     };
   }, [cashAccounts, dividends, engine, holdings, loaded, transactions]);
