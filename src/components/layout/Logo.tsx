@@ -10,14 +10,16 @@ type LogoProps = {
 export function Logo({ collapsed = false, className }: LogoProps) {
   return (
     <Link href="/dashboard" className={cn("flex items-center gap-3", className)}>
-      <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-base font-black tracking-[-0.08em] text-slate-950 shadow-[0_18px_40px_rgba(255,255,255,0.08)]">
+      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1f8cff] text-sm font-black text-white shadow-[0_0_30px_rgba(31,140,255,0.35)]">
         L
       </div>
 
       {!collapsed ? (
         <div className="leading-tight">
-          <p className="text-lg font-semibold tracking-[-0.06em] text-white">{APP_NAME}</p>
-          <p className="text-xs font-medium text-slate-500">Portfolio OS</p>
+          <p className="text-lg font-semibold tracking-tight text-white">{APP_NAME}</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-slate-500">
+            Portfolio OS
+          </p>
         </div>
       ) : null}
     </Link>
