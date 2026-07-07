@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect } from "react";
-import { buildSeedPortfolio } from "@/lib/portfolio-engine/seed";
+import { buildPortfolio } from "@/lib/portfolio-engine/buildPortfolio";
 import { usePortfolioStore } from "@/store/portfolioStore";
-import { DEFAULT_TRANSACTION_LEDGER } from "@/data/seed-transactions";
+
+const SEEDED_LEDGER_URL = "/data/transactions.csv";
 
 export function useSeedPortfolio() {
   const loaded = usePortfolioStore((state) => state.loaded);
@@ -12,10 +13,31 @@ export function useSeedPortfolio() {
   useEffect(() => {
     if (loaded) return;
 
-    const seed = buildSeedPortfolio();
+    let cancelled = false;
 
-    if (seed) {
-      setEngine(seed, DEFAULT_TRANSACTION_LEDGER);
+    async function loadSeedLedger() {
+      try {
+        const response = await fetch(SEEDED_LEDGER_URL, {
+          cache: "no-store",
+        });
+
+        if (!response.ok) return;
+
+        const csv = await response.text();
+
+        if (cancelled || !csv.trim()) return;
+
+        const engine = buildPortfolio(csv);
+        setEngine(engine, csv);
+      } catch {
+        // Silent fail: manual import can still be used.
+      }
     }
+
+    loadSeedLedger();
+
+    return () => {
+      cancelled = true;
+    };
   }, [loaded, setEngine]);
 }
