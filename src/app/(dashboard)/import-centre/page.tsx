@@ -4,6 +4,7 @@ import { FileSpreadsheet, UploadCloud, WandSparkles } from "lucide-react";
 import { PremiumStatCard } from "@/components/workspace/premium-stat-card";
 import { StatusPill } from "@/components/workspace/status-pill";
 import { BROKER_SOURCES } from "@/lib/portfolio-engine/brokerImport";
+import { supabaseEnabled } from "@/lib/supabase/client";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { useDashboardData } from "@/features/dashboard/useDashboardData";
 import {
@@ -35,7 +36,7 @@ export default function ImportCentrePage() {
       <WorkspaceGrid columns="xl:grid-cols-4">
         <PremiumStatCard icon={<FileSpreadsheet />} label="Ledger Rows" value={String(data.transactions.length)} tone="blue" />
         <PremiumStatCard icon={<UploadCloud />} label="Broker Sources" value={String(BROKER_SOURCES.length)} tone="purple" />
-        <PremiumStatCard icon={<WandSparkles />} label="Automation" value="Planned" helper="v2.0" tone="amber" />
+        <PremiumStatCard icon={<WandSparkles />} label="Database Import" value={supabaseEnabled ? "Ready" : "Demo Mode"} helper="Supabase" tone={supabaseEnabled ? "green" : "amber"} />
         <PremiumStatCard label="Data Quality" value={`${data.dataQuality.score}/100`} helper={data.dataQuality.rating} tone="green" />
       </WorkspaceGrid>
 
