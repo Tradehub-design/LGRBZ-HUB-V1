@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { AssetLogo } from "@/components/workspace/asset-logo";
+import { FilterBar } from "@/components/workspace/filter-bar";
 import { TransactionTimeline } from "@/components/workspace/transaction-timeline";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { buildPortfolio } from "@/lib/portfolio-engine/buildPortfolio";
@@ -91,6 +92,8 @@ export default function TransactionsPage() {
           </>
         }
       />
+
+      <FilterBar placeholder="Search transactions..." />
 
       <WorkspaceGrid columns="xl:grid-cols-7">
         <MetricTile label="Transactions" value={String(totals.transactions)} />

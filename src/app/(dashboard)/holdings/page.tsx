@@ -1,6 +1,7 @@
 "use client";
 
 import { AssetLogo } from "@/components/workspace/asset-logo";
+import { FilterBar } from "@/components/workspace/filter-bar";
 import { HoldingDetailCard } from "@/components/workspace/holding-detail-card";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { useDashboardData } from "@/features/dashboard/useDashboardData";
@@ -34,6 +35,8 @@ export default function HoldingsPage() {
           </>
         }
       />
+
+      <FilterBar placeholder="Search holdings..." />
 
       <WorkspaceGrid columns="xl:grid-cols-5">
         <MetricTile label="Open Positions" value={String(data.enhancedHoldings.length)} />
