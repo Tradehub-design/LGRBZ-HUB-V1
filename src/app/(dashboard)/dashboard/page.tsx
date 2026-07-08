@@ -50,6 +50,34 @@ export default function DashboardPage() {
         }
       />
 
+
+<section className="grid gap-5 xl:grid-cols-[1.4fr_0.6fr]">
+
+<div className="rounded-3xl border border-[#173047] bg-gradient-to-br from-[#071827] to-[#0b1e30] p-8">
+
+<p className="text-sm uppercase tracking-[0.2em] text-sky-400">
+WELCOME BACK
+</p>
+
+<h1 className="mt-2 text-5xl font-bold tracking-tight text-white">
+{formatMoney(data.totalValueAud)}
+</h1>
+
+<p className="mt-2 text-slate-400">
+Current Portfolio Value
+</p>
+
+</div>
+
+<PortfolioScore
+score={data.health.score}
+title="Portfolio Health"
+subtitle={data.health.rating}
+/>
+
+</section>
+
+
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
         <AnimatedKpiCard icon={<Wallet />} label="Portfolio Value" value={formatMoney(data.totalValueAud, 2)} helper="Market value + cash" trend="up" />
         <AnimatedKpiCard icon={<TrendingUp />} label="Total Return" value={formatMoney(data.totalReturnAud, 2)} helper={formatPercent(data.totalReturnPercent)} trend={data.totalReturnAud >= 0 ? "up" : "down"} />
