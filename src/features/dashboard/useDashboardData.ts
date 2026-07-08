@@ -6,6 +6,10 @@ import {
   calculatePortfolioPerformance,
   calculatePortfolioRisk,
 } from "@/lib/portfolio-engine/insights";
+import {
+  calculateEnhancedHoldings,
+  calculatePortfolioValuation,
+} from "@/lib/portfolio-engine/valuation";
 import { usePortfolioStore } from "@/store/portfolioStore";
 import { percentage, round } from "@/utils/math";
 
@@ -21,15 +25,18 @@ export function useDashboardData() {
     const openHoldings = holdings.filter((holding) => holding.status === "Open");
     const closedHoldings = holdings.filter((holding) => holding.status === "Closed");
 
-    const totalCostAud = round(
-      openHoldings.reduce((total, holding) => total + holding.totalCostAud, 0),
-      2,
-    );
-
     const totalCashAud = round(
       cashAccounts.reduce((total, account) => total + account.balanceAud, 0),
       2,
     );
+
+    const enhancedHoldings = calculateEnhancedHoldings(openHoldings);
+    const valuation = calculatePortfolioValuation({
+      enhancedHoldings,
+      cashAud: totalCashAud,
+    });
+
+    const totalCostAud = valuation.investedCostAud;
 
     const totalDividendsAud = round(
       dividends.reduce((total, dividend) => total + dividend.amountAud, 0),
@@ -41,16 +48,16 @@ export function useDashboardData() {
       2,
     );
 
-    const totalValueAud = round(totalCostAud + totalCashAud, 2);
-    const totalReturnAud = round(realisedPlAud + totalDividendsAud, 2);
+    const totalValueAud = valuation.totalValueAud;
+    const totalReturnAud = round(realisedPlAud + totalDividendsAud + valuation.unrealisedPlAud, 2);
     const totalReturnPercent = round(percentage(totalReturnAud, Math.max(totalCostAud, 1)), 2);
 
-    const topHoldings = [...openHoldings]
-      .sort((a, b) => b.totalCostAud - a.totalCostAud)
+    const topHoldings = [...enhancedHoldings]
+      .sort((a, b) => b.marketValueAud - a.marketValueAud)
       .slice(0, 10)
       .map((holding) => ({
         ...holding,
-        weightPercent: round(percentage(holding.totalCostAud, Math.max(totalCostAud, 1)), 2),
+        weightPercent: holding.portfolioWeightPercent,
       }));
 
     const recentTransactions = [...transactions]
@@ -104,6 +111,7 @@ export function useDashboardData() {
       holdings,
       openHoldings,
       closedHoldings,
+      enhancedHoldings,
       dividends,
       cashAccounts,
       totalCostAud,
@@ -120,6 +128,7 @@ export function useDashboardData() {
       performance,
       risk,
       health,
+      valuation,
       summary: engine?.summary ?? null,
     };
   }, [cashAccounts, dividends, engine, holdings, loaded, transactions]);
