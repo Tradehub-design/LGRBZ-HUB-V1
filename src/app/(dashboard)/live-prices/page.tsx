@@ -1,10 +1,21 @@
 "use client";
 
+import { Activity, LineChart, Radio, Wallet } from "lucide-react";
+import { AssetLogo } from "@/components/workspace/asset-logo";
+import { PremiumStatCard } from "@/components/workspace/premium-stat-card";
+import {
+  PremiumRow,
+  PremiumTable,
+  PremiumTableBody,
+  PremiumTableHead,
+  PremiumTd,
+  PremiumTh,
+} from "@/components/workspace/premium-table";
+import { StatusPill } from "@/components/workspace/status-pill";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { useDashboardData } from "@/features/dashboard/useDashboardData";
 import { formatMoney, formatPercent } from "@/lib/portfolio-engine/format";
 import {
-  MetricTile,
   Workspace,
   WorkspaceGrid,
   WorkspaceHeader,
@@ -31,39 +42,45 @@ export default function LivePricesPage() {
       />
 
       <WorkspaceGrid columns="xl:grid-cols-4">
-        <MetricTile label="Tracked Holdings" value={String(data.openHoldings.length)} />
-        <MetricTile label="Current Valuation" value={formatMoney(data.totalValueAud)} helper="Cost basis mode" />
-        <MetricTile label="Unrealised P/L" value="$0" helper="Requires live prices" />
-        <MetricTile label="Price Source" value="Pending" helper="v2.0 market API" />
+        <PremiumStatCard icon={<LineChart />} label="Tracked Holdings" value={String(data.openHoldings.length)} tone="blue" />
+        <PremiumStatCard icon={<Wallet />} label="Current Valuation" value={formatMoney(data.totalValueAud)} helper="Cost basis mode" tone="green" />
+        <PremiumStatCard icon={<Activity />} label="Unrealised P/L" value="$0" helper="Requires live prices" tone="amber" />
+        <PremiumStatCard icon={<Radio />} label="Price Source" value="Pending" helper="v2.0 market API" tone="purple" />
       </WorkspaceGrid>
 
       <WorkspacePanel title="Price Coverage">
-        <div className="overflow-hidden rounded-xl border border-[#173047]">
-          <table className="w-full text-left text-xs">
-            <thead className="bg-[#0b1e30] text-slate-400">
-              <tr>
-                <th className="px-3 py-3">Ticker</th>
-                <th className="px-3 py-3">Asset Class</th>
-                <th className="px-3 py-3">Platform</th>
-                <th className="px-3 py-3 text-right">Cost Base</th>
-                <th className="px-3 py-3 text-right">Weight</th>
-                <th className="px-3 py-3">Price Status</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-800">
-              {data.topHoldings.map((holding) => (
-                <tr key={holding.id} className="text-slate-300 hover:bg-slate-800/40">
-                  <td className="px-3 py-3 font-semibold text-white">{holding.ticker}</td>
-                  <td className="px-3 py-3 text-slate-400">{holding.assetClass}</td>
-                  <td className="px-3 py-3 text-slate-400">{holding.platform}</td>
-                  <td className="px-3 py-3 text-right text-white">{formatMoney(holding.totalCostAud)}</td>
-                  <td className="px-3 py-3 text-right text-sky-300">{formatPercent(holding.weightPercent)}</td>
-                  <td className="px-3 py-3 text-amber-300">Pending API</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <PremiumTable>
+          <PremiumTableHead>
+            <tr>
+              <PremiumTh>Ticker</PremiumTh>
+              <PremiumTh>Asset Class</PremiumTh>
+              <PremiumTh>Platform</PremiumTh>
+              <PremiumTh align="right">Cost Base</PremiumTh>
+              <PremiumTh align="right">Weight</PremiumTh>
+              <PremiumTh>Price Status</PremiumTh>
+            </tr>
+          </PremiumTableHead>
+
+          <PremiumTableBody>
+            {data.topHoldings.map((holding) => (
+              <PremiumRow key={holding.id}>
+                <PremiumTd strong>
+                  <div className="flex items-center gap-3">
+                    <AssetLogo symbol={holding.ticker} />
+                    {holding.ticker}
+                  </div>
+                </PremiumTd>
+                <PremiumTd>{holding.assetClass}</PremiumTd>
+                <PremiumTd>{holding.platform}</PremiumTd>
+                <PremiumTd align="right" strong>{formatMoney(holding.totalCostAud)}</PremiumTd>
+                <PremiumTd align="right">{formatPercent(holding.weightPercent)}</PremiumTd>
+                <PremiumTd>
+                  <StatusPill tone="amber">Pending API</StatusPill>
+                </PremiumTd>
+              </PremiumRow>
+            ))}
+          </PremiumTableBody>
+        </PremiumTable>
       </WorkspacePanel>
     </Workspace>
   );

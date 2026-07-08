@@ -1,10 +1,20 @@
 "use client";
 
+import { DatabaseZap, RefreshCcw, ShieldCheck, UploadCloud } from "lucide-react";
+import { PremiumStatCard } from "@/components/workspace/premium-stat-card";
+import {
+  PremiumRow,
+  PremiumTable,
+  PremiumTableBody,
+  PremiumTableHead,
+  PremiumTd,
+  PremiumTh,
+} from "@/components/workspace/premium-table";
+import { StatusPill } from "@/components/workspace/status-pill";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { useDashboardData } from "@/features/dashboard/useDashboardData";
 import { formatNumber } from "@/lib/portfolio-engine/format";
 import {
-  MetricTile,
   Workspace,
   WorkspaceGrid,
   WorkspaceHeader,
@@ -13,12 +23,12 @@ import {
 } from "@/components/workspace";
 
 const brokers = [
-  { name: "CommSec", status: "CSV Ready", type: "Shares" },
-  { name: "CommSec International", status: "CSV Ready", type: "International Shares" },
-  { name: "Coinbase", status: "Manual Ledger", type: "Crypto" },
-  { name: "Stake", status: "Planned", type: "Shares" },
-  { name: "CMC", status: "Planned", type: "Shares" },
-  { name: "Binance", status: "Planned", type: "Crypto" },
+  { name: "CommSec", status: "CSV Ready", type: "Shares", tone: "green" as const },
+  { name: "CommSec International", status: "CSV Ready", type: "International Shares", tone: "green" as const },
+  { name: "Coinbase", status: "Manual Ledger", type: "Crypto", tone: "blue" as const },
+  { name: "Stake", status: "Planned", type: "Shares", tone: "amber" as const },
+  { name: "CMC", status: "Planned", type: "Shares", tone: "amber" as const },
+  { name: "Binance", status: "Planned", type: "Crypto", tone: "amber" as const },
 ];
 
 export default function BrokerSyncPage() {
@@ -40,37 +50,38 @@ export default function BrokerSyncPage() {
       />
 
       <WorkspaceGrid columns="xl:grid-cols-4">
-        <MetricTile label="Connected Sources" value="1" helper="Seeded CSV ledger" />
-        <MetricTile label="Brokers Tracked" value={String(brokers.length)} />
-        <MetricTile label="Transactions Loaded" value={formatNumber(data.transactions.length, 0)} />
-        <MetricTile label="Sync Mode" value="Manual" helper="API sync in v2.0" />
+        <PremiumStatCard icon={<DatabaseZap />} label="Connected Sources" value="1" helper="Seeded CSV ledger" tone="blue" />
+        <PremiumStatCard icon={<ShieldCheck />} label="Brokers Tracked" value={String(brokers.length)} tone="green" />
+        <PremiumStatCard icon={<UploadCloud />} label="Transactions Loaded" value={formatNumber(data.transactions.length, 0)} tone="purple" />
+        <PremiumStatCard icon={<RefreshCcw />} label="Sync Mode" value="Manual" helper="API sync in v2.0" tone="amber" />
       </WorkspaceGrid>
 
       <WorkspacePanel title="Broker Sources">
-        <div className="overflow-hidden rounded-xl border border-[#173047]">
-          <table className="w-full text-left text-xs">
-            <thead className="bg-[#0b1e30] text-slate-400">
-              <tr>
-                <th className="px-3 py-3">Broker</th>
-                <th className="px-3 py-3">Type</th>
-                <th className="px-3 py-3">Status</th>
-                <th className="px-3 py-3">Next Step</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-800">
-              {brokers.map((broker) => (
-                <tr key={broker.name} className="text-slate-300 hover:bg-slate-800/40">
-                  <td className="px-3 py-3 font-semibold text-white">{broker.name}</td>
-                  <td className="px-3 py-3 text-slate-400">{broker.type}</td>
-                  <td className="px-3 py-3 text-sky-300">{broker.status}</td>
-                  <td className="px-3 py-3 text-slate-400">
-                    {broker.status === "Planned" ? "Add import connector" : "Map CSV fields"}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <PremiumTable>
+          <PremiumTableHead>
+            <tr>
+              <PremiumTh>Broker</PremiumTh>
+              <PremiumTh>Type</PremiumTh>
+              <PremiumTh>Status</PremiumTh>
+              <PremiumTh>Next Step</PremiumTh>
+            </tr>
+          </PremiumTableHead>
+
+          <PremiumTableBody>
+            {brokers.map((broker) => (
+              <PremiumRow key={broker.name}>
+                <PremiumTd strong>{broker.name}</PremiumTd>
+                <PremiumTd>{broker.type}</PremiumTd>
+                <PremiumTd>
+                  <StatusPill tone={broker.tone}>{broker.status}</StatusPill>
+                </PremiumTd>
+                <PremiumTd>
+                  {broker.status === "Planned" ? "Add import connector" : "Map CSV fields"}
+                </PremiumTd>
+              </PremiumRow>
+            ))}
+          </PremiumTableBody>
+        </PremiumTable>
       </WorkspacePanel>
     </Workspace>
   );
