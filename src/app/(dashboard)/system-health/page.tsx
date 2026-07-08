@@ -1,6 +1,7 @@
 "use client";
 
 import { Activity, Database, ShieldCheck, Wifi } from "lucide-react";
+import { DemoDataBanner } from "@/components/system/demo-data-banner";
 import { PremiumStatCard } from "@/components/workspace/premium-stat-card";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { useDashboardData } from "@/features/dashboard/useDashboardData";
@@ -24,6 +25,8 @@ export default function SystemHealthPage() {
         description="Application status, data quality, build readiness and production checks."
         actions={<WorkspaceLink href="/settings">Settings</WorkspaceLink>}
       />
+
+      <DemoDataBanner />
 
       <WorkspaceGrid columns="xl:grid-cols-4">
         <PremiumStatCard icon={<Activity />} label="App Status" value="Online" tone="green" />
