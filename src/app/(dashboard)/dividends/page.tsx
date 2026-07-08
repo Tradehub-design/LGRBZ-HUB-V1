@@ -60,10 +60,10 @@ export default function DividendsPage() {
       />
 
       <WorkspaceGrid columns="xl:grid-cols-4">
-        <MetricTile label="Total Dividends" value={formatMoney(data.totalDividendsAud, 2)} />
-        <MetricTile label="Dividend Records" value={String(data.dividends.length)} />
-        <MetricTile label="Average Monthly" value={formatMoney(averageMonthly, 2)} />
-        <MetricTile label="Income Holdings" value={String(byTicker.length)} />
+        <MetricTile label="Total Dividends" value={formatMoney(data.incomeMetrics.totalIncomeAud, 2)} />
+        <MetricTile label="Dividend Records" value={String(data.incomeMetrics.incomeRecords)} />
+        <MetricTile label="Average Monthly" value={formatMoney(data.incomeMetrics.monthlyAverageAud, 2)} />
+        <MetricTile label="Income Holdings" value={String(data.incomeMetrics.incomeHoldings)} />
       </WorkspaceGrid>
 
       <section className="grid gap-4 xl:grid-cols-[1.3fr_0.7fr]">
