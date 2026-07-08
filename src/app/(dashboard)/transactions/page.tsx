@@ -5,6 +5,7 @@ import { AssetLogo } from "@/components/workspace/asset-logo";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { buildPortfolio } from "@/lib/portfolio-engine/buildPortfolio";
 import { formatMoney, formatNumber } from "@/lib/portfolio-engine/format";
+import { useDashboardData } from "@/features/dashboard/useDashboardData";
 import { usePortfolioStore } from "@/store/portfolioStore";
 import {
   MetricTile,
@@ -30,6 +31,8 @@ export default function TransactionsPage() {
     setEngine,
     clear,
   } = usePortfolioStore();
+
+  const data = useDashboardData();
 
   const [draftCsv, setDraftCsv] = useState(rawLedgerCsv);
   const [showImport, setShowImport] = useState(false);
@@ -131,6 +134,24 @@ export default function TransactionsPage() {
           />
         </WorkspacePanel>
       ) : null}
+
+
+      <WorkspacePanel title="Data Quality">
+        <div className="grid gap-3 md:grid-cols-3">
+          <MetricTile label="Quality Score" value={`${data.dataQuality.score}/100`} helper={data.dataQuality.rating} />
+          <MetricTile label="Issue Count" value={String(data.dataQuality.issueCount)} />
+          <MetricTile label="Engine Rows" value={String(engine?.validRows ?? 0)} />
+        </div>
+
+        <div className="mt-4 grid gap-3 md:grid-cols-2">
+          {data.dataQuality.warnings.map((warning) => (
+            <div key={warning} className="rounded-lg border border-[#173047] bg-[#0b1e30] p-3 text-sm text-slate-300">
+              {warning}
+            </div>
+          ))}
+        </div>
+      </WorkspacePanel>
+
 
       <section className="grid gap-4 xl:grid-cols-[1.5fr_0.65fr]">
         <WorkspacePanel title="Transaction Ledger">
