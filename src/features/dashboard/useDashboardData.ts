@@ -19,6 +19,7 @@ import { calculateFifoLots } from "@/lib/portfolio-engine/fifo";
 import { buildIncomeInsights } from "@/lib/portfolio-engine/incomeIntelligence";
 import { buildIntelligenceInsights } from "@/lib/portfolio-engine/intelligence";
 import { buildCountryInsights } from "@/lib/portfolio-engine/countryIntelligence";
+import { buildCurrencyInsights } from "@/lib/portfolio-engine/currencyIntelligence";
 import { buildSectorInsights } from "@/lib/portfolio-engine/sectorIntelligence";
 import { calculateIncomeMetrics } from "@/lib/portfolio-engine/incomeMetrics";
 import { calculatePerformanceMetrics } from "@/lib/portfolio-engine/performanceMetrics";
@@ -168,6 +169,7 @@ export function useDashboardData() {
 
     const sectorInsights = buildSectorInsights(allocation.sector);
     const countryInsights = buildCountryInsights(allocation.country);
+    const currencyInsights = buildCurrencyInsights(allocation.currency);
 
     const incomeInsights = buildIncomeInsights({
       dividends,
@@ -240,6 +242,7 @@ export function useDashboardData() {
       snapshot,
       sectorInsights,
       countryInsights,
+      currencyInsights,
       incomeInsights,
       intelligenceInsights,
       recommendations,
