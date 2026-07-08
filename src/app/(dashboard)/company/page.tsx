@@ -1,5 +1,6 @@
 "use client";
 
+import { MarketDataBanner } from "@/components/market/market-data-banner";
 import { Building2, LineChart, Shield, TrendingUp } from "lucide-react";
 import { PriceChart } from "@/components/market/price-chart";
 import { PremiumStatCard } from "@/components/workspace/premium-stat-card";
@@ -54,6 +55,8 @@ export default function CompanyWorkspace() {
           <StatusPill tone="blue">Demo Profile</StatusPill>
         </div>
       </WorkspacePanel>
+
+      <MarketDataBanner />
 
       <WorkspaceGrid columns="xl:grid-cols-4">
         <PremiumStatCard icon={<LineChart />} label="Market Cap" value={demoMetrics.marketCap} tone="blue" />

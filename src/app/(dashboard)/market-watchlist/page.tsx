@@ -1,5 +1,6 @@
 "use client";
 
+import { MarketDataBanner } from "@/components/market/market-data-banner";
 import { Star, TrendingUp } from "lucide-react";
 import { AssetLogo } from "@/components/workspace/asset-logo";
 import { PremiumStatCard } from "@/components/workspace/premium-stat-card";
@@ -31,6 +32,8 @@ export default function MarketWatchlistPage() {
           </>
         }
       />
+
+      <MarketDataBanner />
 
       <WorkspaceGrid columns="xl:grid-cols-4">
         <PremiumStatCard icon={<Star />} label="Watchlist Assets" value={String(DEFAULT_MARKET_WATCHLIST.length)} tone="blue" />

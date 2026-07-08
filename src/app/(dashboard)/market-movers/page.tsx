@@ -1,5 +1,6 @@
 "use client";
 
+import { MarketDataBanner } from "@/components/market/market-data-banner";
 import { Activity, ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { AssetLogo } from "@/components/workspace/asset-logo";
 import { PremiumStatCard } from "@/components/workspace/premium-stat-card";
@@ -34,6 +35,8 @@ export default function MarketMoversPage() {
           </>
         }
       />
+
+      <MarketDataBanner />
 
       <WorkspaceGrid columns="xl:grid-cols-3">
         <PremiumStatCard icon={<Activity />} label="Quotes" value={String(quotes.length)} tone="blue" />

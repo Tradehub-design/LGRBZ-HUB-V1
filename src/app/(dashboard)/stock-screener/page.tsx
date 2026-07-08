@@ -1,5 +1,6 @@
 "use client";
 
+import { MarketDataBanner } from "@/components/market/market-data-banner";
 import { Filter, Search } from "lucide-react";
 import { AssetLogo } from "@/components/workspace/asset-logo";
 import { PremiumStatCard } from "@/components/workspace/premium-stat-card";
@@ -38,6 +39,8 @@ export default function StockScreenerPage() {
           </>
         }
       />
+
+      <MarketDataBanner />
 
       <WorkspaceGrid columns="xl:grid-cols-4">
         <PremiumStatCard icon={<Search />} label="Screened Assets" value={String(rows.length)} tone="blue" />

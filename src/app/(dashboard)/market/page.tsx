@@ -1,5 +1,6 @@
 "use client";
 
+import { MarketDataBanner } from "@/components/market/market-data-banner";
 import { Activity } from "lucide-react";
 import { useMarketQuotes } from "@/hooks/useMarketQuotes";
 import { MarketSummaryCards } from "@/components/market/market-summary-cards";

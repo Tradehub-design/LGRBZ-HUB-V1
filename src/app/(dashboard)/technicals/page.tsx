@@ -1,5 +1,6 @@
 "use client";
 
+import { MarketDataBanner } from "@/components/market/market-data-banner";
 import { Activity, LineChart, TrendingUp } from "lucide-react";
 import { PriceChart } from "@/components/market/price-chart";
 import { PremiumStatCard } from "@/components/workspace/premium-stat-card";
@@ -31,6 +32,8 @@ export default function TechnicalsPage() {
           </>
         }
       />
+
+      <MarketDataBanner />
 
       <WorkspaceGrid columns="xl:grid-cols-4">
         <PremiumStatCard icon={<LineChart />} label="Last Close" value={`$${snapshot.lastClose}`} tone="blue" />
