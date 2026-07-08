@@ -51,11 +51,11 @@ export default function DashboardPage() {
       />
 
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-        <HeroMetric icon={<Wallet />} label="Portfolio Value" value={formatMoney(data.totalValueAud, 2)} helper="Market value + cash" tone="blue" />
-        <HeroMetric icon={<TrendingUp />} label="Total Return" value={formatMoney(data.totalReturnAud, 2)} helper={formatPercent(data.totalReturnPercent)} tone="green" />
-        <HeroMetric icon={<Wallet />} label="Unrealised P/L" value={formatMoney(data.valuation.unrealisedPlAud, 2)} helper={formatPercent(data.valuation.unrealisedPlPercent)} tone={data.valuation.unrealisedPlAud >= 0 ? "green" : "purple"} />
-        <HeroMetric icon={<CalendarDays />} label="Income Return" value={formatPercent(data.enginePerformance.incomeReturnPercent)} helper={formatMoney(data.totalDividendsAud, 2)} tone="violet" />
-        <HeroMetric icon={<Shield />} label="Portfolio Health" value={`${data.health.score}/100`} helper={data.health.rating} tone="blue" />
+        <AnimatedKpiCard icon={<Wallet />} label="Portfolio Value" value={formatMoney(data.totalValueAud, 2)} helper="Market value + cash" trend="up" />
+        <AnimatedKpiCard icon={<TrendingUp />} label="Total Return" value={formatMoney(data.totalReturnAud, 2)} helper={formatPercent(data.totalReturnPercent)} trend={data.totalReturnAud >= 0 ? "up" : "down"} />
+        <AnimatedKpiCard icon={<Wallet />} label="Unrealised P/L" value={formatMoney(data.valuation.unrealisedPlAud, 2)} helper={formatPercent(data.valuation.unrealisedPlPercent)} trend={data.valuation.unrealisedPlAud >= 0 ? "up" : "down"} />
+        <AnimatedKpiCard icon={<CalendarDays />} label="Income Return" value={formatPercent(data.enginePerformance.incomeReturnPercent)} helper={formatMoney(data.totalDividendsAud, 2)} trend="up" />
+        <AnimatedKpiCard icon={<Shield />} label="Portfolio Health" value={`${data.health.score}/100`} helper={data.health.rating} trend="neutral" />
       </section>
 
       <section className="grid gap-4 xl:grid-cols-[1.45fr_0.75fr]">
