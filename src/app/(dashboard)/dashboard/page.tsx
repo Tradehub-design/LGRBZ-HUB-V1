@@ -162,21 +162,21 @@ export default function DashboardPage() {
           <BottomLink href="/transactions">View all transactions</BottomLink>
         </WorkspacePanel>
 
-        <WorkspacePanel title="Upcoming Dividends">
+        <WorkspacePanel title="Top Movers">
           <div className="space-y-3">
-            {data.latestDividends.slice(0, 6).map((dividend, index) => (
+            {data.topMovers.slice(0, 6).map((mover, index) => (
               <TransactionRow
-                key={dividend.id}
-                symbol={dividend.ticker}
-                title={dividend.ticker}
-                meta={dividend.date}
-                value={formatMoney(dividend.amountAud, 2)}
+                key={mover.ticker}
+                symbol={mover.ticker}
+                title={mover.ticker}
+                meta={`${mover.direction === "up" ? "Gain" : mover.direction === "down" ? "Loss" : "Flat"} · ${formatPercent(mover.changePercent)}`}
+                value={formatMoney(mover.changeAud, 2)}
                 index={index}
-                type="Dividend"
+                type={mover.direction === "up" ? "Buy" : mover.direction === "down" ? "Sell" : "Other"}
               />
             ))}
           </div>
-          <BottomLink href="/dividends">View dividends</BottomLink>
+          <BottomLink href="/holdings">View holdings</BottomLink>
         </WorkspacePanel>
 
         <WorkspacePanel title="Performance Breakdown">
