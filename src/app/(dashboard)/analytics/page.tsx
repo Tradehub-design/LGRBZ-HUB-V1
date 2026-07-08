@@ -139,6 +139,37 @@ export default function AnalyticsPage() {
         </WorkspacePanel>
       </section>
 
+
+      <WorkspacePanel title="Top Movers">
+        <PremiumTable>
+          <PremiumTableHead>
+            <tr>
+              <PremiumTh>Ticker</PremiumTh>
+              <PremiumTh>Direction</PremiumTh>
+              <PremiumTh align="right">Value</PremiumTh>
+              <PremiumTh align="right">Change</PremiumTh>
+              <PremiumTh align="right">Change %</PremiumTh>
+            </tr>
+          </PremiumTableHead>
+
+          <PremiumTableBody>
+            {data.topMovers.slice(0, 10).map((mover) => (
+              <PremiumRow key={mover.ticker}>
+                <PremiumTd strong>{mover.ticker}</PremiumTd>
+                <PremiumTd>
+                  <StatusPill tone={mover.direction === "up" ? "green" : mover.direction === "down" ? "rose" : "neutral"}>
+                    {mover.direction}
+                  </StatusPill>
+                </PremiumTd>
+                <PremiumTd align="right">{formatMoney(mover.valueAud)}</PremiumTd>
+                <PremiumTd align="right" strong>{formatMoney(mover.changeAud)}</PremiumTd>
+                <PremiumTd align="right">{formatPercent(mover.changePercent)}</PremiumTd>
+              </PremiumRow>
+            ))}
+          </PremiumTableBody>
+        </PremiumTable>
+      </WorkspacePanel>
+
       <section className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
         <WorkspacePanel title="Monthly Activity">
           <PremiumTable>
