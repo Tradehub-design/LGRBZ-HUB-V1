@@ -16,6 +16,8 @@ import { CommandCentreGrid } from "@/components/workspace/command-centre-grid";
 import { DashboardHero } from "@/components/workspace/dashboard-hero";
 import { DashboardToolbar } from "@/components/workspace/dashboard-toolbar";
 import { HealthRing } from "@/components/workspace/health-ring";
+import { LiveDashboardSummary } from "@/components/market/live-dashboard-summary";
+import { LivePortfolioMovers } from "@/components/market/live-portfolio-movers";
 import { MarketStatusStrip } from "@/components/workspace/market-status-strip";
 import { QuickCommandCards } from "@/components/workspace/quick-command-cards";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
@@ -196,6 +198,12 @@ subtitle={data.health.rating}
       </section>
 
 
+
+
+
+      <WorkspacePanel title="Live Portfolio Movers">
+        <LivePortfolioMovers />
+      </WorkspacePanel>
 
 
       <WorkspacePanel title="Portfolio Heatmap">
