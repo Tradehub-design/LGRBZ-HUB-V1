@@ -209,6 +209,34 @@ subtitle={data.health.rating}
       </WorkspacePanel>
 
 
+
+
+<section className="grid gap-4 md:grid-cols-4">
+
+<GlassStat
+title="Open Holdings"
+value={String(data.openHoldings.length)}
+/>
+
+<GlassStat
+title="Transactions"
+value={String(data.transactions.length)}
+/>
+
+<GlassStat
+title="Dividends"
+value={formatMoney(data.totalDividendsAud)}
+/>
+
+<GlassStat
+title="Risk Score"
+value={String(data.risk.riskScore)}
+/>
+
+</section>
+
+
+
       <WorkspacePanel title="Portfolio Snapshot">
         <div className="rounded-lg border border-[#173047] bg-[#0b1e30] p-4">
           <p className="text-sm font-semibold text-white">{data.snapshot.headline}</p>
