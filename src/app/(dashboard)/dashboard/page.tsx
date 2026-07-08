@@ -1,22 +1,20 @@
 "use client";
 
 import Link from "next/link";
+import { Shield, Wallet, TrendingUp, CalendarDays, Activity } from "lucide-react";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
-import { formatMoney, formatNumber, formatPercent } from "@/lib/portfolio-engine/format";
+import { useDashboardData } from "@/features/dashboard/useDashboardData";
+import { formatMoney, formatPercent } from "@/lib/portfolio-engine/format";
 import {
-  MetricTile,
   ProgressRow,
   Workspace,
-  WorkspaceGrid,
   WorkspaceHeader,
   WorkspaceLink,
   WorkspacePanel,
 } from "@/components/workspace";
-import { useDashboardData } from "@/features/dashboard/useDashboardData";
 
 export default function DashboardPage() {
   useSeedPortfolio();
-
   const data = useDashboardData();
 
   return (
@@ -24,149 +22,172 @@ export default function DashboardPage() {
       <WorkspaceHeader
         eyebrow="Portfolio Command Centre"
         title="Dashboard"
-        description="Executive summary powered by your transaction ledger. Detailed tools live in the dedicated workspaces."
+        description="Your portfolio overview, key metrics, activity, income, risk and allocation."
         actions={
           <>
             <WorkspaceLink href="/transactions">Transactions</WorkspaceLink>
             <WorkspaceLink href="/holdings">Holdings</WorkspaceLink>
-            <WorkspaceLink href="/analytics">Analytics</WorkspaceLink>
             <WorkspaceLink href="/reports">Reports</WorkspaceLink>
           </>
         }
       />
 
-      <WorkspaceGrid columns="xl:grid-cols-6">
-        <MetricTile label="Total Value" value={formatMoney(data.totalValueAud)} helper="Cost basis + cash" />
-        <MetricTile label="Daily G/L" value="$0" helper="Live prices in v2.0" />
-        <MetricTile label="Cash Available" value={formatMoney(data.totalCashAud)} helper="Across cash accounts" />
-        <MetricTile label="Dividends" value={formatMoney(data.totalDividendsAud)} helper="Received income" />
-        <MetricTile label="Health Score" value={`${data.health.score}/100`} helper={data.health.rating} />
-        <MetricTile label="Risk Score" value={`${data.risk.riskScore}/100`} helper={data.risk.concentrationLevel} />
-      </WorkspaceGrid>
+      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+        <HeroMetric icon={<Wallet />} label="Portfolio Value" value={formatMoney(data.totalValueAud, 2)} helper="Cost basis + cash" tone="blue" />
+        <HeroMetric icon={<TrendingUp />} label="Total Return" value={formatMoney(data.totalReturnAud, 2)} helper={formatPercent(data.totalReturnPercent)} tone="green" />
+        <HeroMetric icon={<Wallet />} label="Cash Balance" value={formatMoney(data.totalCashAud, 2)} helper="Available cash" tone="purple" />
+        <HeroMetric icon={<CalendarDays />} label="Dividend Income" value={formatMoney(data.totalDividendsAud, 2)} helper="Received income" tone="violet" />
+        <HeroMetric icon={<Shield />} label="Portfolio Health" value={`${data.health.score}/100`} helper={data.health.rating} tone="blue" />
+      </section>
 
-      <section className="grid gap-4 xl:grid-cols-[1.35fr_0.65fr]">
-        <WorkspacePanel
-          title="Portfolio Summary"
-          action={<Link href="/holdings" className="text-xs text-sky-300">View holdings</Link>}
-        >
-          <div className="grid gap-3 md:grid-cols-3">
-            <MiniStat label="Invested Cost" value={formatMoney(data.totalCostAud)} />
-            <MiniStat label="Realised P/L" value={formatMoney(data.realisedPlAud)} />
-            <MiniStat label="Total Return" value={formatMoney(data.totalReturnAud)} />
+      <section className="grid gap-4 xl:grid-cols-[1.45fr_0.75fr]">
+        <WorkspacePanel title="Portfolio Growth">
+          <div className="mb-4 flex items-end justify-between">
+            <div>
+              <p className="text-3xl font-semibold text-white">{formatMoney(data.totalValueAud, 2)}</p>
+              <p className="mt-1 text-sm text-emerald-300">
+                {formatMoney(data.totalReturnAud, 2)} · {formatPercent(data.totalReturnPercent)}
+              </p>
+            </div>
+
+            <div className="flex rounded-lg border border-[#173047] bg-[#0b1e30] p-1 text-xs text-slate-400">
+              {["1M", "3M", "6M", "YTD", "1Y", "ALL"].map((item) => (
+                <span key={item} className={item === "1Y" ? "rounded-md bg-blue-600 px-3 py-1 text-white" : "px-3 py-1"}>
+                  {item}
+                </span>
+              ))}
+            </div>
           </div>
 
-          <div className="mt-5 overflow-hidden rounded-xl border border-[#173047]">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-[#0b1e30] text-slate-400">
-                <tr>
-                  <th className="px-3 py-3">Holding</th>
-                  <th className="px-3 py-3">Platform</th>
-                  <th className="px-3 py-3 text-right">Qty</th>
-                  <th className="px-3 py-3 text-right">Cost</th>
-                  <th className="px-3 py-3 text-right">Weight</th>
-                </tr>
-              </thead>
+          <div className="relative h-72 overflow-hidden rounded-xl border border-[#173047] bg-[#081a2b] p-5">
+            <div className="absolute inset-x-5 top-8 h-px bg-slate-800" />
+            <div className="absolute inset-x-5 top-24 h-px bg-slate-800" />
+            <div className="absolute inset-x-5 top-40 h-px bg-slate-800" />
+            <div className="absolute inset-x-5 top-56 h-px bg-slate-800" />
 
-              <tbody className="divide-y divide-slate-800">
-                {data.topHoldings.slice(0, 6).map((holding) => (
-                  <tr key={holding.id} className="hover:bg-slate-800/40">
-                    <td className="px-3 py-3 font-semibold text-white">{holding.ticker}</td>
-                    <td className="px-3 py-3 text-slate-400">{holding.platform}</td>
-                    <td className="px-3 py-3 text-right text-slate-300">{formatNumber(holding.quantity)}</td>
-                    <td className="px-3 py-3 text-right text-white">{formatMoney(holding.totalCostAud)}</td>
-                    <td className="px-3 py-3 text-right text-sky-300">{formatPercent(holding.weightPercent)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <svg viewBox="0 0 900 240" className="relative z-10 h-full w-full">
+              <defs>
+                <linearGradient id="area" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0%" stopColor="#1f8cff" stopOpacity="0.4" />
+                  <stop offset="100%" stopColor="#1f8cff" stopOpacity="0" />
+                </linearGradient>
+              </defs>
+              <path
+                d="M0,190 C80,175 110,145 170,155 C230,166 250,125 320,132 C390,140 420,94 480,105 C555,118 590,70 650,76 C720,82 750,42 810,54 C850,62 870,43 900,35 L900,240 L0,240 Z"
+                fill="url(#area)"
+              />
+              <path
+                d="M0,190 C80,175 110,145 170,155 C230,166 250,125 320,132 C390,140 420,94 480,105 C555,118 590,70 650,76 C720,82 750,42 810,54 C850,62 870,43 900,35"
+                fill="none"
+                stroke="#1f8cff"
+                strokeWidth="4"
+                strokeLinecap="round"
+              />
+            </svg>
           </div>
         </WorkspacePanel>
 
-        <WorkspacePanel
-          title="Asset Allocation"
-          action={<Link href="/portfolio-allocation" className="text-xs text-sky-300">Details</Link>}
-        >
-          <div className="space-y-3">
-            {data.allocation.assetClass.slice(0, 6).map((item) => (
-              <ProgressRow
-                key={item.label}
-                label={item.label}
-                value={`${formatPercent(item.percent)} · ${formatMoney(item.value)}`}
-                percent={item.percent}
-              />
-            ))}
+        <WorkspacePanel title="Asset Allocation">
+          <div className="grid gap-5 md:grid-cols-[180px_1fr] xl:grid-cols-1">
+            <div className="mx-auto flex h-44 w-44 items-center justify-center rounded-full bg-[conic-gradient(#1f8cff_0_42%,#7c3aed_42%_70%,#f97316_70%_86%,#14b8a6_86%_94%,#64748b_94%_100%)]">
+              <div className="h-24 w-24 rounded-full bg-[#071827]" />
+            </div>
 
-            {data.allocation.assetClass.length === 0 ? (
-              <p className="text-sm text-slate-500">No allocation data loaded yet.</p>
-            ) : null}
+            <div className="space-y-3">
+              {data.allocation.assetClass.slice(0, 6).map((item) => (
+                <ProgressRow
+                  key={item.label}
+                  label={item.label}
+                  value={formatPercent(item.percent)}
+                  percent={item.percent}
+                />
+              ))}
+            </div>
           </div>
         </WorkspacePanel>
       </section>
 
       <section className="grid gap-4 xl:grid-cols-3">
-        <WorkspacePanel title="Recent Transactions" action={<Link href="/transactions" className="text-xs text-sky-300">Open ledger</Link>}>
+        <WorkspacePanel title="Recent Transactions">
           <div className="space-y-3">
             {data.recentTransactions.slice(0, 6).map((tx) => (
-              <ActivityRow key={tx.id} title={`${tx.action} · ${tx.assetTicker}`} meta={tx.date} value={formatMoney(tx.totalFeesIncludedAud)} />
+              <Row key={tx.id} label={`${tx.action} · ${tx.assetTicker}`} meta={tx.date} value={formatMoney(tx.totalFeesIncludedAud, 2)} />
             ))}
           </div>
+          <BottomLink href="/transactions">View all transactions</BottomLink>
         </WorkspacePanel>
 
-        <WorkspacePanel title="Dividend Summary" action={<Link href="/dividends" className="text-xs text-sky-300">View dividends</Link>}>
+        <WorkspacePanel title="Upcoming Dividends">
           <div className="space-y-3">
             {data.latestDividends.slice(0, 6).map((dividend) => (
-              <ActivityRow key={dividend.id} title={dividend.ticker} meta={dividend.date} value={formatMoney(dividend.amountAud)} />
+              <Row key={dividend.id} label={dividend.ticker} meta={dividend.date} value={formatMoney(dividend.amountAud, 2)} />
             ))}
           </div>
+          <BottomLink href="/dividends">View dividends</BottomLink>
         </WorkspacePanel>
 
-        <WorkspacePanel title="Portfolio Health">
-          <div className="space-y-3">
-            <ProgressRow label="Health Score" value={`${data.health.score}/100`} percent={data.health.score} tone="emerald" />
-            <ProgressRow label="Risk Score" value={`${data.risk.riskScore}/100`} percent={data.risk.riskScore} tone="amber" />
-            <ProgressRow label="High Risk Exposure" value={formatPercent(data.risk.highRiskPercent)} percent={data.risk.highRiskPercent} tone="rose" />
-            <ProgressRow label="Cash Weight" value={formatPercent(data.risk.cashPercent)} percent={data.risk.cashPercent} tone="sky" />
+        <WorkspacePanel title="Portfolio Health Breakdown">
+          <div className="space-y-4">
+            <ProgressRow label="Diversification" value={`${data.health.score}/100`} percent={data.health.score} tone="emerald" />
+            <ProgressRow label="Risk Management" value={`${100 - data.risk.riskScore}/100`} percent={100 - data.risk.riskScore} tone="sky" />
+            <ProgressRow label="Asset Allocation" value={`${Math.max(0, 100 - data.risk.largestSectorPercent).toFixed(0)}/100`} percent={Math.max(0, 100 - data.risk.largestSectorPercent)} tone="amber" />
+            <ProgressRow label="Liquidity" value={formatPercent(data.risk.cashPercent)} percent={data.risk.cashPercent} tone="violet" />
           </div>
+          <BottomLink href="/portfolio-health">View health report</BottomLink>
         </WorkspacePanel>
       </section>
 
-      <section className="grid gap-4 xl:grid-cols-[0.8fr_1.2fr]">
-        <WorkspacePanel title="Alerts & Notifications">
-          <div className="space-y-3">
-            <Alert tone="green" title="Transaction engine active" />
-            <Alert tone="blue" title={`${data.transactions.length} transactions loaded`} />
-            <Alert tone="amber" title="Live prices not connected yet" />
-            <Alert tone="slate" title="Broker sync planned for v2.0" />
-          </div>
-        </WorkspacePanel>
-
-        <WorkspacePanel title="Quick Actions">
-          <div className="grid gap-3 sm:grid-cols-4">
-            <Action href="/transactions" label="Update Ledger" />
-            <Action href="/portfolio-health" label="Health Check" />
-            <Action href="/dividend-forecast" label="Forecast Income" />
-            <Action href="/tax" label="Tax Centre" />
-          </div>
-        </WorkspacePanel>
-      </section>
+      <WorkspacePanel title="Market News">
+        <div className="grid gap-3 md:grid-cols-3">
+          <News title="Live news feed planned" meta="Market engine v2.0" />
+          <News title="Broker sync planned" meta="Data engine v2.0" />
+          <News title="AI insights planned" meta="Analyst workspace" />
+        </div>
+      </WorkspacePanel>
     </Workspace>
   );
 }
 
-function MiniStat({ label, value }: { label: string; value: string }) {
+function HeroMetric({
+  icon,
+  label,
+  value,
+  helper,
+  tone,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+  helper: string;
+  tone: "blue" | "green" | "purple" | "violet";
+}) {
+  const tones = {
+    blue: "bg-blue-500/15 text-blue-300",
+    green: "bg-emerald-500/15 text-emerald-300",
+    purple: "bg-purple-500/15 text-purple-300",
+    violet: "bg-violet-500/15 text-violet-300",
+  };
+
   return (
-    <div className="rounded-lg border border-[#173047] bg-[#0b1e30] p-3">
-      <p className="text-xs text-slate-500">{label}</p>
-      <p className="mt-1 text-lg font-semibold text-white">{value}</p>
+    <div className="rounded-xl border border-[#173047] bg-[#071827] p-4 shadow-xl">
+      <div className="flex items-start justify-between">
+        <p className="text-xs text-slate-400">{label}</p>
+        <div className={`flex h-10 w-10 items-center justify-center rounded-full ${tones[tone]}`}>
+          <div className="h-5 w-5">{icon}</div>
+        </div>
+      </div>
+      <p className="mt-2 text-2xl font-semibold text-white">{value}</p>
+      <p className="mt-1 text-sm text-emerald-300">{helper}</p>
+      <div className="mt-4 h-8 rounded bg-[linear-gradient(90deg,transparent,#1f8cff55,transparent)]" />
     </div>
   );
 }
 
-function ActivityRow({ title, meta, value }: { title: string; meta: string; value: string }) {
+function Row({ label, meta, value }: { label: string; meta: string; value: string }) {
   return (
-    <div className="flex items-center justify-between gap-4 border-b border-slate-800 pb-3 last:border-0 last:pb-0">
+    <div className="flex items-center justify-between border-b border-slate-800 pb-3 last:border-0 last:pb-0">
       <div>
-        <p className="text-sm font-medium text-white">{title}</p>
+        <p className="text-sm font-semibold text-white">{label}</p>
         <p className="text-xs text-slate-500">{meta}</p>
       </div>
       <p className="text-sm font-semibold text-white">{value}</p>
@@ -174,21 +195,22 @@ function ActivityRow({ title, meta, value }: { title: string; meta: string; valu
   );
 }
 
-function Alert({ title, tone }: { title: string; tone: "green" | "blue" | "amber" | "slate" }) {
-  const tones = {
-    green: "bg-emerald-500/10 text-emerald-300",
-    blue: "bg-sky-500/10 text-sky-300",
-    amber: "bg-amber-500/10 text-amber-300",
-    slate: "bg-slate-500/10 text-slate-300",
-  };
-
-  return <div className={`rounded-lg px-3 py-2 text-sm ${tones[tone]}`}>{title}</div>;
+function BottomLink({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <Link href={href} className="mt-5 block text-center text-sm font-semibold text-sky-300 hover:text-sky-200">
+      {children} →
+    </Link>
+  );
 }
 
-function Action({ href, label }: { href: string; label: string }) {
+function News({ title, meta }: { title: string; meta: string }) {
   return (
-    <Link href={href} className="rounded-lg border border-[#173047] bg-[#0b1e30] px-4 py-3 text-center text-sm font-semibold text-slate-200 hover:border-sky-500 hover:text-white">
-      {label}
-    </Link>
+    <div className="rounded-lg border border-[#173047] bg-[#0b1e30] p-3">
+      <div className="flex items-center gap-2">
+        <Activity className="h-4 w-4 text-sky-300" />
+        <p className="text-sm font-semibold text-white">{title}</p>
+      </div>
+      <p className="mt-1 text-xs text-slate-500">{meta}</p>
+    </div>
   );
 }
