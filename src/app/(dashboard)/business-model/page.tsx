@@ -1,10 +1,12 @@
 "use client";
 
+import { Calculator, Landmark, LineChart, Shield, Wallet } from "lucide-react";
+import { PremiumStatCard } from "@/components/workspace/premium-stat-card";
+import { StatusPill } from "@/components/workspace/status-pill";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { useDashboardData } from "@/features/dashboard/useDashboardData";
 import { formatMoney, formatPercent } from "@/lib/portfolio-engine/format";
 import {
-  MetricTile,
   ProgressRow,
   Workspace,
   WorkspaceGrid,
@@ -22,6 +24,7 @@ export default function BusinessModelPage() {
   const requiredPortfolio = targetIncome / (safeWithdrawalRate / 100);
   const progress = (data.totalValueAud / requiredPortfolio) * 100;
   const monthlyIncome = data.totalDividendsAud / 12;
+  const yieldOnCost = data.totalCostAud ? (data.totalDividendsAud / data.totalCostAud) * 100 : 0;
 
   return (
     <Workspace>
@@ -38,11 +41,11 @@ export default function BusinessModelPage() {
       />
 
       <WorkspaceGrid columns="xl:grid-cols-5">
-        <MetricTile label="Current Portfolio" value={formatMoney(data.totalValueAud)} />
-        <MetricTile label="Target Portfolio" value={formatMoney(requiredPortfolio)} helper={`${safeWithdrawalRate}% withdrawal model`} />
-        <MetricTile label="Progress" value={formatPercent(progress)} />
-        <MetricTile label="Dividend Monthly" value={formatMoney(monthlyIncome, 2)} />
-        <MetricTile label="Risk Score" value={`${data.risk.riskScore}/100`} helper={data.risk.concentrationLevel} />
+        <PremiumStatCard icon={<Wallet />} label="Current Portfolio" value={formatMoney(data.totalValueAud)} tone="blue" />
+        <PremiumStatCard icon={<Landmark />} label="Target Portfolio" value={formatMoney(requiredPortfolio)} helper={`${safeWithdrawalRate}% withdrawal model`} tone="purple" />
+        <PremiumStatCard icon={<LineChart />} label="Progress" value={formatPercent(progress)} tone="green" />
+        <PremiumStatCard icon={<Calculator />} label="Dividend Monthly" value={formatMoney(monthlyIncome, 2)} tone="green" />
+        <PremiumStatCard icon={<Shield />} label="Risk Score" value={`${data.risk.riskScore}/100`} helper={data.risk.concentrationLevel} tone="amber" />
       </WorkspaceGrid>
 
       <section className="grid gap-4 xl:grid-cols-[0.9fr_1.1fr]">
@@ -74,13 +77,16 @@ export default function BusinessModelPage() {
         <WorkspacePanel title="Income Model">
           <Summary label="Dividend Income" value={formatMoney(data.totalDividendsAud, 2)} />
           <Summary label="Monthly Average" value={formatMoney(monthlyIncome, 2)} />
-          <Summary label="Yield on Cost" value={formatPercent(data.totalCostAud ? (data.totalDividendsAud / data.totalCostAud) * 100 : 0)} />
+          <Summary label="Yield on Cost" value={formatPercent(yieldOnCost)} />
         </WorkspacePanel>
 
         <WorkspacePanel title="Operating Notes">
-          <p className="text-sm text-slate-300">
-            This workspace will become the home for account-level risk models, position sizing, cash flow and long-term planning.
-          </p>
+          <div className="space-y-3">
+            <StatusPill tone="blue">Planning Model</StatusPill>
+            <p className="text-sm text-slate-300">
+              This workspace will become the home for account-level risk models, position sizing, cash flow and long-term planning.
+            </p>
+          </div>
         </WorkspacePanel>
       </section>
     </Workspace>

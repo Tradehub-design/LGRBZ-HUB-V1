@@ -1,11 +1,21 @@
 "use client";
 
 import { useMemo } from "react";
+import { Coins, FileText, ReceiptText, TrendingUp, Wallet } from "lucide-react";
+import { PremiumStatCard } from "@/components/workspace/premium-stat-card";
+import {
+  PremiumRow,
+  PremiumTable,
+  PremiumTableBody,
+  PremiumTableHead,
+  PremiumTd,
+  PremiumTh,
+} from "@/components/workspace/premium-table";
+import { StatusPill } from "@/components/workspace/status-pill";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { useDashboardData } from "@/features/dashboard/useDashboardData";
 import { formatMoney } from "@/lib/portfolio-engine/format";
 import {
-  MetricTile,
   Workspace,
   WorkspaceGrid,
   WorkspaceHeader,
@@ -19,9 +29,7 @@ export default function TaxCentrePage() {
 
   const taxRows = useMemo(() => {
     return data.transactions
-      .filter((tx) =>
-        ["Sell", "Cash Dividend", "Cash Interest", "Fee"].includes(tx.action),
-      )
+      .filter((tx) => ["Sell", "Cash Dividend", "Cash Interest", "Fee"].includes(tx.action))
       .sort((a, b) => b.date.localeCompare(a.date));
   }, [data.transactions]);
 
@@ -46,55 +54,70 @@ export default function TaxCentrePage() {
       />
 
       <WorkspaceGrid columns="xl:grid-cols-5">
-        <MetricTile label="Realised P/L" value={formatMoney(data.realisedPlAud)} />
-        <MetricTile label="Dividends" value={formatMoney(data.totalDividendsAud)} />
-        <MetricTile label="Interest" value={formatMoney(interest)} />
-        <MetricTile label="Fees" value={formatMoney(fees)} />
-        <MetricTile label="Tax Events" value={String(taxRows.length)} />
+        <PremiumStatCard icon={<TrendingUp />} label="Realised P/L" value={formatMoney(data.realisedPlAud)} tone="green" />
+        <PremiumStatCard icon={<Coins />} label="Dividends" value={formatMoney(data.totalDividendsAud)} tone="green" />
+        <PremiumStatCard icon={<Wallet />} label="Interest" value={formatMoney(interest)} tone="blue" />
+        <PremiumStatCard icon={<ReceiptText />} label="Fees" value={formatMoney(fees)} tone="amber" />
+        <PremiumStatCard icon={<FileText />} label="Tax Events" value={String(taxRows.length)} tone="purple" />
       </WorkspaceGrid>
 
       <section className="grid gap-4 xl:grid-cols-[1.25fr_0.75fr]">
         <WorkspacePanel title="Tax Event Register">
-          <div className="overflow-hidden rounded-xl border border-[#173047]">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-[#0b1e30] text-slate-400">
-                <tr>
-                  <th className="px-3 py-3">Date</th>
-                  <th className="px-3 py-3">Type</th>
-                  <th className="px-3 py-3">Asset</th>
-                  <th className="px-3 py-3">Platform</th>
-                  <th className="px-3 py-3 text-right">Amount</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-800">
-                {taxRows.slice(0, 80).map((tx) => (
-                  <tr key={tx.id} className="text-slate-300 hover:bg-slate-800/40">
-                    <td className="px-3 py-3 text-slate-400">{tx.date}</td>
-                    <td className="px-3 py-3">{tx.action}</td>
-                    <td className="px-3 py-3 font-semibold text-white">{tx.assetTicker}</td>
-                    <td className="px-3 py-3 text-slate-400">{tx.platform}</td>
-                    <td className="px-3 py-3 text-right text-white">{formatMoney(tx.totalFeesIncludedAud, 2)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <PremiumTable>
+            <PremiumTableHead>
+              <tr>
+                <PremiumTh>Date</PremiumTh>
+                <PremiumTh>Type</PremiumTh>
+                <PremiumTh>Asset</PremiumTh>
+                <PremiumTh>Platform</PremiumTh>
+                <PremiumTh align="right">Amount</PremiumTh>
+              </tr>
+            </PremiumTableHead>
+
+            <PremiumTableBody>
+              {taxRows.slice(0, 80).map((tx) => (
+                <PremiumRow key={tx.id}>
+                  <PremiumTd>{tx.date}</PremiumTd>
+                  <PremiumTd>
+                    <StatusPill tone={tx.action === "Sell" ? "rose" : tx.action.includes("Dividend") ? "green" : "amber"}>
+                      {tx.action}
+                    </StatusPill>
+                  </PremiumTd>
+                  <PremiumTd strong>{tx.assetTicker}</PremiumTd>
+                  <PremiumTd>{tx.platform}</PremiumTd>
+                  <PremiumTd align="right" strong>{formatMoney(tx.totalFeesIncludedAud, 2)}</PremiumTd>
+                </PremiumRow>
+              ))}
+            </PremiumTableBody>
+          </PremiumTable>
         </WorkspacePanel>
 
-        <WorkspacePanel title="Tax Notes">
+        <WorkspacePanel title="Tax Readiness">
           <div className="space-y-3 text-sm text-slate-300">
-            <p className="rounded-lg border border-[#173047] bg-[#0b1e30] p-3">
-              CGT calculations are placeholder-ready. FIFO parcel matching will be added in v1.2.
-            </p>
-            <p className="rounded-lg border border-[#173047] bg-[#0b1e30] p-3">
-              Franking credits need dividend statement fields before final ATO-ready reporting.
-            </p>
-            <p className="rounded-lg border border-[#173047] bg-[#0b1e30] p-3">
-              This page is currently a tax event workspace, not financial advice.
-            </p>
+            <Note tone="blue" title="Event register active" text="Dividend, sell, interest and fee records are being extracted from the ledger." />
+            <Note tone="amber" title="FIFO CGT pending" text="Parcel-level FIFO matching will be added in v1.2." />
+            <Note tone="green" title="Reports ready" text="Tax summaries can now be included in report templates." />
+            <Note tone="rose" title="Important" text="This is a calculation workspace, not financial advice." />
           </div>
         </WorkspacePanel>
       </section>
     </Workspace>
+  );
+}
+
+function Note({
+  title,
+  text,
+  tone,
+}: {
+  title: string;
+  text: string;
+  tone: "blue" | "amber" | "green" | "rose";
+}) {
+  return (
+    <div className="rounded-lg border border-[#173047] bg-[#0b1e30] p-3">
+      <StatusPill tone={tone}>{title}</StatusPill>
+      <p className="mt-2 text-sm text-slate-400">{text}</p>
+    </div>
   );
 }
