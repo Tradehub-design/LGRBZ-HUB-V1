@@ -54,13 +54,25 @@ export default function TaxCentrePage() {
       />
 
       <WorkspaceGrid columns="xl:grid-cols-5">
-        <PremiumStatCard icon={<TrendingUp />} label="Realised P/L" value={formatMoney(data.realisedPlAud)} tone="green" />
+        <PremiumStatCard icon={<TrendingUp />} label="Net CGT" value={formatMoney(data.cgtSummary.netCapitalGainAud)} tone={data.cgtSummary.netCapitalGainAud >= 0 ? "green" : "rose"} />
         <PremiumStatCard icon={<Coins />} label="Dividends" value={formatMoney(data.totalDividendsAud)} tone="green" />
         <PremiumStatCard icon={<Wallet />} label="Interest" value={formatMoney(interest)} tone="blue" />
         <PremiumStatCard icon={<ReceiptText />} label="Fees" value={formatMoney(fees)} tone="amber" />
-        <PremiumStatCard icon={<FileText />} label="Tax Events" value={String(taxRows.length)} tone="purple" />
+        <PremiumStatCard icon={<FileText />} label="Disposals" value={String(data.cgtSummary.disposalCount)} tone="purple" />
       </WorkspaceGrid>
 
+
+
+
+      <WorkspacePanel title="Capital Gains Summary">
+        <div className="grid gap-3 md:grid-cols-5">
+          <PremiumStatCard label="Proceeds" value={formatMoney(data.cgtSummary.totalProceedsAud, 2)} tone="blue" />
+          <PremiumStatCard label="Cost Base" value={formatMoney(data.cgtSummary.totalCostBaseAud, 2)} tone="purple" />
+          <PremiumStatCard label="Capital Gains" value={formatMoney(data.cgtSummary.capitalGainsAud, 2)} tone="green" />
+          <PremiumStatCard label="Capital Losses" value={formatMoney(data.cgtSummary.capitalLossesAud, 2)} tone="rose" />
+          <PremiumStatCard label="Net Gain" value={formatMoney(data.cgtSummary.netCapitalGainAud, 2)} tone={data.cgtSummary.netCapitalGainAud >= 0 ? "green" : "rose"} />
+        </div>
+      </WorkspacePanel>
 
 
       <WorkspacePanel title="FIFO Disposal Register">
