@@ -21,6 +21,7 @@ import { buildIncomeInsights } from "@/lib/portfolio-engine/incomeIntelligence";
 import { buildIntelligenceInsights } from "@/lib/portfolio-engine/intelligence";
 import { buildWatchlistIdeas } from "@/lib/portfolio-engine/watchlistIntelligence";
 import { calculateCashflowPlan } from "@/lib/portfolio-engine/cashflowPlanner";
+import { calculateCgtSummary } from "@/lib/portfolio-engine/cgt";
 import { calculateFireProjection } from "@/lib/portfolio-engine/fireCalculator";
 import { buildCountryInsights } from "@/lib/portfolio-engine/countryIntelligence";
 import { buildCurrencyInsights } from "@/lib/portfolio-engine/currencyIntelligence";
@@ -103,6 +104,8 @@ export function useDashboardData() {
     };
 
     const fifo = calculateFifoLots(transactions);
+
+    const cgtSummary = calculateCgtSummary(fifo.disposals);
 
     const dataQuality = calculateDataQuality({
       transactions,
@@ -273,6 +276,7 @@ export function useDashboardData() {
       allocation,
       performance,
       fifo,
+      cgtSummary,
       dataQuality,
       financialYears,
       incomeMetrics,
