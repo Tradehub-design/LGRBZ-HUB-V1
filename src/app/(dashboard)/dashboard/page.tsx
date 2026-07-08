@@ -16,6 +16,7 @@ import { CommandCentreGrid } from "@/components/workspace/command-centre-grid";
 import { DashboardHero } from "@/components/workspace/dashboard-hero";
 import { DashboardToolbar } from "@/components/workspace/dashboard-toolbar";
 import { HealthRing } from "@/components/workspace/health-ring";
+import { MarketStatusStrip } from "@/components/workspace/market-status-strip";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { useDashboardData } from "@/features/dashboard/useDashboardData";
 import { formatMoney, formatPercent } from "@/lib/portfolio-engine/format";
