@@ -1,5 +1,6 @@
 "use client";
 
+import { RiskRadar } from "@/components/workspace/risk-radar";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { useDashboardData } from "@/features/dashboard/useDashboardData";
 import { formatPercent } from "@/lib/portfolio-engine/format";
@@ -40,6 +41,18 @@ export default function PortfolioHealthPage() {
         <MetricTile label="Largest Sector" value={formatPercent(data.risk.largestSectorPercent)} />
         <MetricTile label="High Risk Exposure" value={formatPercent(data.risk.highRiskPercent)} />
       </WorkspaceGrid>
+
+
+      <WorkspacePanel title="Risk Radar">
+        <RiskRadar
+          largestHoldingPercent={data.risk.largestHoldingPercent}
+          largestSectorPercent={data.risk.largestSectorPercent}
+          largestCountryPercent={data.risk.largestCountryPercent}
+          highRiskPercent={data.risk.highRiskPercent}
+          cashPercent={data.risk.cashPercent}
+        />
+      </WorkspacePanel>
+
 
       <section className="grid gap-4 xl:grid-cols-[0.8fr_1.2fr]">
         <WorkspacePanel title="Health Breakdown">
