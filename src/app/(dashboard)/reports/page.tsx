@@ -52,6 +52,28 @@ export default function ReportsPage() {
 
 
 
+
+      <WorkspacePanel title="Recent Portfolio Activity">
+        <div className="space-y-3">
+          {data.portfolioReplay.slice(0, 8).map((point) => (
+            <div key={point.date} className="rounded-lg border border-[#173047] bg-[#0b1e30] p-3">
+              <div className="mb-2 flex items-center justify-between">
+                <span className="text-sm font-semibold text-white">{point.date}</span>
+                <StatusPill tone={point.netActivityAud >= 0 ? "green" : "rose"}>
+                  {formatMoney(point.netActivityAud, 2)}
+                </StatusPill>
+              </div>
+              <div className="grid gap-2 text-xs text-slate-400 md:grid-cols-3">
+                <span>Buys: {formatMoney(point.buysAud, 2)}</span>
+                <span>Sells: {formatMoney(point.sellsAud, 2)}</span>
+                <span>Dividends: {formatMoney(point.dividendsAud, 2)}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </WorkspacePanel>
+
+
       <WorkspacePanel title="Portfolio Snapshot">
         <div className="rounded-lg border border-[#173047] bg-[#0b1e30] p-4">
           <p className="text-sm font-semibold text-white">{data.snapshot.headline}</p>
