@@ -1,5 +1,6 @@
 "use client";
 
+import { HorizontalBarChart } from "@/components/workspace/portfolio-charts";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { useDashboardData } from "@/features/dashboard/useDashboardData";
 import { formatMoney, formatPercent } from "@/lib/portfolio-engine/format";
@@ -47,6 +48,19 @@ export default function PerformanceAttributionPage() {
         <MetricTile label="Fees" value={formatMoney(data.performance.feesAud)} />
         <MetricTile label="Positions" value={String(data.openHoldings.length)} />
       </WorkspaceGrid>
+
+
+      <WorkspacePanel title="Attribution Chart">
+        <HorizontalBarChart
+          data={[
+            { label: "Unrealised P/L", value: data.valuation.unrealisedPlAud },
+            { label: "Realised P/L", value: data.realisedPlAud },
+            { label: "Dividends", value: data.totalDividendsAud },
+            { label: "Fees", value: -data.enginePerformance.feesAud },
+          ]}
+        />
+      </WorkspacePanel>
+
 
       <section className="grid gap-4 xl:grid-cols-[0.8fr_1.2fr]">
         <WorkspacePanel title="Return Drivers">
