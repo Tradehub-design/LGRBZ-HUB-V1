@@ -190,11 +190,11 @@ export default function DashboardPage() {
         </WorkspacePanel>
       </section>
 
-      <WorkspacePanel title="Market News">
+      <WorkspacePanel title="Alerts & Notifications">
         <div className="grid gap-3 md:grid-cols-3">
-          <News title="Live news feed planned" meta="Market engine v2.0" />
-          <News title="Broker sync planned" meta="Data engine v2.0" />
-          <News title="AI insights planned" meta="Analyst workspace" />
+          {data.alerts.slice(0, 6).map((alert) => (
+            <News key={alert.id} title={alert.title} meta={alert.message} />
+          ))}
         </div>
       </WorkspacePanel>
     </Workspace>
