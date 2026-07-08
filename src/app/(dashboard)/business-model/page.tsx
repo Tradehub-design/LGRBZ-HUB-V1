@@ -67,6 +67,20 @@ export default function BusinessModelPage() {
         </WorkspacePanel>
       </section>
 
+
+      <WorkspacePanel title="Business Recommendations">
+        <div className="grid gap-3 md:grid-cols-3">
+          {data.recommendations.slice(0, 6).map((recommendation) => (
+            <div key={recommendation.id} className="rounded-lg border border-[#173047] bg-[#0b1e30] p-3">
+              <p className="text-sm font-semibold text-white">{recommendation.title}</p>
+              <p className="mt-1 text-sm text-slate-400">{recommendation.detail}</p>
+              <p className="mt-2 text-xs text-sky-300">{recommendation.category}</p>
+            </div>
+          ))}
+        </div>
+      </WorkspacePanel>
+
+
       <section className="grid gap-4 xl:grid-cols-3">
         <WorkspacePanel title="Capital Model">
           <Summary label="Invested Cost" value={formatMoney(data.totalCostAud)} />
