@@ -19,6 +19,7 @@ import { calculateFifoLots } from "@/lib/portfolio-engine/fifo";
 import { buildIncomeInsights } from "@/lib/portfolio-engine/incomeIntelligence";
 import { buildIntelligenceInsights } from "@/lib/portfolio-engine/intelligence";
 import { buildWatchlistIdeas } from "@/lib/portfolio-engine/watchlistIntelligence";
+import { calculateCashflowPlan } from "@/lib/portfolio-engine/cashflowPlanner";
 import { buildCountryInsights } from "@/lib/portfolio-engine/countryIntelligence";
 import { buildCurrencyInsights } from "@/lib/portfolio-engine/currencyIntelligence";
 import { buildSectorInsights } from "@/lib/portfolio-engine/sectorIntelligence";
@@ -152,6 +153,8 @@ export function useDashboardData() {
 
     const portfolioReplay = calculatePortfolioReplay(transactions);
 
+    const cashflowPlan = calculateCashflowPlan(transactions);
+
     const retirementProjection = calculateRetirementProjection({
       currentPortfolioAud: totalValueAud,
     });
@@ -250,6 +253,7 @@ export function useDashboardData() {
       risk,
       health,
       equityCurve,
+      cashflowPlan,
       portfolioReplay,
       retirementProjection,
       returnMetrics,
