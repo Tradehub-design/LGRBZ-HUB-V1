@@ -3,6 +3,8 @@
 import { MonitorCog, Palette, PanelLeft, Settings2 } from "lucide-react";
 import { PremiumStatCard } from "@/components/workspace/premium-stat-card";
 import { StatusPill } from "@/components/workspace/status-pill";
+import { useDashboardData } from "@/features/dashboard/useDashboardData";
+import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { useSettingsStore } from "@/store/settingsStore";
 import {
   Workspace,
@@ -13,6 +15,8 @@ import {
 } from "@/components/workspace";
 
 export default function SettingsPage() {
+  useSeedPortfolio();
+  const data = useDashboardData();
   const settings = useSettingsStore((state) => state.settings);
   const collapsed = useSettingsStore((state) => state.sidebarCollapsed);
   const toggleSidebar = useSettingsStore((state) => state.toggleSidebar);
@@ -50,6 +54,17 @@ export default function SettingsPage() {
             Toggle Sidebar
           </button>
         </WorkspacePanel>
+
+
+        <WorkspacePanel title="Data Status">
+          <div className="space-y-3">
+            <SettingRow label="Transactions" value={String(data.transactions.length)} />
+            <SettingRow label="Open Holdings" value={String(data.openHoldings.length)} />
+            <SettingRow label="Data Quality" value={`${data.dataQuality.score}/100 · ${data.dataQuality.rating}`} />
+            <SettingRow label="Financial Years" value={String(data.financialYears.length)} />
+          </div>
+        </WorkspacePanel>
+
 
         <WorkspacePanel title="Roadmap Settings">
           <div className="space-y-3 text-sm text-slate-300">
