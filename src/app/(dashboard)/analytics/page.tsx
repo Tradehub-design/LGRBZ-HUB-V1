@@ -1,11 +1,21 @@
 "use client";
 
 import { useMemo } from "react";
+import { Activity, BarChart3, Coins, Shield, TrendingUp, Wallet } from "lucide-react";
+import { PremiumStatCard } from "@/components/workspace/premium-stat-card";
+import {
+  PremiumRow,
+  PremiumTable,
+  PremiumTableBody,
+  PremiumTableHead,
+  PremiumTd,
+  PremiumTh,
+} from "@/components/workspace/premium-table";
+import { StatusPill } from "@/components/workspace/status-pill";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { useDashboardData } from "@/features/dashboard/useDashboardData";
 import { formatMoney, formatNumber, formatPercent } from "@/lib/portfolio-engine/format";
 import {
-  MetricTile,
   ProgressRow,
   Workspace,
   WorkspaceGrid,
@@ -70,12 +80,12 @@ export default function AnalyticsPage() {
       />
 
       <WorkspaceGrid columns="xl:grid-cols-6">
-        <MetricTile label="Transactions" value={String(data.transactions.length)} />
-        <MetricTile label="Open Holdings" value={String(data.openHoldings.length)} />
-        <MetricTile label="Total Return" value={formatMoney(data.totalReturnAud)} helper={formatPercent(data.totalReturnPercent)} />
-        <MetricTile label="Dividend Income" value={formatMoney(data.totalDividendsAud)} />
-        <MetricTile label="Fees" value={formatMoney(data.performance.feesAud)} />
-        <MetricTile label="Health" value={`${data.health.score}/100`} helper={data.health.rating} />
+        <PremiumStatCard icon={<Activity />} label="Transactions" value={String(data.transactions.length)} tone="blue" />
+        <PremiumStatCard icon={<Wallet />} label="Open Holdings" value={String(data.openHoldings.length)} tone="purple" />
+        <PremiumStatCard icon={<TrendingUp />} label="Total Return" value={formatMoney(data.totalReturnAud)} helper={formatPercent(data.totalReturnPercent)} tone="green" />
+        <PremiumStatCard icon={<Coins />} label="Dividend Income" value={formatMoney(data.totalDividendsAud)} tone="green" />
+        <PremiumStatCard icon={<BarChart3 />} label="Fees" value={formatMoney(data.performance.feesAud)} tone="amber" />
+        <PremiumStatCard icon={<Shield />} label="Health" value={`${data.health.score}/100`} helper={data.health.rating} tone="blue" />
       </WorkspaceGrid>
 
       <section className="grid gap-4 xl:grid-cols-3">
@@ -122,31 +132,29 @@ export default function AnalyticsPage() {
 
       <section className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
         <WorkspacePanel title="Monthly Activity">
-          <div className="overflow-hidden rounded-xl border border-[#173047]">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-[#0b1e30] text-slate-400">
-                <tr>
-                  <th className="px-3 py-3">Month</th>
-                  <th className="px-3 py-3 text-right">Buys</th>
-                  <th className="px-3 py-3 text-right">Sells</th>
-                  <th className="px-3 py-3 text-right">Dividends</th>
-                  <th className="px-3 py-3 text-right">Deposits</th>
-                </tr>
-              </thead>
+          <PremiumTable>
+            <PremiumTableHead>
+              <tr>
+                <PremiumTh>Month</PremiumTh>
+                <PremiumTh align="right">Buys</PremiumTh>
+                <PremiumTh align="right">Sells</PremiumTh>
+                <PremiumTh align="right">Dividends</PremiumTh>
+                <PremiumTh align="right">Deposits</PremiumTh>
+              </tr>
+            </PremiumTableHead>
 
-              <tbody className="divide-y divide-slate-800">
-                {monthlyActivity.map((row) => (
-                  <tr key={row.month} className="text-slate-300 hover:bg-slate-800/40">
-                    <td className="px-3 py-3 font-semibold text-white">{row.month}</td>
-                    <td className="px-3 py-3 text-right">{formatMoney(row.buys)}</td>
-                    <td className="px-3 py-3 text-right">{formatMoney(row.sells)}</td>
-                    <td className="px-3 py-3 text-right">{formatMoney(row.dividends)}</td>
-                    <td className="px-3 py-3 text-right">{formatMoney(row.deposits)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+            <PremiumTableBody>
+              {monthlyActivity.map((row) => (
+                <PremiumRow key={row.month}>
+                  <PremiumTd strong>{row.month}</PremiumTd>
+                  <PremiumTd align="right">{formatMoney(row.buys)}</PremiumTd>
+                  <PremiumTd align="right">{formatMoney(row.sells)}</PremiumTd>
+                  <PremiumTd align="right">{formatMoney(row.dividends)}</PremiumTd>
+                  <PremiumTd align="right">{formatMoney(row.deposits)}</PremiumTd>
+                </PremiumRow>
+              ))}
+            </PremiumTableBody>
+          </PremiumTable>
         </WorkspacePanel>
 
         <WorkspacePanel title="Activity Intensity">
@@ -155,13 +163,13 @@ export default function AnalyticsPage() {
               const total = row.buys + row.sells + row.dividends + row.deposits;
 
               return (
-                <ProgressRow
-                  key={row.month}
-                  label={row.month}
-                  value={formatMoney(total)}
-                  percent={(total / maxMonth) * 100}
-                  tone="violet"
-                />
+                <div key={row.month} className="rounded-lg border border-[#173047] bg-[#0b1e30] p-3">
+                  <div className="mb-2 flex items-center justify-between">
+                    <StatusPill tone="purple">{row.month}</StatusPill>
+                    <span className="text-sm font-semibold text-white">{formatMoney(total)}</span>
+                  </div>
+                  <ProgressRow label="Activity" value={formatPercent((total / maxMonth) * 100)} percent={(total / maxMonth) * 100} tone="violet" />
+                </div>
               );
             })}
           </div>

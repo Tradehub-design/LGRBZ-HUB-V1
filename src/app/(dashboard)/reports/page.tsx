@@ -1,10 +1,12 @@
 "use client";
 
+import { BarChart3, Coins, FileText, Shield, TrendingUp } from "lucide-react";
+import { PremiumStatCard } from "@/components/workspace/premium-stat-card";
+import { StatusPill } from "@/components/workspace/status-pill";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { useDashboardData } from "@/features/dashboard/useDashboardData";
 import { formatMoney, formatPercent } from "@/lib/portfolio-engine/format";
 import {
-  MetricTile,
   Workspace,
   WorkspaceGrid,
   WorkspaceHeader,
@@ -41,11 +43,11 @@ export default function ReportsPage() {
       />
 
       <WorkspaceGrid columns="xl:grid-cols-5">
-        <MetricTile label="Portfolio Value" value={formatMoney(data.totalValueAud)} />
-        <MetricTile label="Return" value={formatMoney(data.totalReturnAud)} helper={formatPercent(data.totalReturnPercent)} />
-        <MetricTile label="Dividends" value={formatMoney(data.totalDividendsAud)} />
-        <MetricTile label="Health" value={`${data.health.score}/100`} helper={data.health.rating} />
-        <MetricTile label="Transactions" value={String(data.transactions.length)} />
+        <PremiumStatCard icon={<FileText />} label="Portfolio Value" value={formatMoney(data.totalValueAud)} tone="blue" />
+        <PremiumStatCard icon={<TrendingUp />} label="Return" value={formatMoney(data.totalReturnAud)} helper={formatPercent(data.totalReturnPercent)} tone="green" />
+        <PremiumStatCard icon={<Coins />} label="Dividends" value={formatMoney(data.totalDividendsAud)} tone="green" />
+        <PremiumStatCard icon={<Shield />} label="Health" value={`${data.health.score}/100`} helper={data.health.rating} tone="blue" />
+        <PremiumStatCard icon={<BarChart3 />} label="Transactions" value={String(data.transactions.length)} tone="purple" />
       </WorkspaceGrid>
 
       <section className="grid gap-4 xl:grid-cols-[0.8fr_1.2fr]">
@@ -54,12 +56,10 @@ export default function ReportsPage() {
             {reportTemplates.map((template) => (
               <div
                 key={template}
-                className="flex items-center justify-between rounded-lg border border-[#173047] bg-[#0b1e30] p-3"
+                className="flex items-center justify-between rounded-lg border border-[#173047] bg-[#0b1e30] p-3 transition hover:border-sky-600"
               >
                 <span className="text-sm font-medium text-white">{template}</span>
-                <span className="rounded-full bg-sky-500/10 px-2.5 py-1 text-xs text-sky-300">
-                  Draft
-                </span>
+                <StatusPill tone="blue">Draft</StatusPill>
               </div>
             ))}
           </div>
