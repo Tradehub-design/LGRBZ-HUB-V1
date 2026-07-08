@@ -1,15 +1,13 @@
 export const appConfig = {
-  name: "Portfolio Performance",
+  name: "LGRBZ",
 
-  version: "1.0.0",
+  version: "1.1.0",
 
   currency: "AUD",
 
   timezone: "Australia/Sydney",
 
-  supportEmail:
-    "support@portfolio-performance.com",
+  supportEmail: "support@lgrbz.com",
 
-  environment:
-    process.env.NODE_ENV,
+  environment: process.env.NODE_ENV,
 };
