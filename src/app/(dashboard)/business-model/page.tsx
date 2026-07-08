@@ -68,6 +68,19 @@ export default function BusinessModelPage() {
       </section>
 
 
+
+      <WorkspacePanel title="Return Model">
+        <div className="grid gap-3 md:grid-cols-3">
+          <Summary label="Total Gain" value={formatMoney(data.returnMetrics.totalGainAud, 2)} />
+          <Summary label="Total Gain %" value={formatPercent(data.returnMetrics.totalGainPercent)} />
+          <Summary label="Avg Monthly Cash Flow" value={formatMoney(data.returnMetrics.averageMonthlyCashFlowAud, 2)} />
+          <Summary label="Activity Months" value={String(data.returnMetrics.activityMonths)} />
+          <Summary label="Dividend Return" value={formatPercent(data.returnMetrics.dividendReturnPercent)} />
+          <Summary label="Unrealised Return" value={formatPercent(data.returnMetrics.unrealisedReturnPercent)} />
+        </div>
+      </WorkspacePanel>
+
+
       <WorkspacePanel title="Business Recommendations">
         <div className="grid gap-3 md:grid-cols-3">
           {data.recommendations.slice(0, 6).map((recommendation) => (
