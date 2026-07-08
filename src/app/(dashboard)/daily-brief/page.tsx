@@ -1,49 +1,85 @@
 "use client";
 
-import{
-Workspace,
-WorkspaceHeader,
-WorkspacePanel
-}from "@/components/workspace";
+import { Newspaper, Sparkles } from "lucide-react";
+import { InsightFeed } from "@/components/workspace/insight-feed";
+import { PremiumStatCard } from "@/components/workspace/premium-stat-card";
+import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
+import { useDashboardData } from "@/features/dashboard/useDashboardData";
+import { formatMoney, formatPercent } from "@/lib/portfolio-engine/format";
+import {
+  Workspace,
+  WorkspaceGrid,
+  WorkspaceHeader,
+  WorkspaceLink,
+  WorkspacePanel,
+} from "@/components/workspace";
 
-export default function DailyBrief(){
+export default function DailyBriefPage() {
+  useSeedPortfolio();
+  const data = useDashboardData();
 
-return(
+  const brief = [
+    {
+      id: "value",
+      title: "Portfolio value",
+      detail: `Current portfolio value is ${formatMoney(data.totalValueAud, 2)} with total return of ${formatMoney(data.totalReturnAud, 2)}.`,
+      category: "Portfolio",
+    },
+    {
+      id: "health",
+      title: "Health status",
+      detail: `Health score is ${data.health.score}/100 and rated ${data.health.rating}.`,
+      category: "Health",
+    },
+    {
+      id: "risk",
+      title: "Risk status",
+      detail: `Risk score is ${data.risk.riskScore}/100. Largest holding is ${formatPercent(data.risk.largestHoldingPercent)}.`,
+      category: "Risk",
+    },
+    {
+      id: "income",
+      title: "Income status",
+      detail: `Annualised dividend income is ${formatMoney(data.incomeMetrics.annualisedIncomeAud, 2)}.`,
+      category: "Income",
+    },
+  ];
 
-<Workspace>
+  return (
+    <Workspace>
+      <WorkspaceHeader
+        eyebrow="AI Brief"
+        title="Daily Brief"
+        description="A portfolio briefing generated from your live engine data."
+        actions={
+          <>
+            <WorkspaceLink href="/dashboard">Dashboard</WorkspaceLink>
+            <WorkspaceLink href="/ai-insights">AI Insights</WorkspaceLink>
+          </>
+        }
+      />
 
-<WorkspaceHeader
+      <WorkspaceGrid columns="xl:grid-cols-4">
+        <PremiumStatCard icon={<Newspaper />} label="Brief Items" value={String(brief.length)} tone="blue" />
+        <PremiumStatCard icon={<Sparkles />} label="Insights" value={String(data.intelligenceInsights.length)} tone="purple" />
+        <PremiumStatCard label="Health" value={`${data.health.score}/100`} tone="green" />
+        <PremiumStatCard label="Risk" value={`${data.risk.riskScore}/100`} tone="amber" />
+      </WorkspaceGrid>
 
-eyebrow="AI"
+      <WorkspacePanel title="Today's Portfolio Brief">
+        <InsightFeed insights={brief} />
+      </WorkspacePanel>
 
-title="Daily Brief"
-
-description="Everything important about your portfolio today."
-
-/>
-
-<WorkspacePanel title="Today's Summary">
-
-<ul className="space-y-4">
-
-<li>Portfolio gained 0.84%</li>
-
-<li>Technology was strongest sector.</li>
-
-<li>Dividend expected this week.</li>
-
-<li>No major concentration changes.</li>
-
-<li>US CPI later tonight.</li>
-
-<li>Portfolio health remains Grade A.</li>
-
-</ul>
-
-</WorkspacePanel>
-
-</Workspace>
-
-)
-
+      <WorkspacePanel title="Priority Intelligence">
+        <InsightFeed
+          insights={data.intelligenceInsights.map((item) => ({
+            id: item.id,
+            title: item.title,
+            detail: item.detail,
+            category: item.category,
+          }))}
+        />
+      </WorkspacePanel>
+    </Workspace>
+  );
 }
