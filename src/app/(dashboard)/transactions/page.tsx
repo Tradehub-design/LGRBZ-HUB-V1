@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { AssetLogo } from "@/components/workspace/asset-logo";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { buildPortfolio } from "@/lib/portfolio-engine/buildPortfolio";
 import { formatMoney, formatNumber } from "@/lib/portfolio-engine/format";
@@ -35,7 +36,7 @@ export default function TransactionsPage() {
   const [error, setError] = useState<string | null>(null);
 
   const recentTransactions = useMemo(() => {
-    return [...transactions].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 50);
+    return [...transactions].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 80);
   }, [transactions]);
 
   const totals = useMemo(() => {
@@ -90,28 +91,22 @@ export default function TransactionsPage() {
       <WorkspaceGrid columns="xl:grid-cols-7">
         <MetricTile label="Transactions" value={String(totals.transactions)} />
         <MetricTile label="Open Holdings" value={String(totals.holdings)} />
-        <MetricTile label="Cash" value={formatMoney(totals.cash)} />
-        <MetricTile label="Invested Cost" value={formatMoney(totals.cost)} />
-        <MetricTile label="Dividends" value={formatMoney(totals.dividends)} />
-        <MetricTile label="Fees" value={formatMoney(totals.fees)} />
-        <MetricTile label="Realised P/L" value={formatMoney(totals.realised)} />
+        <MetricTile label="Cash" value={formatMoney(totals.cash, 2)} />
+        <MetricTile label="Invested Cost" value={formatMoney(totals.cost, 2)} />
+        <MetricTile label="Dividends" value={formatMoney(totals.dividends, 2)} />
+        <MetricTile label="Fees" value={formatMoney(totals.fees, 2)} />
+        <MetricTile label="Realised P/L" value={formatMoney(totals.realised, 2)} />
       </WorkspaceGrid>
 
       {showImport ? (
         <WorkspacePanel title="Manual Ledger Update">
           <div className="mb-3 flex items-center justify-between">
-            <p className="text-sm text-slate-400">
-              This replaces the currently loaded ledger for this browser session.
-            </p>
+            <p className="text-sm text-slate-400">This replaces the currently loaded ledger for this browser session.</p>
 
             <div className="flex gap-2">
-              <button
-                onClick={handleBuildPortfolio}
-                className="rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-emerald-400"
-              >
+              <button onClick={handleBuildPortfolio} className="rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-emerald-400">
                 Apply Update
               </button>
-
               <button
                 onClick={() => {
                   setDraftCsv("");
@@ -125,11 +120,7 @@ export default function TransactionsPage() {
             </div>
           </div>
 
-          {error ? (
-            <div className="mb-3 rounded-lg border border-red-800 bg-red-950/50 px-4 py-3 text-sm text-red-200">
-              {error}
-            </div>
-          ) : null}
+          {error ? <div className="mb-3 rounded-lg border border-red-800 bg-red-950/50 px-4 py-3 text-sm text-red-200">{error}</div> : null}
 
           <textarea
             value={draftCsv}
@@ -147,9 +138,9 @@ export default function TransactionsPage() {
             <table className="w-full text-left text-xs">
               <thead className="bg-[#0b1e30] text-slate-400">
                 <tr>
-                  <th className="px-3 py-3">Date</th>
+                  <th className="px-3 py-3">Asset</th>
                   <th className="px-3 py-3">Type</th>
-                  <th className="px-3 py-3">Symbol</th>
+                  <th className="px-3 py-3">Date</th>
                   <th className="px-3 py-3">Platform</th>
                   <th className="px-3 py-3 text-right">Qty</th>
                   <th className="px-3 py-3 text-right">Price</th>
@@ -160,13 +151,16 @@ export default function TransactionsPage() {
               <tbody className="divide-y divide-slate-800">
                 {recentTransactions.map((transaction) => (
                   <tr key={transaction.id} className="text-slate-300 hover:bg-slate-800/40">
-                    <td className="px-3 py-3 text-slate-400">{transaction.date}</td>
                     <td className="px-3 py-3">
-                      <span className="rounded-md bg-slate-800 px-2 py-1 text-[11px] text-slate-200">
-                        {transaction.action}
-                      </span>
+                      <div className="flex items-center gap-3">
+                        <AssetLogo symbol={transaction.assetTicker} />
+                        <span className="font-semibold text-white">{transaction.assetTicker}</span>
+                      </div>
                     </td>
-                    <td className="px-3 py-3 font-semibold text-white">{transaction.assetTicker}</td>
+                    <td className="px-3 py-3">
+                      <span className={badgeClass(transaction.action)}>{transaction.action}</span>
+                    </td>
+                    <td className="px-3 py-3 text-slate-400">{transaction.date}</td>
                     <td className="px-3 py-3 text-slate-400">{transaction.platform}</td>
                     <td className="px-3 py-3 text-right">{transaction.quantity ? formatNumber(transaction.quantity) : "-"}</td>
                     <td className="px-3 py-3 text-right">{transaction.price ? formatMoney(transaction.price, 2) : "-"}</td>
@@ -175,14 +169,6 @@ export default function TransactionsPage() {
                     </td>
                   </tr>
                 ))}
-
-                {recentTransactions.length === 0 ? (
-                  <tr>
-                    <td colSpan={7} className="px-4 py-10 text-center text-slate-500">
-                      No transactions loaded yet.
-                    </td>
-                  </tr>
-                ) : null}
               </tbody>
             </table>
           </div>
@@ -200,12 +186,25 @@ export default function TransactionsPage() {
             <StatusRow label="Holdings" value={String(holdings.length)} />
             <StatusRow label="Cash accounts" value={String(cashAccounts.length)} />
             <StatusRow label="Dividend records" value={String(dividends.length)} />
-            <StatusRow label="Total fees" value={formatMoney(totals.fees)} />
+            <StatusRow label="Total fees" value={formatMoney(totals.fees, 2)} />
           </WorkspacePanel>
         </div>
       </section>
     </Workspace>
   );
+}
+
+function badgeClass(action: string) {
+  const base = "rounded-md px-2 py-1 text-[11px] font-semibold";
+  const lower = action.toLowerCase();
+
+  if (lower.includes("buy")) return `${base} bg-emerald-500/10 text-emerald-300`;
+  if (lower.includes("sell")) return `${base} bg-rose-500/10 text-rose-300`;
+  if (lower.includes("dividend")) return `${base} bg-sky-500/10 text-sky-300`;
+  if (lower.includes("deposit")) return `${base} bg-violet-500/10 text-violet-300`;
+  if (lower.includes("fee")) return `${base} bg-amber-500/10 text-amber-300`;
+
+  return `${base} bg-slate-500/10 text-slate-300`;
 }
 
 function StatusRow({ label, value }: { label: string; value: string }) {
