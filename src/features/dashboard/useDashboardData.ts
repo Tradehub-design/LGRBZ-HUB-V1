@@ -19,6 +19,7 @@ import { calculateFifoLots } from "@/lib/portfolio-engine/fifo";
 import { calculateIncomeMetrics } from "@/lib/portfolio-engine/incomeMetrics";
 import { calculatePerformanceMetrics } from "@/lib/portfolio-engine/performanceMetrics";
 import { calculateRecommendations } from "@/lib/portfolio-engine/recommendations";
+import { calculatePortfolioReplay } from "@/lib/portfolio-engine/replay";
 import { calculateReturnMetrics } from "@/lib/portfolio-engine/returnMetrics";
 import { buildPortfolioSnapshot } from "@/lib/portfolio-engine/snapshot";
 import { calculateEquityCurve } from "@/lib/portfolio-engine/equityCurve";
@@ -142,6 +143,8 @@ export function useDashboardData() {
 
     const equityCurve = calculateEquityCurve(transactions);
 
+    const portfolioReplay = calculatePortfolioReplay(transactions);
+
     const returnMetrics = calculateReturnMetrics({
       transactions,
       investedCostAud: totalCostAud,
@@ -208,6 +211,7 @@ export function useDashboardData() {
       risk,
       health,
       equityCurve,
+      portfolioReplay,
       returnMetrics,
       snapshot,
       recommendations,
