@@ -2,6 +2,7 @@
 
 import { Activity } from "lucide-react";
 import { useMarketQuotes } from "@/hooks/useMarketQuotes";
+import { buildMarketSummary } from "@/lib/market/summary";
 import {
 Workspace,
 WorkspaceHeader,
@@ -21,6 +22,8 @@ const {quotes}=useMarketQuotes([
 "BTC"
 ]);
 
+const summary = buildMarketSummary(quotes);
+
 return(
 
 <Workspace>
@@ -37,17 +40,10 @@ description="Live market pricing foundation."
 
 <WorkspaceGrid columns="xl:grid-cols-4">
 
-<PremiumStatCard
-
-icon={<Activity/>}
-
-label="Quotes"
-
-value={String(quotes.length)}
-
-tone="green"
-
-/>
+<PremiumStatCard icon={<Activity/>} label="Quotes" value={String(summary.quoteCount)} tone="green" />
+<PremiumStatCard label="Gainers" value={String(summary.gainers)} tone="green" />
+<PremiumStatCard label="Losers" value={String(summary.losers)} tone="rose" />
+<PremiumStatCard label="Average Change" value={`${summary.averageChangePercent}%`} tone="blue" />
 
 </WorkspaceGrid>
 
