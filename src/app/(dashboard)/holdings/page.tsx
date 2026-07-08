@@ -18,14 +18,13 @@ export default function HoldingsPage() {
   useSeedPortfolio();
 
   const data = useDashboardData();
-  const totalCost = data.totalCostAud || 1;
 
   return (
     <Workspace>
       <WorkspaceHeader
         eyebrow="Portfolio Core"
         title="Holdings"
-        description="Current positions calculated directly from your transaction ledger."
+        description="Current positions with market valuation, unrealised gain/loss and portfolio weight."
         actions={
           <>
             <WorkspaceLink href="/transactions">Source Ledger</WorkspaceLink>
@@ -36,11 +35,11 @@ export default function HoldingsPage() {
       />
 
       <WorkspaceGrid columns="xl:grid-cols-5">
-        <MetricTile label="Open Positions" value={String(data.openHoldings.length)} />
-        <MetricTile label="Cost Base" value={formatMoney(data.totalCostAud, 2)} />
+        <MetricTile label="Open Positions" value={String(data.enhancedHoldings.length)} />
+        <MetricTile label="Market Value" value={formatMoney(data.valuation.marketValueAud, 2)} />
+        <MetricTile label="Cost Base" value={formatMoney(data.valuation.investedCostAud, 2)} />
+        <MetricTile label="Unrealised P/L" value={formatMoney(data.valuation.unrealisedPlAud, 2)} helper={formatPercent(data.valuation.unrealisedPlPercent)} />
         <MetricTile label="Cash" value={formatMoney(data.totalCashAud, 2)} />
-        <MetricTile label="Dividends" value={formatMoney(data.totalDividendsAud, 2)} />
-        <MetricTile label="Realised P/L" value={formatMoney(data.realisedPlAud, 2)} />
       </WorkspaceGrid>
 
       <section className="grid gap-4 xl:grid-cols-[1.55fr_0.65fr]">
@@ -51,20 +50,20 @@ export default function HoldingsPage() {
                 <tr>
                   <th className="px-3 py-3">Holding</th>
                   <th className="px-3 py-3">Platform</th>
-                  <th className="px-3 py-3">Asset</th>
-                  <th className="px-3 py-3">Sector</th>
                   <th className="px-3 py-3 text-right">Qty</th>
                   <th className="px-3 py-3 text-right">Avg Cost</th>
-                  <th className="px-3 py-3 text-right">Cost Base</th>
+                  <th className="px-3 py-3 text-right">Market Price</th>
+                  <th className="px-3 py-3 text-right">Market Value</th>
+                  <th className="px-3 py-3 text-right">Unrealised P/L</th>
                   <th className="px-3 py-3 text-right">Weight</th>
                 </tr>
               </thead>
 
               <tbody className="divide-y divide-slate-800">
-                {[...data.openHoldings]
-                  .sort((a, b) => b.totalCostAud - a.totalCostAud)
+                {[...data.enhancedHoldings]
+                  .sort((a, b) => b.marketValueAud - a.marketValueAud)
                   .map((holding) => {
-                    const weight = (holding.totalCostAud / totalCost) * 100;
+                    const positive = holding.unrealisedPlAud >= 0;
 
                     return (
                       <tr key={holding.id} className="text-slate-300 transition hover:bg-slate-800/40">
@@ -73,19 +72,20 @@ export default function HoldingsPage() {
                             <AssetLogo symbol={holding.ticker} />
                             <div>
                               <p className="font-semibold text-white">{holding.ticker}</p>
-                              <p className="text-[11px] text-slate-500">{holding.country}</p>
+                              <p className="text-[11px] text-slate-500">{holding.sector}</p>
                             </div>
                           </div>
                         </td>
                         <td className="px-3 py-3 text-slate-400">{holding.platform}</td>
-                        <td className="px-3 py-3">{holding.assetClass}</td>
-                        <td className="px-3 py-3 text-slate-400">{holding.sector}</td>
                         <td className="px-3 py-3 text-right">{formatNumber(holding.quantity)}</td>
                         <td className="px-3 py-3 text-right">{formatMoney(holding.averageCostAud, 2)}</td>
-                        <td className="px-3 py-3 text-right font-medium text-white">
-                          {formatMoney(holding.totalCostAud, 2)}
+                        <td className="px-3 py-3 text-right">{formatMoney(holding.marketPriceAud, 2)}</td>
+                        <td className="px-3 py-3 text-right font-medium text-white">{formatMoney(holding.marketValueAud, 2)}</td>
+                        <td className={positive ? "px-3 py-3 text-right text-emerald-300" : "px-3 py-3 text-right text-rose-300"}>
+                          {formatMoney(holding.unrealisedPlAud, 2)}
+                          <span className="ml-1 text-slate-500">({formatPercent(holding.unrealisedPlPercent)})</span>
                         </td>
-                        <td className="px-3 py-3 text-right text-sky-300">{formatPercent(weight)}</td>
+                        <td className="px-3 py-3 text-right text-sky-300">{formatPercent(holding.portfolioWeightPercent)}</td>
                       </tr>
                     );
                   })}
@@ -103,8 +103,8 @@ export default function HoldingsPage() {
                   <div className="min-w-0 flex-1">
                     <ProgressRow
                       label={holding.ticker}
-                      value={`${formatPercent(holding.weightPercent)} · ${formatMoney(holding.totalCostAud)}`}
-                      percent={holding.weightPercent}
+                      value={`${formatPercent(holding.portfolioWeightPercent)} · ${formatMoney(holding.marketValueAud)}`}
+                      percent={holding.portfolioWeightPercent}
                     />
                   </div>
                 </div>
@@ -112,17 +112,20 @@ export default function HoldingsPage() {
             </div>
           </WorkspacePanel>
 
-          <WorkspacePanel title="Risk Split">
+          <WorkspacePanel title="Unrealised Gain/Loss">
             <div className="space-y-3">
-              {data.allocation.risk.slice(0, 6).map((item) => (
-                <ProgressRow
-                  key={item.label}
-                  label={item.label}
-                  value={`${formatPercent(item.percent)} · ${formatMoney(item.value)}`}
-                  percent={item.percent}
-                  tone={item.label.toLowerCase().includes("high") ? "rose" : "sky"}
-                />
-              ))}
+              {[...data.enhancedHoldings]
+                .sort((a, b) => Math.abs(b.unrealisedPlAud) - Math.abs(a.unrealisedPlAud))
+                .slice(0, 8)
+                .map((holding) => (
+                  <ProgressRow
+                    key={holding.id}
+                    label={holding.ticker}
+                    value={`${formatMoney(holding.unrealisedPlAud, 2)} · ${formatPercent(holding.unrealisedPlPercent)}`}
+                    percent={Math.min(Math.abs(holding.unrealisedPlPercent), 100)}
+                    tone={holding.unrealisedPlAud >= 0 ? "emerald" : "rose"}
+                  />
+                ))}
             </div>
           </WorkspacePanel>
         </div>
