@@ -1,30 +1,62 @@
-import { NotificationActionsCard } from "@/features/notifications/components/notification-actions-card";
-import { NotificationHistoryCard } from "@/features/notifications/components/notification-history-card";
-import { NotificationPreferencesCard } from "@/features/notifications/components/notification-preferences-card";
-import { NotificationsFooter } from "@/features/notifications/components/notifications-footer";
-import { NotificationsHeader } from "@/features/notifications/components/notifications-header";
-import { NotificationsList } from "@/features/notifications/components/notifications-list";
-import { NotificationsSummaryCards } from "@/features/notifications/components/notifications-summary-cards";
-import { PriceAlertsCard } from "@/features/notifications/components/price-alerts-card";
+"use client";
 
-export default function NotificationsPage() {
-  return (
-    <div className="space-y-6">
-      <NotificationsHeader />
+import {
+Workspace,
+WorkspaceHeader,
+WorkspacePanel
+} from "@/components/workspace";
 
-      <NotificationsSummaryCards />
+import {notifications} from "@/lib/notifications/notifications";
 
-      <div className="grid gap-6 xl:grid-cols-3">
-        <NotificationPreferencesCard />
-        <PriceAlertsCard />
-        <NotificationHistoryCard />
-      </div>
+export default function Notifications(){
 
-      <NotificationActionsCard />
+return(
 
-      <NotificationsList />
+<Workspace>
 
-      <NotificationsFooter />
-    </div>
-  );
+<WorkspaceHeader
+
+eyebrow="Productivity"
+
+title="Notification Centre"
+
+description="Upcoming portfolio events."
+
+/>
+
+<WorkspacePanel title="Notifications">
+
+<div className="space-y-4">
+
+{notifications.map(n=>(
+
+<div
+key={n.id}
+className="rounded-xl border border-[#173047] bg-[#0b1e30] p-4"
+>
+
+<p className="font-semibold text-white">
+
+{n.title}
+
+</p>
+
+<p className="text-xs text-slate-500">
+
+{n.type}
+
+</p>
+
+</div>
+
+))}
+
+</div>
+
+</WorkspacePanel>
+
+</Workspace>
+
+)
+
 }
