@@ -190,6 +190,30 @@ export default function DashboardPage() {
         </WorkspacePanel>
       </section>
 
+
+      <WorkspacePanel title="Portfolio Snapshot">
+        <div className="rounded-lg border border-[#173047] bg-[#0b1e30] p-4">
+          <p className="text-sm font-semibold text-white">{data.snapshot.headline}</p>
+        </div>
+
+        <div className="mt-4 grid gap-3 md:grid-cols-2">
+          <div className="space-y-2">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-300">Strengths</p>
+            {data.snapshot.strengths.map((item) => (
+              <p key={item} className="rounded-lg bg-emerald-500/10 px-3 py-2 text-sm text-emerald-200">{item}</p>
+            ))}
+          </div>
+
+          <div className="space-y-2">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-amber-300">Watch Items</p>
+            {data.snapshot.watchItems.map((item) => (
+              <p key={item} className="rounded-lg bg-amber-500/10 px-3 py-2 text-sm text-amber-200">{item}</p>
+            ))}
+          </div>
+        </div>
+      </WorkspacePanel>
+
+
       <WorkspacePanel title="Alerts & Notifications">
         <div className="grid gap-3 md:grid-cols-3">
           {data.alerts.slice(0, 6).map((alert) => (
