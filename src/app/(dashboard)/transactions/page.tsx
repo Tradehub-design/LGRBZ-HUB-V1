@@ -1,32 +1,24 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { buildPortfolio } from "@/lib/portfolio-engine/buildPortfolio";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
+import { buildPortfolio } from "@/lib/portfolio-engine/buildPortfolio";
+import { formatMoney, formatNumber } from "@/lib/portfolio-engine/format";
 import { usePortfolioStore } from "@/store/portfolioStore";
-
-function formatCurrency(value: number) {
-  return new Intl.NumberFormat("en-AU", {
-    style: "currency",
-    currency: "AUD",
-    maximumFractionDigits: 2,
-  }).format(value || 0);
-}
-
-function formatDate(value: string | null) {
-  if (!value) return "Auto-loaded seed ledger";
-  return new Intl.DateTimeFormat("en-AU", {
-    dateStyle: "medium",
-    timeStyle: "short",
-  }).format(new Date(value));
-}
+import {
+  MetricTile,
+  Workspace,
+  WorkspaceGrid,
+  WorkspaceHeader,
+  WorkspaceLink,
+  WorkspacePanel,
+} from "@/components/workspace";
 
 export default function TransactionsPage() {
   useSeedPortfolio();
 
   const {
     loaded,
-    lastUpdatedAt,
     rawLedgerCsv,
     transactions,
     holdings,
@@ -43,9 +35,7 @@ export default function TransactionsPage() {
   const [error, setError] = useState<string | null>(null);
 
   const recentTransactions = useMemo(() => {
-    return [...transactions]
-      .sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
-      .slice(0, 12);
+    return [...transactions].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 50);
   }, [transactions]);
 
   const totals = useMemo(() => {
@@ -79,63 +69,60 @@ export default function TransactionsPage() {
   }
 
   return (
-    <div className="min-h-screen space-y-5 bg-[#061421] px-4 py-4 text-slate-100">
-      <section className="rounded-xl border border-slate-700/70 bg-[#071827] p-4 shadow-2xl">
-        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-          <div>
-            <p className="text-xs uppercase tracking-[0.24em] text-sky-300">LGRBZ</p>
-            <h1 className="mt-2 text-2xl font-semibold text-white">Transactions</h1>
-            <p className="mt-1 text-sm text-slate-400">
-              Seeded ledger loaded from your uploaded transaction history. This is now the source of truth for the portfolio engine.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap gap-2">
+    <Workspace>
+      <WorkspaceHeader
+        eyebrow="Portfolio Core"
+        title="Transactions"
+        description="The source-of-truth ledger powering holdings, dividends, allocation, dashboard and reporting."
+        actions={
+          <>
             <button
               onClick={() => setShowImport((value) => !value)}
-              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500"
+              className="rounded-lg bg-[#1f8cff] px-4 py-2 text-sm font-semibold text-white hover:bg-sky-500"
             >
               {showImport ? "Hide Import" : "Update Ledger"}
             </button>
+            <WorkspaceLink href="/holdings">Holdings</WorkspaceLink>
+          </>
+        }
+      />
 
-            <button
-              onClick={() => {
-                clear();
-                setDraftCsv("");
-                setError(null);
-              }}
-              className="rounded-lg border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-300 hover:bg-slate-800"
-            >
-              Reset
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7">
-        <MetricCard label="Transactions" value={String(totals.transactions)} />
-        <MetricCard label="Open Holdings" value={String(totals.holdings)} />
-        <MetricCard label="Cash" value={formatCurrency(totals.cash)} />
-        <MetricCard label="Invested Cost" value={formatCurrency(totals.cost)} />
-        <MetricCard label="Dividends" value={formatCurrency(totals.dividends)} />
-        <MetricCard label="Fees" value={formatCurrency(totals.fees)} />
-        <MetricCard label="Realised P/L" value={formatCurrency(totals.realised)} />
-      </section>
+      <WorkspaceGrid columns="xl:grid-cols-7">
+        <MetricTile label="Transactions" value={String(totals.transactions)} />
+        <MetricTile label="Open Holdings" value={String(totals.holdings)} />
+        <MetricTile label="Cash" value={formatMoney(totals.cash)} />
+        <MetricTile label="Invested Cost" value={formatMoney(totals.cost)} />
+        <MetricTile label="Dividends" value={formatMoney(totals.dividends)} />
+        <MetricTile label="Fees" value={formatMoney(totals.fees)} />
+        <MetricTile label="Realised P/L" value={formatMoney(totals.realised)} />
+      </WorkspaceGrid>
 
       {showImport ? (
-        <section className="rounded-xl border border-slate-700/70 bg-[#071827] p-4">
+        <WorkspacePanel title="Manual Ledger Update">
           <div className="mb-3 flex items-center justify-between">
-            <div>
-              <h2 className="text-base font-semibold text-white">Manual ledger update</h2>
-              <p className="text-sm text-slate-400">Only use this when replacing the built-in seeded ledger.</p>
-            </div>
+            <p className="text-sm text-slate-400">
+              This replaces the currently loaded ledger for this browser session.
+            </p>
 
-            <button
-              onClick={handleBuildPortfolio}
-              className="rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-emerald-400"
-            >
-              Apply Update
-            </button>
+            <div className="flex gap-2">
+              <button
+                onClick={handleBuildPortfolio}
+                className="rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-emerald-400"
+              >
+                Apply Update
+              </button>
+
+              <button
+                onClick={() => {
+                  setDraftCsv("");
+                  clear();
+                  setError(null);
+                }}
+                className="rounded-lg border border-[#173047] bg-[#0b1e30] px-4 py-2 text-sm font-semibold text-slate-200 hover:border-rose-500"
+              >
+                Reset
+              </button>
+            </div>
           </div>
 
           {error ? (
@@ -149,24 +136,14 @@ export default function TransactionsPage() {
             onChange={(event) => setDraftCsv(event.target.value)}
             spellCheck={false}
             placeholder="Paste updated transaction CSV here..."
-            className="min-h-[280px] w-full resize-y rounded-xl border border-slate-700 bg-[#0b1e30] p-4 font-mono text-xs leading-5 text-slate-200 outline-none placeholder:text-slate-600 focus:border-sky-400"
+            className="min-h-[280px] w-full resize-y rounded-xl border border-[#173047] bg-[#0b1e30] p-4 font-mono text-xs leading-5 text-slate-200 outline-none placeholder:text-slate-600 focus:border-sky-400"
           />
-        </section>
+        </WorkspacePanel>
       ) : null}
 
-      <section className="grid gap-4 xl:grid-cols-[1.5fr_0.8fr]">
-        <div className="rounded-xl border border-slate-700/70 bg-[#071827] p-4">
-          <div className="mb-4 flex items-center justify-between">
-            <div>
-              <h2 className="text-base font-semibold text-white">Transaction History</h2>
-              <p className="text-xs text-slate-400">Showing latest transactions from the seeded portfolio ledger.</p>
-            </div>
-            <span className="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300">
-              {loaded ? "Live Engine" : "Loading"}
-            </span>
-          </div>
-
-          <div className="overflow-hidden rounded-xl border border-slate-700/70">
+      <section className="grid gap-4 xl:grid-cols-[1.5fr_0.65fr]">
+        <WorkspacePanel title="Transaction Ledger">
+          <div className="overflow-hidden rounded-xl border border-[#173047]">
             <table className="w-full text-left text-xs">
               <thead className="bg-[#0b1e30] text-slate-400">
                 <tr>
@@ -191,10 +168,10 @@ export default function TransactionsPage() {
                     </td>
                     <td className="px-3 py-3 font-semibold text-white">{transaction.assetTicker}</td>
                     <td className="px-3 py-3 text-slate-400">{transaction.platform}</td>
-                    <td className="px-3 py-3 text-right">{transaction.quantity || "-"}</td>
-                    <td className="px-3 py-3 text-right">{transaction.price ? formatCurrency(transaction.price) : "-"}</td>
+                    <td className="px-3 py-3 text-right">{transaction.quantity ? formatNumber(transaction.quantity) : "-"}</td>
+                    <td className="px-3 py-3 text-right">{transaction.price ? formatMoney(transaction.price, 2) : "-"}</td>
                     <td className="px-3 py-3 text-right font-medium text-white">
-                      {formatCurrency(transaction.totalFeesIncludedAud)}
+                      {formatMoney(transaction.totalFeesIncludedAud, 2)}
                     </td>
                   </tr>
                 ))}
@@ -209,65 +186,33 @@ export default function TransactionsPage() {
               </tbody>
             </table>
           </div>
-        </div>
+        </WorkspacePanel>
 
         <div className="space-y-4">
-          <Panel title="Ledger Status">
+          <WorkspacePanel title="Ledger Status">
             <StatusRow label="Portfolio loaded" value={loaded ? "Yes" : "No"} />
             <StatusRow label="Valid rows" value={String(engine?.validRows ?? 0)} />
             <StatusRow label="Issues" value={String(engine?.invalidRows.length ?? 0)} />
             <StatusRow label="Source rows" value={String(engine?.sourceRows ?? 0)} />
-            <StatusRow label="Last updated" value={formatDate(lastUpdatedAt)} />
-          </Panel>
+          </WorkspacePanel>
 
-          <Panel title="Engine Coverage">
+          <WorkspacePanel title="Engine Coverage">
             <StatusRow label="Holdings" value={String(holdings.length)} />
             <StatusRow label="Cash accounts" value={String(cashAccounts.length)} />
             <StatusRow label="Dividend records" value={String(dividends.length)} />
-            <StatusRow label="Total fees" value={formatCurrency(totals.fees)} />
-          </Panel>
-
-          {engine?.invalidRows.length ? (
-            <Panel title="Ledger Issues">
-              <div className="space-y-2">
-                {engine.invalidRows.slice(0, 6).map((issue, index) => (
-                  <div key={`${issue.rowNumber}-${issue.field}-${index}`} className="rounded-lg bg-amber-950/40 p-3 text-xs">
-                    <p className="font-semibold text-amber-200">Row {issue.rowNumber} · {issue.field}</p>
-                    <p className="mt-1 text-amber-100/80">{issue.message}</p>
-                  </div>
-                ))}
-              </div>
-            </Panel>
-          ) : null}
+            <StatusRow label="Total fees" value={formatMoney(totals.fees)} />
+          </WorkspacePanel>
         </div>
       </section>
-    </div>
-  );
-}
-
-function MetricCard({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-xl border border-slate-700/70 bg-[#071827] p-4 shadow-xl">
-      <p className="text-xs text-slate-400">{label}</p>
-      <p className="mt-2 text-xl font-semibold text-white">{value}</p>
-    </div>
-  );
-}
-
-function Panel({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div className="rounded-xl border border-slate-700/70 bg-[#071827] p-4">
-      <h2 className="mb-4 text-base font-semibold text-white">{title}</h2>
-      <div className="space-y-3">{children}</div>
-    </div>
+    </Workspace>
   );
 }
 
 function StatusRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-center justify-between gap-4 border-b border-slate-800 pb-2 last:border-0 last:pb-0">
-      <span className="text-xs text-slate-400">{label}</span>
-      <span className="text-xs font-semibold text-white">{value}</span>
+    <div className="flex items-center justify-between gap-4 border-b border-slate-800 pb-2 text-xs last:border-0 last:pb-0">
+      <span className="text-slate-400">{label}</span>
+      <span className="font-semibold text-white">{value}</span>
     </div>
   );
 }
