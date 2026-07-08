@@ -12,6 +12,7 @@ import {
 import { EquityAreaChart, AllocationDonutChart } from "@/components/workspace/portfolio-charts";
 import { PortfolioHeatmap } from "@/components/workspace/portfolio-heatmap";
 import { InsightFeed } from "@/components/workspace/insight-feed";
+import { CommandCentreGrid } from "@/components/workspace/command-centre-grid";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { useDashboardData } from "@/features/dashboard/useDashboardData";
 import { formatMoney, formatPercent } from "@/lib/portfolio-engine/format";
