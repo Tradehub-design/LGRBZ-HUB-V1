@@ -13,6 +13,9 @@ import { EquityAreaChart, AllocationDonutChart } from "@/components/workspace/po
 import { PortfolioHeatmap } from "@/components/workspace/portfolio-heatmap";
 import { InsightFeed } from "@/components/workspace/insight-feed";
 import { CommandCentreGrid } from "@/components/workspace/command-centre-grid";
+import { DashboardHero } from "@/components/workspace/dashboard-hero";
+import { DashboardToolbar } from "@/components/workspace/dashboard-toolbar";
+import { HealthRing } from "@/components/workspace/health-ring";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { useDashboardData } from "@/features/dashboard/useDashboardData";
 import { formatMoney, formatPercent } from "@/lib/portfolio-engine/format";
@@ -39,6 +42,22 @@ export default function DashboardPage() {
 
   return (
     <Workspace>
+
+      <DashboardToolbar />
+
+      <section className="grid gap-5 xl:grid-cols-[1.45fr_0.55fr]">
+        <DashboardHero
+          value={data.totalValueAud}
+          returnAmount={data.totalReturnAud}
+          returnPercent={data.totalReturnPercent}
+        />
+
+        <WorkspacePanel title="Health Ring">
+          <HealthRing score={data.health.score} />
+        </WorkspacePanel>
+      </section>
+
+
       <WorkspaceHeader
         eyebrow="Portfolio Command Centre"
         title="Dashboard"
