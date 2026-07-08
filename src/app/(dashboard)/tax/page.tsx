@@ -62,6 +62,36 @@ export default function TaxCentrePage() {
       </WorkspaceGrid>
 
 
+
+      <WorkspacePanel title="FIFO Disposal Register">
+        <PremiumTable>
+          <PremiumTableHead>
+            <tr>
+              <PremiumTh>Date</PremiumTh>
+              <PremiumTh>Ticker</PremiumTh>
+              <PremiumTh align="right">Qty Sold</PremiumTh>
+              <PremiumTh align="right">Proceeds</PremiumTh>
+              <PremiumTh align="right">Cost Base</PremiumTh>
+              <PremiumTh align="right">Gain / Loss</PremiumTh>
+            </tr>
+          </PremiumTableHead>
+
+          <PremiumTableBody>
+            {data.fifo.disposals.slice(0, 80).map((row) => (
+              <PremiumRow key={row.id}>
+                <PremiumTd>{row.sellDate}</PremiumTd>
+                <PremiumTd strong>{row.ticker}</PremiumTd>
+                <PremiumTd align="right">{row.quantitySold}</PremiumTd>
+                <PremiumTd align="right">{formatMoney(row.proceedsAud, 2)}</PremiumTd>
+                <PremiumTd align="right">{formatMoney(row.costBaseAud, 2)}</PremiumTd>
+                <PremiumTd align="right" strong>{formatMoney(row.realisedGainAud, 2)}</PremiumTd>
+              </PremiumRow>
+            ))}
+          </PremiumTableBody>
+        </PremiumTable>
+      </WorkspacePanel>
+
+
       <WorkspacePanel title="Financial Year Summary">
         <PremiumTable>
           <PremiumTableHead>
