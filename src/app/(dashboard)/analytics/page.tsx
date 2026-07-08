@@ -2,6 +2,8 @@
 
 import { useMemo } from "react";
 import { Activity, BarChart3, Coins, Shield, TrendingUp, Wallet } from "lucide-react";
+import { IncomeBarChart, EquityAreaChart } from "@/components/workspace/portfolio-charts";
+import { ChartCard } from "@/components/workspace/chart-card";
 import { PremiumStatCard } from "@/components/workspace/premium-stat-card";
 import {
   PremiumRow,
@@ -87,6 +89,21 @@ export default function AnalyticsPage() {
         <PremiumStatCard icon={<BarChart3 />} label="Fees" value={formatMoney(data.enginePerformance.feesAud)} tone="amber" />
         <PremiumStatCard icon={<Shield />} label="Health" value={`${data.health.score}/100`} helper={data.health.rating} tone="blue" />
       </WorkspaceGrid>
+
+
+      <section className="grid gap-4 xl:grid-cols-2">
+        <ChartCard title="Equity Curve" description="Portfolio invested value over time.">
+          <EquityAreaChart data={data.equityCurve.slice(-80)} />
+        </ChartCard>
+
+        <ChartCard title="Monthly Income" description="Dividend income by month.">
+          <IncomeBarChart data={data.dividends.map((dividend) => ({
+            month: dividend.date.slice(0, 7),
+            amount: dividend.amountAud,
+          }))} />
+        </ChartCard>
+      </section>
+
 
       <section className="grid gap-4 xl:grid-cols-3">
         <WorkspacePanel title="Transaction Mix">
