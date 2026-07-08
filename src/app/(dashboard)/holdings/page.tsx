@@ -39,7 +39,7 @@ export default function HoldingsPage() {
         <MetricTile label="Market Value" value={formatMoney(data.valuation.marketValueAud, 2)} />
         <MetricTile label="Cost Base" value={formatMoney(data.valuation.investedCostAud, 2)} />
         <MetricTile label="Unrealised P/L" value={formatMoney(data.valuation.unrealisedPlAud, 2)} helper={formatPercent(data.valuation.unrealisedPlPercent)} />
-        <MetricTile label="Cash" value={formatMoney(data.totalCashAud, 2)} />
+        <MetricTile label="Open Lots" value={String(data.fifo.openLots.length)} helper="FIFO lots" />
       </WorkspaceGrid>
 
       <section className="grid gap-4 xl:grid-cols-[1.55fr_0.65fr]">
@@ -55,6 +55,7 @@ export default function HoldingsPage() {
                   <th className="px-3 py-3 text-right">Market Price</th>
                   <th className="px-3 py-3 text-right">Market Value</th>
                   <th className="px-3 py-3 text-right">Unrealised P/L</th>
+                  <th className="px-3 py-3 text-right">Lots</th>
                   <th className="px-3 py-3 text-right">Weight</th>
                 </tr>
               </thead>
@@ -84,6 +85,9 @@ export default function HoldingsPage() {
                         <td className={positive ? "px-3 py-3 text-right text-emerald-300" : "px-3 py-3 text-right text-rose-300"}>
                           {formatMoney(holding.unrealisedPlAud, 2)}
                           <span className="ml-1 text-slate-500">({formatPercent(holding.unrealisedPlPercent)})</span>
+                        </td>
+                        <td className="px-3 py-3 text-right text-slate-400">
+                          {data.fifo.openLots.filter((lot) => lot.ticker === holding.ticker).length}
                         </td>
                         <td className="px-3 py-3 text-right text-sky-300">{formatPercent(holding.portfolioWeightPercent)}</td>
                       </tr>
