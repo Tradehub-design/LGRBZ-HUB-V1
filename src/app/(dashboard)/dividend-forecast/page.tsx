@@ -31,9 +31,9 @@ export default function DividendForecastPage() {
       .sort((a, b) => a.month.localeCompare(b.month));
   }, [data.dividends]);
 
-  const annualisedIncome = data.totalDividendsAud;
-  const projectedMonthly = annualisedIncome / 12;
-  const yieldOnCost = data.totalCostAud > 0 ? (annualisedIncome / data.totalCostAud) * 100 : 0;
+  const annualisedIncome = data.incomeMetrics.annualisedIncomeAud;
+  const projectedMonthly = data.incomeMetrics.monthlyAverageAud;
+  const yieldOnCost = data.incomeMetrics.incomeYieldPercent;
   const maxMonth = Math.max(...monthly.map((item) => item.amount), 1);
 
   return (
@@ -46,7 +46,7 @@ export default function DividendForecastPage() {
       />
 
       <WorkspaceGrid columns="xl:grid-cols-4">
-        <MetricTile label="Historical Income" value={formatMoney(data.totalDividendsAud, 2)} />
+        <MetricTile label="Historical Income" value={formatMoney(data.incomeMetrics.totalIncomeAud, 2)} />
         <MetricTile label="Monthly Average" value={formatMoney(projectedMonthly, 2)} />
         <MetricTile label="Yield on Cost" value={formatPercent(yieldOnCost)} />
         <MetricTile label="Income Records" value={String(data.dividends.length)} />
