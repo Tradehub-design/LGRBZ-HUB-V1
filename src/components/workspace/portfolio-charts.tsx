@@ -83,3 +83,23 @@ export function IncomeBarChart({
     </div>
   );
 }
+
+export function HorizontalBarChart({
+  data,
+}: {
+  data: { label: string; value: number }[];
+}) {
+  return (
+    <div className="h-72 rounded-xl border border-[#173047] bg-[#081a2b] p-4">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={data} layout="vertical">
+          <CartesianGrid stroke="#173047" horizontal={false} />
+          <XAxis type="number" tick={{ fill: "#94a3b8", fontSize: 11 }} tickLine={false} axisLine={false} />
+          <YAxis dataKey="label" type="category" tick={{ fill: "#94a3b8", fontSize: 11 }} tickLine={false} axisLine={false} width={90} />
+          <Tooltip contentStyle={{ background: "#071827", border: "1px solid #173047", borderRadius: 12, color: "#fff" }} />
+          <Bar dataKey="value" fill="#1f8cff" radius={[0, 6, 6, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
