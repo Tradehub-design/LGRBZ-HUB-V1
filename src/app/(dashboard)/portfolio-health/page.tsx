@@ -102,6 +102,18 @@ export default function PortfolioHealthPage() {
         </WorkspacePanel>
       </section>
 
+
+      <WorkspacePanel title="Portfolio Alerts">
+        <div className="grid gap-3 md:grid-cols-3">
+          {data.alerts.map((alert) => (
+            <div key={alert.id} className="rounded-lg border border-[#173047] bg-[#0b1e30] p-3">
+              <p className="text-sm font-semibold text-white">{alert.title}</p>
+              <p className="mt-1 text-sm text-slate-400">{alert.message}</p>
+            </div>
+          ))}
+        </div>
+      </WorkspacePanel>
+
       <section className="grid gap-4 xl:grid-cols-3">
         <WorkspacePanel title="Sector Concentration">
           <div className="space-y-3">
