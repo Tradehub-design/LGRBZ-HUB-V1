@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { EquityAreaChart, AllocationDonutChart } from "@/components/workspace/portfolio-charts";
 import { PortfolioHeatmap } from "@/components/workspace/portfolio-heatmap";
+import { InsightFeed } from "@/components/workspace/insight-feed";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { useDashboardData } from "@/features/dashboard/useDashboardData";
 import { formatMoney, formatPercent } from "@/lib/portfolio-engine/format";
@@ -235,6 +236,19 @@ value={String(data.risk.riskScore)}
 
 </section>
 
+
+
+
+      <WorkspacePanel title="AI Portfolio Insights">
+        <InsightFeed
+          insights={data.recommendations.map((recommendation) => ({
+            id: recommendation.id,
+            title: recommendation.title,
+            detail: recommendation.detail,
+            category: recommendation.category,
+          }))}
+        />
+      </WorkspacePanel>
 
 
       <WorkspacePanel title="Portfolio Snapshot">
