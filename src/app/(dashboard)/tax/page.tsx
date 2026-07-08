@@ -61,6 +61,38 @@ export default function TaxCentrePage() {
         <PremiumStatCard icon={<FileText />} label="Tax Events" value={String(taxRows.length)} tone="purple" />
       </WorkspaceGrid>
 
+
+      <WorkspacePanel title="Financial Year Summary">
+        <PremiumTable>
+          <PremiumTableHead>
+            <tr>
+              <PremiumTh>FY</PremiumTh>
+              <PremiumTh align="right">Buys</PremiumTh>
+              <PremiumTh align="right">Sells</PremiumTh>
+              <PremiumTh align="right">Dividends</PremiumTh>
+              <PremiumTh align="right">Interest</PremiumTh>
+              <PremiumTh align="right">Fees</PremiumTh>
+              <PremiumTh align="right">Events</PremiumTh>
+            </tr>
+          </PremiumTableHead>
+
+          <PremiumTableBody>
+            {data.financialYears.map((fy) => (
+              <PremiumRow key={fy.financialYear}>
+                <PremiumTd strong>{fy.financialYear}</PremiumTd>
+                <PremiumTd align="right">{formatMoney(fy.buysAud, 2)}</PremiumTd>
+                <PremiumTd align="right">{formatMoney(fy.sellsAud, 2)}</PremiumTd>
+                <PremiumTd align="right">{formatMoney(fy.dividendsAud, 2)}</PremiumTd>
+                <PremiumTd align="right">{formatMoney(fy.interestAud, 2)}</PremiumTd>
+                <PremiumTd align="right">{formatMoney(fy.feesAud, 2)}</PremiumTd>
+                <PremiumTd align="right">{fy.transactionCount}</PremiumTd>
+              </PremiumRow>
+            ))}
+          </PremiumTableBody>
+        </PremiumTable>
+      </WorkspacePanel>
+
+
       <section className="grid gap-4 xl:grid-cols-[1.25fr_0.75fr]">
         <WorkspacePanel title="Tax Event Register">
           <PremiumTable>
