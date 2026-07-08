@@ -25,7 +25,18 @@ export function useMarketQuotes(symbols: string[]) {
       mounted = false;
     };
 
+
+    const timer = setInterval(() => {
+      marketProvider.getQuotes(symbols).then(setQuotes);
+    }, 60000);
+
+    return () => {
+      mounted = false;
+      clearInterval(timer);
+    };
+
   }, [symbols.join(",")]);
+
 
   return {
     loading,
