@@ -30,6 +30,7 @@ import { calculateRecommendations } from "@/lib/portfolio-engine/recommendations
 import { calculateNetWorth } from "@/lib/portfolio-engine/netWorth";
 import { calculateRetirementProjection } from "@/lib/portfolio-engine/retirementPlanner";
 import { buildDefaultScenarios } from "@/lib/portfolio-engine/scenarioSimulator";
+import { calculatePositionSizing } from "@/lib/portfolio-engine/positionSizing";
 import { calculatePortfolioReplay } from "@/lib/portfolio-engine/replay";
 import { calculateReturnMetrics } from "@/lib/portfolio-engine/returnMetrics";
 import { buildPortfolioSnapshot } from "@/lib/portfolio-engine/snapshot";
@@ -163,6 +164,10 @@ export function useDashboardData() {
       cashAud: totalCashAud,
     });
 
+    const positionSizing = calculatePositionSizing({
+      portfolioValueAud: totalValueAud,
+    });
+
     const goals = buildPortfolioGoals({
       totalValueAud,
       annualIncomeAud: incomeMetrics.annualisedIncomeAud,
@@ -273,6 +278,7 @@ export function useDashboardData() {
       cashflowPlan,
       portfolioReplay,
       netWorth,
+      positionSizing,
       goals,
       scenarios,
       retirementProjection,
