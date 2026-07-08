@@ -10,6 +10,7 @@ import {
   Wallet,
 } from "lucide-react";
 import { EquityAreaChart, AllocationDonutChart } from "@/components/workspace/portfolio-charts";
+import { PortfolioHeatmap } from "@/components/workspace/portfolio-heatmap";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { useDashboardData } from "@/features/dashboard/useDashboardData";
 import { formatMoney, formatPercent } from "@/lib/portfolio-engine/format";
@@ -143,6 +144,12 @@ export default function DashboardPage() {
         </WorkspacePanel>
       </section>
 
+
+
+
+      <WorkspacePanel title="Portfolio Heatmap">
+        <PortfolioHeatmap holdings={data.enhancedHoldings} />
+      </WorkspacePanel>
 
 
       <WorkspacePanel title="Portfolio Timeline">
