@@ -50,6 +50,26 @@ export default function ReportsPage() {
         <PremiumStatCard icon={<BarChart3 />} label="Transactions" value={String(data.transactions.length)} tone="purple" />
       </WorkspaceGrid>
 
+
+      <WorkspacePanel title="Financial Year Snapshot">
+        <div className="space-y-3">
+          {data.financialYears.slice(0, 5).map((fy) => (
+            <div key={fy.financialYear} className="rounded-lg border border-[#173047] bg-[#0b1e30] p-3">
+              <div className="mb-2 flex items-center justify-between">
+                <span className="text-sm font-semibold text-white">{fy.financialYear}</span>
+                <StatusPill tone="blue">{fy.transactionCount} events</StatusPill>
+              </div>
+              <div className="grid gap-2 text-xs text-slate-400 md:grid-cols-3">
+                <span>Buys: {formatMoney(fy.buysAud)}</span>
+                <span>Sells: {formatMoney(fy.sellsAud)}</span>
+                <span>Dividends: {formatMoney(fy.dividendsAud)}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </WorkspacePanel>
+
+
       <section className="grid gap-4 xl:grid-cols-[0.8fr_1.2fr]">
         <WorkspacePanel title="Report Templates">
           <div className="space-y-3">
