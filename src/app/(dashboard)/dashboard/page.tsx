@@ -49,9 +49,9 @@ export default function DashboardPage() {
       />
 
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-        <HeroMetric icon={<Wallet />} label="Portfolio Value" value={formatMoney(data.totalValueAud, 2)} helper="Cost basis + cash" tone="blue" />
+        <HeroMetric icon={<Wallet />} label="Portfolio Value" value={formatMoney(data.totalValueAud, 2)} helper="Market value + cash" tone="blue" />
         <HeroMetric icon={<TrendingUp />} label="Total Return" value={formatMoney(data.totalReturnAud, 2)} helper={formatPercent(data.totalReturnPercent)} tone="green" />
-        <HeroMetric icon={<Wallet />} label="Cash Balance" value={formatMoney(data.totalCashAud, 2)} helper="Available cash" tone="purple" />
+        <HeroMetric icon={<Wallet />} label="Unrealised P/L" value={formatMoney(data.valuation.unrealisedPlAud, 2)} helper={formatPercent(data.valuation.unrealisedPlPercent)} tone={data.valuation.unrealisedPlAud >= 0 ? "green" : "purple"} />
         <HeroMetric icon={<CalendarDays />} label="Dividend Income" value={formatMoney(data.totalDividendsAud, 2)} helper="Received income" tone="violet" />
         <HeroMetric icon={<Shield />} label="Portfolio Health" value={`${data.health.score}/100`} helper={data.health.rating} tone="blue" />
       </section>
