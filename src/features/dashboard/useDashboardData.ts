@@ -18,6 +18,7 @@ import { calculateFinancialYears } from "@/lib/portfolio-engine/financialYear";
 import { calculateFifoLots } from "@/lib/portfolio-engine/fifo";
 import { buildIncomeInsights } from "@/lib/portfolio-engine/incomeIntelligence";
 import { buildIntelligenceInsights } from "@/lib/portfolio-engine/intelligence";
+import { buildWatchlistIdeas } from "@/lib/portfolio-engine/watchlistIntelligence";
 import { buildCountryInsights } from "@/lib/portfolio-engine/countryIntelligence";
 import { buildCurrencyInsights } from "@/lib/portfolio-engine/currencyIntelligence";
 import { buildSectorInsights } from "@/lib/portfolio-engine/sectorIntelligence";
@@ -171,6 +172,13 @@ export function useDashboardData() {
     const countryInsights = buildCountryInsights(allocation.country);
     const currencyInsights = buildCurrencyInsights(allocation.currency);
 
+    const watchlistIdeas = buildWatchlistIdeas({
+      highRiskPercent: risk.highRiskPercent,
+      largestSectorPercent: risk.largestSectorPercent,
+      incomeYieldPercent: incomeMetrics.incomeYieldPercent,
+      cashPercent: risk.cashPercent,
+    });
+
     const incomeInsights = buildIncomeInsights({
       dividends,
       annualisedIncomeAud: incomeMetrics.annualisedIncomeAud,
@@ -243,6 +251,7 @@ export function useDashboardData() {
       sectorInsights,
       countryInsights,
       currencyInsights,
+      watchlistIdeas,
       incomeInsights,
       intelligenceInsights,
       recommendations,
