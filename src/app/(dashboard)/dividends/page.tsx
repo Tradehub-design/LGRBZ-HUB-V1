@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { IncomeCalendar } from "@/components/workspace/income-calendar";
 import { IncomeBarChart } from "@/components/workspace/portfolio-charts";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { useDashboardData } from "@/features/dashboard/useDashboardData";
@@ -66,6 +67,12 @@ export default function DividendsPage() {
         <MetricTile label="Average Monthly" value={formatMoney(data.incomeMetrics.monthlyAverageAud, 2)} />
         <MetricTile label="Income Holdings" value={String(data.incomeMetrics.incomeHoldings)} />
       </WorkspaceGrid>
+
+
+
+      <WorkspacePanel title="Income Calendar">
+        <IncomeCalendar dividends={data.dividends} />
+      </WorkspacePanel>
 
 
       <WorkspacePanel title="Income Chart">
