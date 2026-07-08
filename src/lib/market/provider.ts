@@ -1,3 +1,4 @@
+import { fetchTwelveQuote } from "./providers/twelveData";
 import { marketProviderConfig, marketProviderIsLive } from "./providerConfig";
 
 export type MarketQuote = {
@@ -33,6 +34,10 @@ const SEEDED_QUOTES: Record<string, number> = {
 
 export class DemoMarketProvider implements MarketProvider {
   async getQuote(symbol: string): Promise<MarketQuote> {
+    if (marketProviderIsLive) {
+      return fetchTwelveQuote(symbol);
+    }
+
     const cleaned = symbol.replace(".AX", "").replace("ASX:", "").toUpperCase();
     const price = SEEDED_QUOTES[cleaned] ?? 100;
     const previousClose = price * 0.9925;
