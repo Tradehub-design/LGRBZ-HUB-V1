@@ -26,6 +26,7 @@ import { buildSectorInsights } from "@/lib/portfolio-engine/sectorIntelligence";
 import { calculateIncomeMetrics } from "@/lib/portfolio-engine/incomeMetrics";
 import { calculatePerformanceMetrics } from "@/lib/portfolio-engine/performanceMetrics";
 import { calculateRecommendations } from "@/lib/portfolio-engine/recommendations";
+import { calculateNetWorth } from "@/lib/portfolio-engine/netWorth";
 import { calculateRetirementProjection } from "@/lib/portfolio-engine/retirementPlanner";
 import { buildDefaultScenarios } from "@/lib/portfolio-engine/scenarioSimulator";
 import { calculatePortfolioReplay } from "@/lib/portfolio-engine/replay";
@@ -156,6 +157,11 @@ export function useDashboardData() {
 
     const cashflowPlan = calculateCashflowPlan(transactions);
 
+    const netWorth = calculateNetWorth({
+      portfolioAud: valuation.marketValueAud,
+      cashAud: totalCashAud,
+    });
+
     const scenarios = buildDefaultScenarios(totalValueAud);
 
     const retirementProjection = calculateRetirementProjection({
@@ -258,6 +264,7 @@ export function useDashboardData() {
       equityCurve,
       cashflowPlan,
       portfolioReplay,
+      netWorth,
       scenarios,
       retirementProjection,
       returnMetrics,
