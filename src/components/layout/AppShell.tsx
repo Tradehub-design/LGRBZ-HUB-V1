@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { ErrorBoundary } from "@/components/system/error-boundary";
 import { CommandPalette } from "@/components/layout/CommandPalette";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { Sidebar } from "@/components/layout/Sidebar";
