@@ -20,7 +20,9 @@ export default function AuthPage() {
         eyebrow="v2.0 Platform"
         title="Authentication"
         description="Supabase authentication foundation for private user portfolios."
-        actions={<WorkspaceLink href="/production-checklist">Checklist</WorkspaceLink>}
+        actions={<WorkspaceLink href="/production-checklist">Checklist</WorkspaceLink>
+        <WorkspaceLink href="/login">Login</WorkspaceLink>
+        <WorkspaceLink href="/account">Account</WorkspaceLink>}
       />
 
       <WorkspaceGrid columns="xl:grid-cols-3">
