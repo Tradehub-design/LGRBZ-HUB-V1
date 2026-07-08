@@ -13,6 +13,7 @@ import {
 import { usePortfolioStore } from "@/store/portfolioStore";
 import { calculatePortfolioAlerts } from "@/lib/portfolio-engine/alerts";
 import { calculateTopMovers } from "@/lib/portfolio-engine/movers";
+import { calculateDataQuality } from "@/lib/portfolio-engine/dataQuality";
 import { calculateFinancialYears } from "@/lib/portfolio-engine/financialYear";
 import { calculateIncomeMetrics } from "@/lib/portfolio-engine/incomeMetrics";
 import { calculatePerformanceMetrics } from "@/lib/portfolio-engine/performanceMetrics";
@@ -83,6 +84,11 @@ export function useDashboardData() {
       currency: [],
       platform: [],
     };
+
+    const dataQuality = calculateDataQuality({
+      transactions,
+      issues: engine?.invalidRows ?? [],
+    });
 
     const financialYears = calculateFinancialYears({
       transactions,
@@ -179,6 +185,7 @@ export function useDashboardData() {
       latestDividends,
       allocation,
       performance,
+      dataQuality,
       financialYears,
       incomeMetrics,
       enginePerformance,
