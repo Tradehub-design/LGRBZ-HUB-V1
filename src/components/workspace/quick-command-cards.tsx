@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BarChart3, FileText, Flame, HeartPulse, Landmark, ReceiptText, RefreshCw, Sparkles, Wallet } from "lucide-react";
+import { BarChart3, FileText, Flame, HeartPulse, Landmark, Newspaper, ReceiptText, RefreshCw, Sparkles, Wallet } from "lucide-react";
 
 const commands = [
   { href: "/transactions", label: "Update Ledger", icon: RefreshCw },
@@ -11,6 +11,7 @@ const commands = [
   { href: "/ai-insights", label: "AI Insights", icon: Sparkles },
   { href: "/fire-calculator", label: "FIRE", icon: Flame },
   { href: "/net-worth", label: "Net Worth", icon: Landmark },
+  { href: "/daily-brief", label: "Daily Brief", icon: Newspaper },
 ];
 
 export function QuickCommandCards() {
