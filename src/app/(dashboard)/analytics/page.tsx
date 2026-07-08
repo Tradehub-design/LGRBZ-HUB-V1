@@ -140,6 +140,22 @@ export default function AnalyticsPage() {
       </section>
 
 
+
+      <WorkspacePanel title="Return Metrics">
+        <div className="grid gap-3 md:grid-cols-3">
+          <PremiumStatCard icon={<TrendingUp />} label="Total Gain" value={formatMoney(data.returnMetrics.totalGainAud)} helper={formatPercent(data.returnMetrics.totalGainPercent)} tone="green" />
+          <PremiumStatCard icon={<BarChart3 />} label="Unrealised Return" value={formatPercent(data.returnMetrics.unrealisedReturnPercent)} tone="blue" />
+          <PremiumStatCard icon={<Coins />} label="Dividend Return" value={formatPercent(data.returnMetrics.dividendReturnPercent)} tone="green" />
+        </div>
+
+        <div className="mt-4 space-y-3">
+          <ProgressRow label="Simple Return" value={formatPercent(data.returnMetrics.simpleReturnPercent)} percent={Math.min(Math.abs(data.returnMetrics.simpleReturnPercent), 100)} tone="emerald" />
+          <ProgressRow label="Unrealised Return" value={formatPercent(data.returnMetrics.unrealisedReturnPercent)} percent={Math.min(Math.abs(data.returnMetrics.unrealisedReturnPercent), 100)} tone="sky" />
+          <ProgressRow label="Dividend Return" value={formatPercent(data.returnMetrics.dividendReturnPercent)} percent={Math.min(Math.abs(data.returnMetrics.dividendReturnPercent), 100)} tone="violet" />
+        </div>
+      </WorkspacePanel>
+
+
       <WorkspacePanel title="Top Movers">
         <PremiumTable>
           <PremiumTableHead>
