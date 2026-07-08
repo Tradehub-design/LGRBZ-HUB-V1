@@ -12,6 +12,7 @@ import {
 } from "@/lib/portfolio-engine/valuation";
 import { usePortfolioStore } from "@/store/portfolioStore";
 import { calculatePortfolioAlerts } from "@/lib/portfolio-engine/alerts";
+import { calculateTopMovers } from "@/lib/portfolio-engine/movers";
 import { calculateIncomeMetrics } from "@/lib/portfolio-engine/incomeMetrics";
 import { calculatePerformanceMetrics } from "@/lib/portfolio-engine/performanceMetrics";
 import { percentage, round } from "@/utils/math";
@@ -118,6 +119,8 @@ export function useDashboardData() {
       risk,
     });
 
+    const topMovers = calculateTopMovers(enhancedHoldings);
+
     const alerts = calculatePortfolioAlerts({
       enhancedHoldings,
       riskScore: risk.riskScore,
@@ -154,6 +157,7 @@ export function useDashboardData() {
       risk,
       health,
       alerts,
+      topMovers,
       valuation,
       summary: engine?.summary ?? null,
     };
