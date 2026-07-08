@@ -19,6 +19,7 @@ import { calculateIncomeMetrics } from "@/lib/portfolio-engine/incomeMetrics";
 import { calculatePerformanceMetrics } from "@/lib/portfolio-engine/performanceMetrics";
 import { calculateRecommendations } from "@/lib/portfolio-engine/recommendations";
 import { buildPortfolioSnapshot } from "@/lib/portfolio-engine/snapshot";
+import { calculateEquityCurve } from "@/lib/portfolio-engine/equityCurve";
 import { percentage, round } from "@/utils/math";
 
 export function useDashboardData() {
@@ -135,6 +136,8 @@ export function useDashboardData() {
 
     const topMovers = calculateTopMovers(enhancedHoldings);
 
+    const equityCurve = calculateEquityCurve(transactions);
+
     const snapshot = buildPortfolioSnapshot({
       totalValueAud,
       totalReturnPercent,
@@ -191,6 +194,7 @@ export function useDashboardData() {
       enginePerformance,
       risk,
       health,
+      equityCurve,
       snapshot,
       recommendations,
       alerts,
