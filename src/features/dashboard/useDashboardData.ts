@@ -17,6 +17,7 @@ import { calculateDataQuality } from "@/lib/portfolio-engine/dataQuality";
 import { calculateFinancialYears } from "@/lib/portfolio-engine/financialYear";
 import { calculateFifoLots } from "@/lib/portfolio-engine/fifo";
 import { buildIntelligenceInsights } from "@/lib/portfolio-engine/intelligence";
+import { buildSectorInsights } from "@/lib/portfolio-engine/sectorIntelligence";
 import { calculateIncomeMetrics } from "@/lib/portfolio-engine/incomeMetrics";
 import { calculatePerformanceMetrics } from "@/lib/portfolio-engine/performanceMetrics";
 import { calculateRecommendations } from "@/lib/portfolio-engine/recommendations";
@@ -163,6 +164,8 @@ export function useDashboardData() {
       positionCount: openHoldings.length,
     });
 
+    const sectorInsights = buildSectorInsights(allocation.sector);
+
     const intelligenceInsights = buildIntelligenceInsights({
       riskScore: risk.riskScore,
       healthScore: health.score,
@@ -225,6 +228,7 @@ export function useDashboardData() {
       portfolioReplay,
       returnMetrics,
       snapshot,
+      sectorInsights,
       intelligenceInsights,
       recommendations,
       alerts,
