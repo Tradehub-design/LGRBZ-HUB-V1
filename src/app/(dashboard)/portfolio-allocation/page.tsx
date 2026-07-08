@@ -1,5 +1,6 @@
 "use client";
 
+import { AllocationDonutChart, HorizontalBarChart } from "@/components/workspace/portfolio-charts";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { formatMoney, formatPercent } from "@/lib/portfolio-engine/format";
 import {
@@ -39,6 +40,23 @@ export default function PortfolioAllocationPage() {
         <MetricTile label="Sectors" value={String(data.allocation.sector.length)} />
         <MetricTile label="Platforms" value={String(data.allocation.platform.length)} />
       </WorkspaceGrid>
+
+
+      <section className="grid gap-4 xl:grid-cols-2">
+        <WorkspacePanel title="Asset Class Donut">
+          <AllocationDonutChart data={data.allocation.assetClass} />
+        </WorkspacePanel>
+
+        <WorkspacePanel title="Sector Exposure Chart">
+          <HorizontalBarChart
+            data={data.allocation.sector.slice(0, 8).map((row) => ({
+              label: row.label,
+              value: row.value,
+            }))}
+          />
+        </WorkspacePanel>
+      </section>
+
 
       <section className="grid gap-4 xl:grid-cols-2">
         <AllocationPanel title="Asset Class" rows={data.allocation.assetClass} />
