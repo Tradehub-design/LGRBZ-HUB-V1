@@ -9,6 +9,7 @@ import {
   TrendingUp,
   Wallet,
 } from "lucide-react";
+import { EquityAreaChart, AllocationDonutChart } from "@/components/workspace/portfolio-charts";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { useDashboardData } from "@/features/dashboard/useDashboardData";
 import { formatMoney, formatPercent } from "@/lib/portfolio-engine/format";
@@ -75,60 +76,12 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          <div className="relative h-72 overflow-hidden rounded-xl border border-[#173047] bg-[#081a2b] p-5">
-            <div className="absolute inset-x-5 top-8 h-px bg-slate-800" />
-            <div className="absolute inset-x-5 top-24 h-px bg-slate-800" />
-            <div className="absolute inset-x-5 top-40 h-px bg-slate-800" />
-            <div className="absolute inset-x-5 top-56 h-px bg-slate-800" />
-
-            <svg viewBox="0 0 900 240" className="relative z-10 h-full w-full">
-              <defs>
-                <linearGradient id="areaPremium" x1="0" x2="0" y1="0" y2="1">
-                  <stop offset="0%" stopColor="#1f8cff" stopOpacity="0.48" />
-                  <stop offset="100%" stopColor="#1f8cff" stopOpacity="0" />
-                </linearGradient>
-                <filter id="glow">
-                  <feGaussianBlur stdDeviation="4" result="coloredBlur" />
-                  <feMerge>
-                    <feMergeNode in="coloredBlur" />
-                    <feMergeNode in="SourceGraphic" />
-                  </feMerge>
-                </filter>
-              </defs>
-
-              <path
-                d="M0,190 C80,175 110,145 170,155 C230,166 250,125 320,132 C390,140 420,94 480,105 C555,118 590,70 650,76 C720,82 750,42 810,54 C850,62 870,43 900,35 L900,240 L0,240 Z"
-                fill="url(#areaPremium)"
-              />
-              <path
-                d="M0,190 C80,175 110,145 170,155 C230,166 250,125 320,132 C390,140 420,94 480,105 C555,118 590,70 650,76 C720,82 750,42 810,54 C850,62 870,43 900,35"
-                fill="none"
-                stroke="#1f8cff"
-                strokeWidth="4"
-                strokeLinecap="round"
-                filter="url(#glow)"
-              />
-              <circle cx="900" cy="35" r="7" fill="#1f8cff" stroke="#93c5fd" strokeWidth="3" />
-            </svg>
-
-            <div className="absolute bottom-4 left-5 right-5 flex justify-between text-xs text-slate-500">
-              {["Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun"].map((month) => (
-                <span key={month}>{month}</span>
-              ))}
-            </div>
-          </div>
+          <EquityAreaChart data={data.equityCurve.slice(-40)} />
         </WorkspacePanel>
 
         <WorkspacePanel title="Asset Allocation">
           <div className="grid gap-5 md:grid-cols-[180px_1fr] xl:grid-cols-1">
-            <div className="mx-auto flex h-44 w-44 items-center justify-center rounded-full bg-[conic-gradient(#1f8cff_0_42%,#7c3aed_42%_70%,#f97316_70%_86%,#14b8a6_86%_94%,#64748b_94%_100%)] shadow-[0_0_60px_rgba(31,140,255,0.20)]">
-              <div className="flex h-24 w-24 items-center justify-center rounded-full bg-[#071827]">
-                <p className="text-center text-xs text-slate-400">
-                  Allocation
-                  <span className="block text-lg font-semibold text-white">{data.allocation.assetClass.length}</span>
-                </p>
-              </div>
-            </div>
+            <AllocationDonutChart data={data.allocation.assetClass} />
 
             <div className="space-y-3">
               {data.allocation.assetClass.slice(0, 6).map((item) => (
