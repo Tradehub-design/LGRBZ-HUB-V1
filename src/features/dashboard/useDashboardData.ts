@@ -16,6 +16,7 @@ import { calculateTopMovers } from "@/lib/portfolio-engine/movers";
 import { calculateFinancialYears } from "@/lib/portfolio-engine/financialYear";
 import { calculateIncomeMetrics } from "@/lib/portfolio-engine/incomeMetrics";
 import { calculatePerformanceMetrics } from "@/lib/portfolio-engine/performanceMetrics";
+import { calculateRecommendations } from "@/lib/portfolio-engine/recommendations";
 import { percentage, round } from "@/utils/math";
 
 export function useDashboardData() {
@@ -127,6 +128,16 @@ export function useDashboardData() {
 
     const topMovers = calculateTopMovers(enhancedHoldings);
 
+    const recommendations = calculateRecommendations({
+      healthScore: health.score,
+      riskScore: risk.riskScore,
+      largestHoldingPercent: risk.largestHoldingPercent,
+      largestSectorPercent: risk.largestSectorPercent,
+      cashPercent: risk.cashPercent,
+      highRiskPercent: risk.highRiskPercent,
+      incomeYieldPercent: incomeMetrics.incomeYieldPercent,
+    });
+
     const alerts = calculatePortfolioAlerts({
       enhancedHoldings,
       riskScore: risk.riskScore,
@@ -163,6 +174,7 @@ export function useDashboardData() {
       enginePerformance,
       risk,
       health,
+      recommendations,
       alerts,
       topMovers,
       valuation,
