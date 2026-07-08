@@ -19,6 +19,7 @@ import { calculateFifoLots } from "@/lib/portfolio-engine/fifo";
 import { calculateIncomeMetrics } from "@/lib/portfolio-engine/incomeMetrics";
 import { calculatePerformanceMetrics } from "@/lib/portfolio-engine/performanceMetrics";
 import { calculateRecommendations } from "@/lib/portfolio-engine/recommendations";
+import { calculateReturnMetrics } from "@/lib/portfolio-engine/returnMetrics";
 import { buildPortfolioSnapshot } from "@/lib/portfolio-engine/snapshot";
 import { calculateEquityCurve } from "@/lib/portfolio-engine/equityCurve";
 import { percentage, round } from "@/utils/math";
@@ -141,6 +142,14 @@ export function useDashboardData() {
 
     const equityCurve = calculateEquityCurve(transactions);
 
+    const returnMetrics = calculateReturnMetrics({
+      transactions,
+      investedCostAud: totalCostAud,
+      unrealisedPlAud: valuation.unrealisedPlAud,
+      realisedPlAud,
+      dividendIncomeAud: totalDividendsAud,
+    });
+
     const snapshot = buildPortfolioSnapshot({
       totalValueAud,
       totalReturnPercent,
@@ -199,6 +208,7 @@ export function useDashboardData() {
       risk,
       health,
       equityCurve,
+      returnMetrics,
       snapshot,
       recommendations,
       alerts,
