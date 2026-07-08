@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { AssetLogo } from "@/components/workspace/asset-logo";
+import { TransactionTimeline } from "@/components/workspace/transaction-timeline";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { buildPortfolio } from "@/lib/portfolio-engine/buildPortfolio";
 import { formatMoney, formatNumber } from "@/lib/portfolio-engine/format";
@@ -150,6 +151,12 @@ export default function TransactionsPage() {
             </div>
           ))}
         </div>
+      </WorkspacePanel>
+
+
+
+      <WorkspacePanel title="Recent Activity Timeline">
+        <TransactionTimeline transactions={recentTransactions} />
       </WorkspacePanel>
 
 
