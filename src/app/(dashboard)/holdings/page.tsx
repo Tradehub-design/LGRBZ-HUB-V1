@@ -1,6 +1,7 @@
 "use client";
 
 import { AssetLogo } from "@/components/workspace/asset-logo";
+import { HoldingDetailCard } from "@/components/workspace/holding-detail-card";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { useDashboardData } from "@/features/dashboard/useDashboardData";
 import { formatMoney, formatNumber, formatPercent } from "@/lib/portfolio-engine/format";
@@ -41,6 +42,16 @@ export default function HoldingsPage() {
         <MetricTile label="Unrealised P/L" value={formatMoney(data.valuation.unrealisedPlAud, 2)} helper={formatPercent(data.valuation.unrealisedPlPercent)} />
         <MetricTile label="Open Lots" value={String(data.fifo.openLots.length)} helper="FIFO lots" />
       </WorkspaceGrid>
+
+
+      <WorkspacePanel title="Position Cards">
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {data.enhancedHoldings.slice(0, 8).map((holding) => (
+            <HoldingDetailCard key={holding.id} holding={holding} />
+          ))}
+        </div>
+      </WorkspacePanel>
+
 
       <section className="grid gap-4 xl:grid-cols-[1.55fr_0.65fr]">
         <WorkspacePanel title="Holdings Table">
