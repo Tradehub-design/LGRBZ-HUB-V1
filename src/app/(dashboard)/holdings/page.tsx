@@ -2,6 +2,7 @@
 
 import { AssetLogo } from "@/components/workspace/asset-logo";
 import { FilterBar } from "@/components/workspace/filter-bar";
+import { useWorkspaceSearch } from "@/hooks/useWorkspaceSearch";
 import { HoldingDetailCard } from "@/components/workspace/holding-detail-card";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { useDashboardData } from "@/features/dashboard/useDashboardData";
@@ -21,6 +22,11 @@ export default function HoldingsPage() {
 
   const data = useDashboardData();
 
+  const holdingsSearch = useWorkspaceSearch(
+    data.enhancedHoldings,
+    (holding) => `${holding.ticker} ${holding.platform} ${holding.sector} ${holding.assetClass} ${holding.country}`,
+  );
+
   return (
     <Workspace>
       <WorkspaceHeader
@@ -36,7 +42,7 @@ export default function HoldingsPage() {
         }
       />
 
-      <FilterBar placeholder="Search holdings..." />
+      <FilterBar placeholder="Search holdings..." value={holdingsSearch.query} onChange={holdingsSearch.setQuery} />
 
       <WorkspaceGrid columns="xl:grid-cols-5">
         <MetricTile label="Open Positions" value={String(data.enhancedHoldings.length)} />
@@ -75,7 +81,7 @@ export default function HoldingsPage() {
               </thead>
 
               <tbody className="divide-y divide-slate-800">
-                {[...data.enhancedHoldings]
+                {[...holdingsSearch.filteredRows]
                   .sort((a, b) => b.marketValueAud - a.marketValueAud)
                   .map((holding) => {
                     const positive = holding.unrealisedPlAud >= 0;
