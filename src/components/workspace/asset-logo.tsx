@@ -1,19 +1,16 @@
-const palette = [
-  "from-blue-500 to-cyan-400",
-  "from-emerald-500 to-teal-400",
-  "from-orange-500 to-amber-400",
-  "from-violet-500 to-purple-400",
-  "from-rose-500 to-pink-400",
-  "from-slate-400 to-slate-600",
-];
+import { getAssetBrand } from "@/lib/portfolio-engine/assetBrand";
 
-function hash(input: string) {
-  return input.split("").reduce((sum, char) => sum + char.charCodeAt(0), 0);
-}
+const themeClass = {
+  blue: "from-blue-500 to-cyan-400",
+  green: "from-emerald-500 to-teal-400",
+  orange: "from-orange-500 to-amber-400",
+  purple: "from-violet-500 to-purple-400",
+  rose: "from-rose-500 to-pink-400",
+  slate: "from-slate-400 to-slate-600",
+};
 
 export function AssetLogo({ symbol, size = "md" }: { symbol: string; size?: "sm" | "md" | "lg" }) {
-  const clean = symbol.replace(".AX", "").replace("ASX:", "").slice(0, 3).toUpperCase();
-  const gradient = palette[hash(symbol) % palette.length];
+  const brand = getAssetBrand(symbol);
 
   const sizeClass = {
     sm: "h-8 w-8 text-[10px]",
@@ -22,8 +19,11 @@ export function AssetLogo({ symbol, size = "md" }: { symbol: string; size?: "sm"
   }[size];
 
   return (
-    <div className={`flex shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${gradient} ${sizeClass} font-black text-white shadow-lg`}>
-      {clean || "?"}
+    <div
+      title={brand.displayName}
+      className={`flex shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${themeClass[brand.theme]} ${sizeClass} font-black text-white shadow-lg`}
+    >
+      {brand.shortName.slice(0, 3)}
     </div>
   );
 }
