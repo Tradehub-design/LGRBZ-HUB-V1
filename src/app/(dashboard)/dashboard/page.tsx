@@ -191,6 +191,36 @@ export default function DashboardPage() {
       </section>
 
 
+
+      <WorkspacePanel title="Portfolio Timeline">
+        <div className="space-y-3">
+          {data.equityCurve.slice(-10).reverse().map((point)=>(
+            <div
+              key={point.date}
+              className="flex items-center justify-between rounded-lg border border-[#173047] bg-[#0b1e30] px-4 py-3"
+            >
+              <div>
+                <p className="text-sm font-semibold text-white">{point.date}</p>
+                <p className="text-xs text-slate-500">
+                  Cash Flow {formatMoney(point.cumulativeCashFlowAud)}
+                </p>
+              </div>
+
+              <div className="text-right">
+                <p className="font-semibold text-sky-300">
+                  {formatMoney(point.investedAud)}
+                </p>
+
+                <p className="text-xs text-slate-500">
+                  Invested
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </WorkspacePanel>
+
+
       <WorkspacePanel title="Portfolio Snapshot">
         <div className="rounded-lg border border-[#173047] bg-[#0b1e30] p-4">
           <p className="text-sm font-semibold text-white">{data.snapshot.headline}</p>
