@@ -25,6 +25,7 @@ import { buildSectorInsights } from "@/lib/portfolio-engine/sectorIntelligence";
 import { calculateIncomeMetrics } from "@/lib/portfolio-engine/incomeMetrics";
 import { calculatePerformanceMetrics } from "@/lib/portfolio-engine/performanceMetrics";
 import { calculateRecommendations } from "@/lib/portfolio-engine/recommendations";
+import { calculateRetirementProjection } from "@/lib/portfolio-engine/retirementPlanner";
 import { calculatePortfolioReplay } from "@/lib/portfolio-engine/replay";
 import { calculateReturnMetrics } from "@/lib/portfolio-engine/returnMetrics";
 import { buildPortfolioSnapshot } from "@/lib/portfolio-engine/snapshot";
@@ -151,6 +152,10 @@ export function useDashboardData() {
 
     const portfolioReplay = calculatePortfolioReplay(transactions);
 
+    const retirementProjection = calculateRetirementProjection({
+      currentPortfolioAud: totalValueAud,
+    });
+
     const returnMetrics = calculateReturnMetrics({
       transactions,
       investedCostAud: totalCostAud,
@@ -246,6 +251,7 @@ export function useDashboardData() {
       health,
       equityCurve,
       portfolioReplay,
+      retirementProjection,
       returnMetrics,
       snapshot,
       sectorInsights,
