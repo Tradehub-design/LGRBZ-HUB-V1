@@ -32,6 +32,24 @@ export default function SystemHealthPage() {
         <PremiumStatCard icon={<Wifi />} label="Market Provider" value="Demo" helper="Live API later" tone="amber" />
       </WorkspaceGrid>
 
+
+      <WorkspacePanel title="Validation Checks">
+        <div className="space-y-3">
+          {data.validation.checks.map((check) => (
+            <div key={check.id} className="rounded-lg border border-[#173047] bg-[#0b1e30] p-3">
+              <div className="flex items-center justify-between">
+                <p className="font-semibold text-white">{check.label}</p>
+                <span className={check.status === "pass" ? "text-emerald-300" : check.status === "warning" ? "text-amber-300" : "text-rose-300"}>
+                  {check.status}
+                </span>
+              </div>
+              <p className="mt-1 text-sm text-slate-400">{check.detail}</p>
+            </div>
+          ))}
+        </div>
+      </WorkspacePanel>
+
+
       <WorkspacePanel title="System Checks">
         <div className="grid gap-3 md:grid-cols-2">
           {[

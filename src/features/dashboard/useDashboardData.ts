@@ -107,6 +107,8 @@ export function useDashboardData() {
       platform: [],
     };
 
+    const validation = validatePortfolioData(transactions);
+
     const fifo = calculateFifoLots(transactions);
 
     const cgtSummary = calculateCgtSummary(fifo.disposals);
@@ -293,6 +295,7 @@ export function useDashboardData() {
       latestDividends,
       allocation,
       performance,
+      validation,
       fifo,
       cgtSummary,
       discountSummary,
