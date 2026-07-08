@@ -21,6 +21,7 @@ import { buildIncomeInsights } from "@/lib/portfolio-engine/incomeIntelligence";
 import { buildIntelligenceInsights } from "@/lib/portfolio-engine/intelligence";
 import { buildWatchlistIdeas } from "@/lib/portfolio-engine/watchlistIntelligence";
 import { calculateCashflowPlan } from "@/lib/portfolio-engine/cashflowPlanner";
+import { calculateFireProjection } from "@/lib/portfolio-engine/fireCalculator";
 import { buildCountryInsights } from "@/lib/portfolio-engine/countryIntelligence";
 import { buildCurrencyInsights } from "@/lib/portfolio-engine/currencyIntelligence";
 import { buildSectorInsights } from "@/lib/portfolio-engine/sectorIntelligence";
@@ -164,6 +165,10 @@ export function useDashboardData() {
       cashAud: totalCashAud,
     });
 
+    const fireProjection = calculateFireProjection({
+      currentPortfolioAud: totalValueAud,
+    });
+
     const positionSizing = calculatePositionSizing({
       portfolioValueAud: totalValueAud,
     });
@@ -278,6 +283,7 @@ export function useDashboardData() {
       cashflowPlan,
       portfolioReplay,
       netWorth,
+      fireProjection,
       positionSizing,
       goals,
       scenarios,
