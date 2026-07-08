@@ -58,6 +58,27 @@ export default function WatchlistPage() {
         <PremiumStatCard icon={<Wallet />} label="Cash Available" value={formatMoney(data.totalCashAud)} tone="purple" />
       </WorkspaceGrid>
 
+
+      <WorkspacePanel title="Intelligent Watchlist Ideas">
+        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+          {data.watchlistIdeas.map((idea) => (
+            <div key={idea.symbol} className="rounded-xl border border-[#173047] bg-[#0b1e30] p-4">
+              <div className="flex items-center gap-3">
+                <AssetLogo symbol={idea.symbol} />
+                <div>
+                  <p className="font-semibold text-white">{idea.symbol}</p>
+                  <p className="text-xs text-slate-500">{idea.theme}</p>
+                </div>
+              </div>
+              <p className="mt-3 text-sm text-slate-300">{idea.name}</p>
+              <p className="mt-2 text-xs text-slate-500">{idea.reason}</p>
+              <p className="mt-3 text-xs font-semibold uppercase tracking-[0.18em] text-sky-300">{idea.priority}</p>
+            </div>
+          ))}
+        </div>
+      </WorkspacePanel>
+
+
       <section className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
         <WorkspacePanel title="Watchlist">
           <PremiumTable>
