@@ -11,6 +11,7 @@ import {
   calculatePortfolioValuation,
 } from "@/lib/portfolio-engine/valuation";
 import { usePortfolioStore } from "@/store/portfolioStore";
+import { calculatePortfolioAlerts } from "@/lib/portfolio-engine/alerts";
 import { calculateIncomeMetrics } from "@/lib/portfolio-engine/incomeMetrics";
 import { calculatePerformanceMetrics } from "@/lib/portfolio-engine/performanceMetrics";
 import { percentage, round } from "@/utils/math";
@@ -117,6 +118,15 @@ export function useDashboardData() {
       risk,
     });
 
+    const alerts = calculatePortfolioAlerts({
+      enhancedHoldings,
+      riskScore: risk.riskScore,
+      healthScore: health.score,
+      cashPercent: risk.cashPercent,
+      largestHoldingPercent: risk.largestHoldingPercent,
+      highRiskPercent: risk.highRiskPercent,
+    });
+
     return {
       loaded,
       engine,
@@ -143,6 +153,7 @@ export function useDashboardData() {
       enginePerformance,
       risk,
       health,
+      alerts,
       valuation,
       summary: engine?.summary ?? null,
     };
