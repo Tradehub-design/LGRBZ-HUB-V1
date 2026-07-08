@@ -5,6 +5,7 @@ import { PriceChart } from "@/components/market/price-chart";
 import { PremiumStatCard } from "@/components/workspace/premium-stat-card";
 import { StatusPill } from "@/components/workspace/status-pill";
 import { demoMetrics } from "@/lib/market/companyMetrics";
+import { getDemoCompanyNews } from "@/lib/market/companyNews";
 import { getCompanyProfile } from "@/lib/market/companyProfile";
 import {
   Workspace,
@@ -16,6 +17,7 @@ import {
 
 export default function CompanyWorkspace() {
   const profile = getCompanyProfile("VAS");
+  const news = getDemoCompanyNews(profile.symbol);
 
   return (
     <Workspace>
@@ -75,6 +77,24 @@ export default function CompanyWorkspace() {
           </div>
         </WorkspacePanel>
       </section>
+
+      <WorkspacePanel title="Company News">
+        <div className="space-y-3">
+          {news.map((item) => (
+            <div key={item.id} className="rounded-lg border border-[#173047] bg-[#0b1e30] p-4">
+              <div className="flex items-center justify-between gap-3">
+                <p className="font-semibold text-white">{item.title}</p>
+                <StatusPill tone={item.sentiment === "positive" ? "green" : item.sentiment === "negative" ? "rose" : "blue"}>
+                  {item.sentiment}
+                </StatusPill>
+              </div>
+              <p className="mt-2 text-xs text-slate-500">{item.source} · {item.publishedAt}</p>
+            </div>
+          ))}
+        </div>
+      </WorkspacePanel>
+
+
     </Workspace>
   );
 }
