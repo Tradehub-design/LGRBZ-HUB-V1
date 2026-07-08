@@ -16,6 +16,7 @@ import { calculateTopMovers } from "@/lib/portfolio-engine/movers";
 import { calculateDataQuality } from "@/lib/portfolio-engine/dataQuality";
 import { calculateFinancialYears } from "@/lib/portfolio-engine/financialYear";
 import { calculateFifoLots } from "@/lib/portfolio-engine/fifo";
+import { buildIncomeInsights } from "@/lib/portfolio-engine/incomeIntelligence";
 import { buildIntelligenceInsights } from "@/lib/portfolio-engine/intelligence";
 import { buildCountryInsights } from "@/lib/portfolio-engine/countryIntelligence";
 import { buildSectorInsights } from "@/lib/portfolio-engine/sectorIntelligence";
@@ -168,6 +169,13 @@ export function useDashboardData() {
     const sectorInsights = buildSectorInsights(allocation.sector);
     const countryInsights = buildCountryInsights(allocation.country);
 
+    const incomeInsights = buildIncomeInsights({
+      dividends,
+      annualisedIncomeAud: incomeMetrics.annualisedIncomeAud,
+      incomeYieldPercent: incomeMetrics.incomeYieldPercent,
+      monthlyAverageAud: incomeMetrics.monthlyAverageAud,
+    });
+
     const intelligenceInsights = buildIntelligenceInsights({
       riskScore: risk.riskScore,
       healthScore: health.score,
@@ -232,6 +240,7 @@ export function useDashboardData() {
       snapshot,
       sectorInsights,
       countryInsights,
+      incomeInsights,
       intelligenceInsights,
       recommendations,
       alerts,
