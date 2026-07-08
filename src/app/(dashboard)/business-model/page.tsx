@@ -69,6 +69,19 @@ export default function BusinessModelPage() {
 
 
 
+
+      <WorkspacePanel title="Planning Suite Summary">
+        <div className="grid gap-3 md:grid-cols-3">
+          <Summary label="FIRE Number" value={formatMoney(data.fireProjection.fireNumberAud)} />
+          <Summary label="FIRE Progress" value={formatPercent(data.fireProjection.progressPercent)} />
+          <Summary label="Retirement Gap" value={formatMoney(data.retirementProjection.gapAud)} />
+          <Summary label="Position Max" value={formatMoney(data.positionSizing.maxPositionAud)} />
+          <Summary label="Net Worth" value={formatMoney(data.netWorth.netWorthAud)} />
+          <Summary label="Scenario Count" value={String(data.scenarios.length)} />
+        </div>
+      </WorkspacePanel>
+
+
       <WorkspacePanel title="Return Model">
         <div className="grid gap-3 md:grid-cols-3">
           <Summary label="Total Gain" value={formatMoney(data.returnMetrics.totalGainAud, 2)} />
