@@ -90,12 +90,14 @@ export default function PortfolioHealthPage() {
 
         <WorkspacePanel title="Recommendations">
           <div className="space-y-3">
-            {data.health.recommendations.map((recommendation, index) => (
+            {data.recommendations.map((recommendation) => (
               <div
-                key={`${recommendation}-${index}`}
+                key={recommendation.id}
                 className="rounded-lg border border-[#173047] bg-[#0b1e30] p-3"
               >
-                <p className="text-sm text-slate-200">{recommendation}</p>
+                <p className="text-sm font-semibold text-white">{recommendation.title}</p>
+                <p className="mt-1 text-sm text-slate-400">{recommendation.detail}</p>
+                <p className="mt-2 text-xs text-sky-300">{recommendation.category} · {recommendation.priority}</p>
               </div>
             ))}
           </div>
