@@ -64,3 +64,37 @@ button {
     display: none !important;
   }
 }
+
+@media (max-width: 768px) {
+  table {
+    min-width: 760px;
+  }
+
+  .mobile-tight {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #173047 #061421;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #061421;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #173047;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1f8cff;
+}
