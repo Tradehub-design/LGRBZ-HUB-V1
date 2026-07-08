@@ -1,10 +1,21 @@
 "use client";
 
+import { Eye, LineChart, Shield, Wallet } from "lucide-react";
+import { AssetLogo } from "@/components/workspace/asset-logo";
+import { PremiumStatCard } from "@/components/workspace/premium-stat-card";
+import {
+  PremiumRow,
+  PremiumTable,
+  PremiumTableBody,
+  PremiumTableHead,
+  PremiumTd,
+  PremiumTh,
+} from "@/components/workspace/premium-table";
+import { StatusPill } from "@/components/workspace/status-pill";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { useDashboardData } from "@/features/dashboard/useDashboardData";
 import { formatMoney, formatPercent } from "@/lib/portfolio-engine/format";
 import {
-  MetricTile,
   ProgressRow,
   Workspace,
   WorkspaceGrid,
@@ -41,43 +52,48 @@ export default function WatchlistPage() {
       />
 
       <WorkspaceGrid columns="xl:grid-cols-4">
-        <MetricTile label="Watchlist Items" value={String(watchlist.length)} />
-        <MetricTile label="Current Holdings" value={String(data.openHoldings.length)} />
-        <MetricTile label="High Risk Exposure" value={formatPercent(data.risk.highRiskPercent)} />
-        <MetricTile label="Cash Available" value={formatMoney(data.totalCashAud)} />
+        <PremiumStatCard icon={<Eye />} label="Watchlist Items" value={String(watchlist.length)} tone="blue" />
+        <PremiumStatCard icon={<LineChart />} label="Current Holdings" value={String(data.openHoldings.length)} tone="green" />
+        <PremiumStatCard icon={<Shield />} label="High Risk Exposure" value={formatPercent(data.risk.highRiskPercent)} tone="amber" />
+        <PremiumStatCard icon={<Wallet />} label="Cash Available" value={formatMoney(data.totalCashAud)} tone="purple" />
       </WorkspaceGrid>
 
       <section className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
         <WorkspacePanel title="Watchlist">
-          <div className="overflow-hidden rounded-xl border border-[#173047]">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-[#0b1e30] text-slate-400">
-                <tr>
-                  <th className="px-3 py-3">Symbol</th>
-                  <th className="px-3 py-3">Name</th>
-                  <th className="px-3 py-3">Theme</th>
-                  <th className="px-3 py-3">Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-800">
-                {watchlist.map((item) => {
-                  const held = data.openHoldings.some((holding) => holding.ticker.replace("ASX:", "") === item.symbol.replace(".AX", ""));
-                  return (
-                    <tr key={item.symbol} className="text-slate-300 hover:bg-slate-800/40">
-                      <td className="px-3 py-3 font-semibold text-white">{item.symbol}</td>
-                      <td className="px-3 py-3 text-slate-400">{item.name}</td>
-                      <td className="px-3 py-3">{item.theme}</td>
-                      <td className="px-3 py-3">
-                        <span className={held ? "text-emerald-300" : "text-sky-300"}>
-                          {held ? "Held" : "Watching"}
-                        </span>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+          <PremiumTable>
+            <PremiumTableHead>
+              <tr>
+                <PremiumTh>Symbol</PremiumTh>
+                <PremiumTh>Name</PremiumTh>
+                <PremiumTh>Theme</PremiumTh>
+                <PremiumTh>Status</PremiumTh>
+              </tr>
+            </PremiumTableHead>
+
+            <PremiumTableBody>
+              {watchlist.map((item) => {
+                const held = data.openHoldings.some(
+                  (holding) => holding.ticker.replace("ASX:", "") === item.symbol.replace(".AX", ""),
+                );
+
+                return (
+                  <PremiumRow key={item.symbol}>
+                    <PremiumTd strong>
+                      <div className="flex items-center gap-3">
+                        <AssetLogo symbol={item.symbol} />
+                        {item.symbol}
+                      </div>
+                    </PremiumTd>
+                    <PremiumTd>{item.name}</PremiumTd>
+                    <PremiumTd>{item.theme}</PremiumTd>
+                    <PremiumTd>
+                      <StatusPill tone={held ? "green" : "blue"}>{held ? "Held" : "Watching"}</StatusPill>
+                    </PremiumTd>
+                  </PremiumRow>
+                );
+              })}
+            </PremiumTableBody>
+          </PremiumTable>
         </WorkspacePanel>
 
         <WorkspacePanel title="Current Exposure">
