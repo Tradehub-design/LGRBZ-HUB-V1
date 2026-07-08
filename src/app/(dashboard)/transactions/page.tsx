@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { AssetLogo } from "@/components/workspace/asset-logo";
 import { FilterBar } from "@/components/workspace/filter-bar";
+import { useWorkspaceSearch } from "@/hooks/useWorkspaceSearch";
 import { TransactionTimeline } from "@/components/workspace/transaction-timeline";
 import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { buildPortfolio } from "@/lib/portfolio-engine/buildPortfolio";
@@ -40,9 +41,16 @@ export default function TransactionsPage() {
   const [showImport, setShowImport] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const recentTransactions = useMemo(() => {
-    return [...transactions].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 80);
+  const sortedTransactions = useMemo(() => {
+    return [...transactions].sort((a, b) => b.date.localeCompare(a.date));
   }, [transactions]);
+
+  const transactionSearch = useWorkspaceSearch(
+    sortedTransactions,
+    (transaction) => `${transaction.date} ${transaction.action} ${transaction.assetTicker} ${transaction.platform} ${transaction.sector} ${transaction.country}`,
+  );
+
+  const recentTransactions = transactionSearch.filteredRows.slice(0, 80);
 
   const totals = useMemo(() => {
     return {
@@ -93,7 +101,7 @@ export default function TransactionsPage() {
         }
       />
 
-      <FilterBar placeholder="Search transactions..." />
+      <FilterBar placeholder="Search transactions..." value={transactionSearch.query} onChange={transactionSearch.setQuery} />
 
       <WorkspaceGrid columns="xl:grid-cols-7">
         <MetricTile label="Transactions" value={String(totals.transactions)} />
