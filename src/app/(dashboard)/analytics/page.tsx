@@ -84,7 +84,7 @@ export default function AnalyticsPage() {
         <PremiumStatCard icon={<Wallet />} label="Open Holdings" value={String(data.openHoldings.length)} tone="purple" />
         <PremiumStatCard icon={<TrendingUp />} label="Total Return" value={formatMoney(data.totalReturnAud)} helper={formatPercent(data.totalReturnPercent)} tone="green" />
         <PremiumStatCard icon={<Coins />} label="Dividend Income" value={formatMoney(data.totalDividendsAud)} tone="green" />
-        <PremiumStatCard icon={<BarChart3 />} label="Fees" value={formatMoney(data.performance.feesAud)} tone="amber" />
+        <PremiumStatCard icon={<BarChart3 />} label="Fees" value={formatMoney(data.enginePerformance.feesAud)} tone="amber" />
         <PremiumStatCard icon={<Shield />} label="Health" value={`${data.health.score}/100`} helper={data.health.rating} tone="blue" />
       </WorkspaceGrid>
 
@@ -112,6 +112,15 @@ export default function AnalyticsPage() {
                 percent={item.percent}
               />
             ))}
+          </div>
+        </WorkspacePanel>
+
+        <WorkspacePanel title="Cash Flow Metrics">
+          <div className="space-y-3">
+            <ProgressRow label="Buy Value" value={formatMoney(data.enginePerformance.buyValueAud)} percent={70} tone="sky" />
+            <ProgressRow label="Sell Value" value={formatMoney(data.enginePerformance.sellValueAud)} percent={40} tone="violet" />
+            <ProgressRow label="Deposits" value={formatMoney(data.enginePerformance.depositsAud)} percent={65} tone="emerald" />
+            <ProgressRow label="Withdrawals" value={formatMoney(data.enginePerformance.withdrawalsAud)} percent={25} tone="rose" />
           </div>
         </WorkspacePanel>
 
