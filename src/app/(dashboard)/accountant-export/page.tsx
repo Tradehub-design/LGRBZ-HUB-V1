@@ -1,64 +1,59 @@
 "use client";
 
-import {Download} from "lucide-react"
+import { Download, FileText, PackageCheck } from "lucide-react";
+import { PremiumStatCard } from "@/components/workspace/premium-stat-card";
+import { StatusPill } from "@/components/workspace/status-pill";
+import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
+import { useDashboardData } from "@/features/dashboard/useDashboardData";
+import {
+  Workspace,
+  WorkspaceGrid,
+  WorkspaceHeader,
+  WorkspaceLink,
+  WorkspacePanel,
+} from "@/components/workspace";
 
-import{
-Workspace,
-WorkspaceHeader,
-WorkspacePanel,
-WorkspaceLink
-}from "@/components/workspace"
+export default function AccountantExportPage() {
+  useSeedPortfolio();
+  const data = useDashboardData();
 
-export default function AccountantExport(){
+  return (
+    <Workspace>
+      <WorkspaceHeader
+        eyebrow="Tax Centre"
+        title="Accountant Export"
+        description="Accountant-ready tax package summary. File export will be added later."
+        actions={<WorkspaceLink href="/tax-report">Tax Report</WorkspaceLink>}
+      />
 
-return(
+      <WorkspaceGrid columns="xl:grid-cols-3">
+        <PremiumStatCard icon={<PackageCheck />} label="Export Status" value={data.taxExportSummary.ready ? "Ready" : "Draft"} tone="green" />
+        <PremiumStatCard icon={<FileText />} label="Sections" value={String(data.taxExportSummary.sections.length)} tone="blue" />
+        <PremiumStatCard icon={<Download />} label="Output" value="Pending" helper="PDF/CSV later" tone="amber" />
+      </WorkspaceGrid>
 
-<Workspace>
+      <section className="grid gap-4 xl:grid-cols-2">
+        <WorkspacePanel title="Included Sections">
+          <div className="space-y-3">
+            {data.taxExportSummary.sections.map((section) => (
+              <div key={section} className="flex items-center justify-between rounded-lg border border-[#173047] bg-[#0b1e30] p-3">
+                <span className="text-sm font-semibold text-white">{section}</span>
+                <StatusPill tone="green">Included</StatusPill>
+              </div>
+            ))}
+          </div>
+        </WorkspacePanel>
 
-<WorkspaceHeader
-
-eyebrow="Tax Centre"
-
-title="Accountant Export"
-
-description="Generate accountant-ready tax exports."
-
-actions={
-
-<WorkspaceLink href="/tax-report">
-
-Tax Report
-
-</WorkspaceLink>
-
-}
-
-/>
-
-<WorkspacePanel title="Export">
-
-<div className="space-y-4">
-
-<button className="rounded-xl bg-sky-600 px-5 py-3 text-white flex items-center gap-2">
-
-<Download size={18}/>
-
-Generate Accountant Package
-
-</button>
-
-<p className="text-sm text-slate-400">
-
-CSV, PDF and supporting schedules will be generated here.
-
-</p>
-
-</div>
-
-</WorkspacePanel>
-
-</Workspace>
-
-)
-
+        <WorkspacePanel title="Export Notes">
+          <div className="space-y-3">
+            {data.taxExportSummary.notes.map((note) => (
+              <p key={note} className="rounded-lg border border-[#173047] bg-[#0b1e30] p-3 text-sm text-slate-300">
+                {note}
+              </p>
+            ))}
+          </div>
+        </WorkspacePanel>
+      </section>
+    </Workspace>
+  );
 }

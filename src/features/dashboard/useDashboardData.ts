@@ -25,6 +25,7 @@ import { calculateCgtSummary } from "@/lib/portfolio-engine/cgt";
 import { calculateDiscountSummary } from "@/lib/portfolio-engine/cgtDiscount";
 import { calculateFranking } from "@/lib/portfolio-engine/franking";
 import { buildTaxSuggestions } from "@/lib/portfolio-engine/taxOptimiser";
+import { buildTaxExportSummary } from "@/lib/portfolio-engine/taxExport";
 import { calculateFireProjection } from "@/lib/portfolio-engine/fireCalculator";
 import { buildCountryInsights } from "@/lib/portfolio-engine/countryIntelligence";
 import { buildCurrencyInsights } from "@/lib/portfolio-engine/currencyIntelligence";
@@ -111,6 +112,13 @@ export function useDashboardData() {
     const cgtSummary = calculateCgtSummary(fifo.disposals);
     const discountSummary = calculateDiscountSummary(fifo.disposals);
     const frankingSummary = calculateFranking(dividends);
+    const taxExportSummary = buildTaxExportSummary({
+      cgtSummary,
+      discountSummary,
+      frankingSummary,
+      financialYears,
+    });
+
     const taxSuggestions = buildTaxSuggestions({
       capitalGain: cgtSummary.capitalGainsAud,
       capitalLoss: cgtSummary.capitalLossesAud,
@@ -289,6 +297,7 @@ export function useDashboardData() {
       cgtSummary,
       discountSummary,
       frankingSummary,
+      taxExportSummary,
       taxSuggestions,
       dataQuality,
       financialYears,

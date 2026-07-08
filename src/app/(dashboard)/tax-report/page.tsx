@@ -28,6 +28,7 @@ export default function TaxReportPage() {
           <>
             <WorkspaceLink href="/tax">Tax Centre</WorkspaceLink>
             <WorkspaceLink href="/reports">Reports</WorkspaceLink>
+            <WorkspaceLink href="/accountant-export">Accountant Export</WorkspaceLink>
           </>
         }
       />
