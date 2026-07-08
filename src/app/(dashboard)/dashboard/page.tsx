@@ -52,7 +52,7 @@ export default function DashboardPage() {
         <HeroMetric icon={<Wallet />} label="Portfolio Value" value={formatMoney(data.totalValueAud, 2)} helper="Market value + cash" tone="blue" />
         <HeroMetric icon={<TrendingUp />} label="Total Return" value={formatMoney(data.totalReturnAud, 2)} helper={formatPercent(data.totalReturnPercent)} tone="green" />
         <HeroMetric icon={<Wallet />} label="Unrealised P/L" value={formatMoney(data.valuation.unrealisedPlAud, 2)} helper={formatPercent(data.valuation.unrealisedPlPercent)} tone={data.valuation.unrealisedPlAud >= 0 ? "green" : "purple"} />
-        <HeroMetric icon={<CalendarDays />} label="Dividend Income" value={formatMoney(data.totalDividendsAud, 2)} helper="Received income" tone="violet" />
+        <HeroMetric icon={<CalendarDays />} label="Income Return" value={formatPercent(data.enginePerformance.incomeReturnPercent)} helper={formatMoney(data.totalDividendsAud, 2)} tone="violet" />
         <HeroMetric icon={<Shield />} label="Portfolio Health" value={`${data.health.score}/100`} helper={data.health.rating} tone="blue" />
       </section>
 
@@ -179,12 +179,12 @@ export default function DashboardPage() {
           <BottomLink href="/dividends">View dividends</BottomLink>
         </WorkspacePanel>
 
-        <WorkspacePanel title="Portfolio Health Breakdown">
+        <WorkspacePanel title="Performance Breakdown">
           <div className="space-y-4">
-            <ProgressRow label="Diversification" value={`${data.health.score}/100`} percent={data.health.score} tone="emerald" />
-            <ProgressRow label="Risk Management" value={`${100 - data.risk.riskScore}/100`} percent={100 - data.risk.riskScore} tone="sky" />
-            <ProgressRow label="Asset Allocation" value={`${Math.max(0, 100 - data.risk.largestSectorPercent).toFixed(0)}/100`} percent={Math.max(0, 100 - data.risk.largestSectorPercent)} tone="amber" />
-            <ProgressRow label="Liquidity" value={formatPercent(data.risk.cashPercent)} percent={data.risk.cashPercent} tone="violet" />
+            <ProgressRow label="Unrealised P/L" value={formatMoney(data.valuation.unrealisedPlAud, 2)} percent={Math.min(Math.abs(data.valuation.unrealisedPlPercent), 100)} tone={data.valuation.unrealisedPlAud >= 0 ? "emerald" : "rose"} />
+            <ProgressRow label="Dividend Return" value={formatPercent(data.enginePerformance.incomeReturnPercent)} percent={Math.min(data.enginePerformance.incomeReturnPercent, 100)} tone="sky" />
+            <ProgressRow label="Net Invested" value={formatMoney(data.enginePerformance.netInvestedAud, 2)} percent={60} tone="violet" />
+            <ProgressRow label="Fees" value={formatMoney(data.enginePerformance.feesAud, 2)} percent={20} tone="amber" />
           </div>
           <BottomLink href="/portfolio-health">View health report</BottomLink>
         </WorkspacePanel>
