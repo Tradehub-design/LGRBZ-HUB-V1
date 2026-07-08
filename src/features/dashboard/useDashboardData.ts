@@ -11,6 +11,7 @@ import {
   calculatePortfolioValuation,
 } from "@/lib/portfolio-engine/valuation";
 import { usePortfolioStore } from "@/store/portfolioStore";
+import { calculateIncomeMetrics } from "@/lib/portfolio-engine/incomeMetrics";
 import { calculatePerformanceMetrics } from "@/lib/portfolio-engine/performanceMetrics";
 import { percentage, round } from "@/utils/math";
 
@@ -78,6 +79,11 @@ export function useDashboardData() {
       platform: [],
     };
 
+    const incomeMetrics = calculateIncomeMetrics({
+      dividends,
+      investedCostAud: totalCostAud,
+    });
+
     const enginePerformance = calculatePerformanceMetrics({
       transactions,
       dividends,
@@ -133,6 +139,7 @@ export function useDashboardData() {
       latestDividends,
       allocation,
       performance,
+      incomeMetrics,
       enginePerformance,
       risk,
       health,
