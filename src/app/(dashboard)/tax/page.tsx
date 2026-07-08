@@ -64,6 +64,23 @@ export default function TaxCentrePage() {
 
 
 
+      <WorkspacePanel title="Discount Summary">
+        <div className="grid gap-3 md:grid-cols-4">
+          <PremiumStatCard label="Eligible Gain" value={formatMoney(data.discountSummary.eligibleGainAud, 2)} tone="green" />
+          <PremiumStatCard label="Non-Eligible Gain" value={formatMoney(data.discountSummary.nonEligibleGainAud, 2)} tone="amber" />
+          <PremiumStatCard label="Discount" value={formatMoney(data.discountSummary.discountAud, 2)} tone="blue" />
+          <PremiumStatCard label="Taxable Gain" value={formatMoney(data.discountSummary.taxableGainAud, 2)} tone="purple" />
+        </div>
+      </WorkspacePanel>
+
+      <WorkspacePanel title="Franking Summary">
+        <div className="grid gap-3 md:grid-cols-3">
+          <PremiumStatCard label="Cash Dividends" value={formatMoney(data.frankingSummary.cashDividendAud, 2)} tone="green" />
+          <PremiumStatCard label="Franking Credits" value={formatMoney(data.frankingSummary.frankingCreditsAud, 2)} tone="blue" />
+          <PremiumStatCard label="Grossed-Up Income" value={formatMoney(data.frankingSummary.grossedUpIncomeAud, 2)} tone="purple" />
+        </div>
+      </WorkspacePanel>
+
       <WorkspacePanel title="Capital Gains Summary">
         <div className="grid gap-3 md:grid-cols-5">
           <PremiumStatCard label="Proceeds" value={formatMoney(data.cgtSummary.totalProceedsAud, 2)} tone="blue" />

@@ -22,6 +22,9 @@ import { buildIntelligenceInsights } from "@/lib/portfolio-engine/intelligence";
 import { buildWatchlistIdeas } from "@/lib/portfolio-engine/watchlistIntelligence";
 import { calculateCashflowPlan } from "@/lib/portfolio-engine/cashflowPlanner";
 import { calculateCgtSummary } from "@/lib/portfolio-engine/cgt";
+import { calculateDiscountSummary } from "@/lib/portfolio-engine/cgtDiscount";
+import { calculateFranking } from "@/lib/portfolio-engine/franking";
+import { buildTaxSuggestions } from "@/lib/portfolio-engine/taxOptimiser";
 import { calculateFireProjection } from "@/lib/portfolio-engine/fireCalculator";
 import { buildCountryInsights } from "@/lib/portfolio-engine/countryIntelligence";
 import { buildCurrencyInsights } from "@/lib/portfolio-engine/currencyIntelligence";
@@ -106,6 +109,13 @@ export function useDashboardData() {
     const fifo = calculateFifoLots(transactions);
 
     const cgtSummary = calculateCgtSummary(fifo.disposals);
+    const discountSummary = calculateDiscountSummary(fifo.disposals);
+    const frankingSummary = calculateFranking(dividends);
+    const taxSuggestions = buildTaxSuggestions({
+      capitalGain: cgtSummary.capitalGainsAud,
+      capitalLoss: cgtSummary.capitalLossesAud,
+      discount: discountSummary.discountAud,
+    });
 
     const dataQuality = calculateDataQuality({
       transactions,
@@ -277,6 +287,9 @@ export function useDashboardData() {
       performance,
       fifo,
       cgtSummary,
+      discountSummary,
+      frankingSummary,
+      taxSuggestions,
       dataQuality,
       financialYears,
       incomeMetrics,

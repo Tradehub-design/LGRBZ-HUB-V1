@@ -1,27 +1,21 @@
-import type {DividendRecord} from "./types"
+import type { DividendRecord } from "./types";
 
-export function calculateFranking(dividends:DividendRecord[]){
+export type FrankingSummary = {
+  cashDividendAud: number;
+  frankingCreditsAud: number;
+  grossedUpIncomeAud: number;
+};
 
-let cash=0
-let frankingCredits=0
-
-for(const d of dividends){
-
-cash+=d.amountAud
-
-const percent=d.frankingPercent??0
-
-frankingCredits+=
-(d.amountAud/(1-0.30))*0.30*(percent/100)
-
+function round(value: number) {
+  return Math.round((value || 0) * 100) / 100;
 }
 
-return{
+export function calculateFranking(dividends: DividendRecord[]): FrankingSummary {
+  const cashDividendAud = dividends.reduce((sum, dividend) => sum + dividend.amountAud, 0);
 
-cashDividendAud:cash,
-frankingCreditsAud:frankingCredits,
-grossedUpIncomeAud:cash+frankingCredits
-
-}
-
+  return {
+    cashDividendAud: round(cashDividendAud),
+    frankingCreditsAud: 0,
+    grossedUpIncomeAud: round(cashDividendAud),
+  };
 }
