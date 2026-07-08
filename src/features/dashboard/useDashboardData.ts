@@ -15,6 +15,7 @@ import { calculatePortfolioAlerts } from "@/lib/portfolio-engine/alerts";
 import { calculateTopMovers } from "@/lib/portfolio-engine/movers";
 import { calculateDataQuality } from "@/lib/portfolio-engine/dataQuality";
 import { calculateFinancialYears } from "@/lib/portfolio-engine/financialYear";
+import { buildPortfolioGoals } from "@/lib/portfolio-engine/goalEngine";
 import { calculateFifoLots } from "@/lib/portfolio-engine/fifo";
 import { buildIncomeInsights } from "@/lib/portfolio-engine/incomeIntelligence";
 import { buildIntelligenceInsights } from "@/lib/portfolio-engine/intelligence";
@@ -162,6 +163,13 @@ export function useDashboardData() {
       cashAud: totalCashAud,
     });
 
+    const goals = buildPortfolioGoals({
+      totalValueAud,
+      annualIncomeAud: incomeMetrics.annualisedIncomeAud,
+      cashAud: totalCashAud,
+      retirementTargetAud: retirementProjection.requiredPortfolioAud,
+    });
+
     const scenarios = buildDefaultScenarios(totalValueAud);
 
     const retirementProjection = calculateRetirementProjection({
@@ -265,6 +273,7 @@ export function useDashboardData() {
       cashflowPlan,
       portfolioReplay,
       netWorth,
+      goals,
       scenarios,
       retirementProjection,
       returnMetrics,
