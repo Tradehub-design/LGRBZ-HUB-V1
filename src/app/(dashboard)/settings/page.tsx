@@ -1,8 +1,10 @@
 "use client";
 
+import { MonitorCog, Palette, PanelLeft, Settings2 } from "lucide-react";
+import { PremiumStatCard } from "@/components/workspace/premium-stat-card";
+import { StatusPill } from "@/components/workspace/status-pill";
 import { useSettingsStore } from "@/store/settingsStore";
 import {
-  MetricTile,
   Workspace,
   WorkspaceGrid,
   WorkspaceHeader,
@@ -25,10 +27,10 @@ export default function SettingsPage() {
       />
 
       <WorkspaceGrid columns="xl:grid-cols-4">
-        <MetricTile label="Currency" value={settings.displayCurrency} />
-        <MetricTile label="Theme" value={settings.theme} />
-        <MetricTile label="Density" value={settings.density} />
-        <MetricTile label="Sidebar" value={collapsed ? "Collapsed" : "Expanded"} />
+        <PremiumStatCard icon={<MonitorCog />} label="Currency" value={settings.displayCurrency} tone="blue" />
+        <PremiumStatCard icon={<Palette />} label="Theme" value={settings.theme} tone="purple" />
+        <PremiumStatCard icon={<Settings2 />} label="Density" value={settings.density} tone="green" />
+        <PremiumStatCard icon={<PanelLeft />} label="Sidebar" value={collapsed ? "Collapsed" : "Expanded"} tone="amber" />
       </WorkspaceGrid>
 
       <section className="grid gap-4 xl:grid-cols-2">
@@ -43,7 +45,7 @@ export default function SettingsPage() {
 
           <button
             onClick={toggleSidebar}
-            className="mt-5 rounded-lg bg-[#1f8cff] px-4 py-2 text-sm font-semibold text-white hover:bg-sky-500"
+            className="mt-5 rounded-lg bg-[#1f8cff] px-4 py-2 text-sm font-semibold text-white shadow-[0_10px_28px_rgba(31,140,255,0.28)] transition hover:bg-sky-500"
           >
             Toggle Sidebar
           </button>
@@ -51,9 +53,9 @@ export default function SettingsPage() {
 
         <WorkspacePanel title="Roadmap Settings">
           <div className="space-y-3 text-sm text-slate-300">
-            <Note text="User authentication will be added in v2.0." />
-            <Note text="Multi-portfolio support will be added after Supabase data model migration." />
-            <Note text="Broker sync and live prices will become configurable from this workspace." />
+            <Note tone="blue" text="User authentication will be added in v2.0." />
+            <Note tone="green" text="Multi-portfolio support will be added after Supabase data model migration." />
+            <Note tone="amber" text="Broker sync and live prices will become configurable from this workspace." />
           </div>
         </WorkspacePanel>
       </section>
@@ -65,11 +67,16 @@ function SettingRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-center justify-between border-b border-slate-800 pb-2 text-sm last:border-0 last:pb-0">
       <span className="text-slate-400">{label}</span>
-      <span className="font-semibold text-white">{value}</span>
+      <StatusPill tone="blue">{value}</StatusPill>
     </div>
   );
 }
 
-function Note({ text }: { text: string }) {
-  return <p className="rounded-lg border border-[#173047] bg-[#0b1e30] p-3">{text}</p>;
+function Note({ text, tone }: { text: string; tone: "blue" | "green" | "amber" }) {
+  return (
+    <p className="rounded-lg border border-[#173047] bg-[#0b1e30] p-3">
+      <StatusPill tone={tone}>Roadmap</StatusPill>
+      <span className="mt-2 block text-slate-400">{text}</span>
+    </p>
+  );
 }
