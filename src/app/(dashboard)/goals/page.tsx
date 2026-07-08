@@ -19,10 +19,10 @@ export default function GoalsPage() {
   useSeedPortfolio();
   const data = useDashboardData();
 
-  const incomeGoal = 12000;
-  const portfolioGoal = 250000;
-  const cashGoal = 10000;
-  const healthGoal = 85;
+  const portfolioGoal = data.goals.find((goal) => goal.id === "portfolio-250k");
+  const incomeGoal = data.goals.find((goal) => goal.id === "income-12k");
+  const cashGoal = data.goals.find((goal) => goal.id === "cash-10k");
+  const retirementGoal = data.goals.find((goal) => goal.id === "retirement");
 
   return (
     <Workspace>
@@ -30,43 +30,52 @@ export default function GoalsPage() {
         eyebrow="Planning Workspace"
         title="Goals"
         description="Track portfolio, dividend income, cash reserve and long-term financial goals."
-        actions={<WorkspaceLink href="/dashboard">Dashboard</WorkspaceLink>}
+        actions={
+          <>
+            <WorkspaceLink href="/dashboard">Dashboard</WorkspaceLink>
+            <WorkspaceLink href="/retirement-planner">Retirement</WorkspaceLink>
+          </>
+        }
       />
 
       <WorkspaceGrid columns="xl:grid-cols-4">
-        <PremiumStatCard icon={<Target />} label="Portfolio Goal" value={formatMoney(portfolioGoal)} helper={`${formatPercent((data.totalValueAud / portfolioGoal) * 100)} complete`} tone="blue" />
+        <PremiumStatCard icon={<Target />} label="Portfolio Goal" value={formatMoney(portfolioGoal?.targetAud ?? 0)} helper={`${formatPercent(portfolioGoal?.progressPercent ?? 0)} complete`} tone="blue" />
         <PremiumStatCard icon={<TrendingUp />} label="Current Value" value={formatMoney(data.totalValueAud)} tone="green" />
-        <PremiumStatCard icon={<PiggyBank />} label="Income Goal" value={formatMoney(incomeGoal)} helper={`${formatPercent((data.totalDividendsAud / incomeGoal) * 100)} complete`} tone="purple" />
-        <PremiumStatCard icon={<Flag />} label="Health Target" value={`${healthGoal}/100`} helper={`Current ${data.health.score}/100`} tone="amber" />
+        <PremiumStatCard icon={<PiggyBank />} label="Income Goal" value={formatMoney(incomeGoal?.targetAud ?? 0)} helper={`${formatPercent(incomeGoal?.progressPercent ?? 0)} complete`} tone="purple" />
+        <PremiumStatCard icon={<Flag />} label="Retirement Goal" value={formatPercent(retirementGoal?.progressPercent ?? 0)} helper={formatMoney(retirementGoal?.gapAud ?? 0)} tone="amber" />
       </WorkspaceGrid>
 
-      <section className="grid gap-4 xl:grid-cols-2">
+      <section className="grid gap-4 xl:grid-cols-[1fr_0.8fr]">
         <WorkspacePanel title="Goal Progress">
           <div className="space-y-4">
-            <ProgressRow label="Portfolio Value" value={`${formatMoney(data.totalValueAud)} / ${formatMoney(portfolioGoal)}`} percent={(data.totalValueAud / portfolioGoal) * 100} />
-            <ProgressRow label="Dividend Income" value={`${formatMoney(data.totalDividendsAud)} / ${formatMoney(incomeGoal)}`} percent={(data.totalDividendsAud / incomeGoal) * 100} tone="emerald" />
-            <ProgressRow label="Cash Reserve" value={`${formatMoney(data.totalCashAud)} / ${formatMoney(cashGoal)}`} percent={(data.totalCashAud / cashGoal) * 100} tone="sky" />
-            <ProgressRow label="Health Score" value={`${data.health.score} / ${healthGoal}`} percent={(data.health.score / healthGoal) * 100} tone="amber" />
+            {data.goals.map((goal) => (
+              <ProgressRow
+                key={goal.id}
+                label={goal.title}
+                value={`${formatMoney(goal.currentAud)} / ${formatMoney(goal.targetAud)}`}
+                percent={goal.progressPercent}
+                tone={goal.category === "Income" ? "emerald" : goal.category === "Cash" ? "sky" : goal.category === "Retirement" ? "amber" : "violet"}
+              />
+            ))}
           </div>
         </WorkspacePanel>
 
-        <WorkspacePanel title="Goal Notes">
+        <WorkspacePanel title="Goal Register">
           <div className="space-y-3">
-            <Note tone="blue" title="Portfolio growth" text="Live prices will improve progress accuracy in v2.0." />
-            <Note tone="green" title="Income target" text="Dividend forecast will use forward estimates after live market data is connected." />
-            <Note tone="purple" title="Cash reserve" text="Cash target is currently based on cash accounts calculated from the ledger." />
+            {data.goals.map((goal) => (
+              <div key={goal.id} className="rounded-lg border border-[#173047] bg-[#0b1e30] p-3">
+                <div className="flex items-center justify-between">
+                  <p className="font-semibold text-white">{goal.title}</p>
+                  <StatusPill tone={goal.progressPercent >= 80 ? "green" : goal.progressPercent >= 40 ? "amber" : "blue"}>
+                    {formatPercent(goal.progressPercent)}
+                  </StatusPill>
+                </div>
+                <p className="mt-2 text-sm text-slate-400">Remaining: {formatMoney(goal.gapAud)}</p>
+              </div>
+            ))}
           </div>
         </WorkspacePanel>
       </section>
     </Workspace>
-  );
-}
-
-function Note({ title, text, tone }: { title: string; text: string; tone: "blue" | "green" | "purple" }) {
-  return (
-    <div className="rounded-lg border border-[#173047] bg-[#0b1e30] p-3">
-      <StatusPill tone={tone}>{title}</StatusPill>
-      <p className="mt-2 text-sm text-slate-400">{text}</p>
-    </div>
   );
 }
