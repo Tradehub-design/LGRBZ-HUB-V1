@@ -141,6 +141,36 @@ export default function AnalyticsPage() {
 
 
 
+
+      <WorkspacePanel title="Portfolio Replay">
+        <PremiumTable>
+          <PremiumTableHead>
+            <tr>
+              <PremiumTh>Date</PremiumTh>
+              <PremiumTh align="right">Buys</PremiumTh>
+              <PremiumTh align="right">Sells</PremiumTh>
+              <PremiumTh align="right">Dividends</PremiumTh>
+              <PremiumTh align="right">Fees</PremiumTh>
+              <PremiumTh align="right">Net Activity</PremiumTh>
+            </tr>
+          </PremiumTableHead>
+
+          <PremiumTableBody>
+            {data.portfolioReplay.slice(0, 20).map((point) => (
+              <PremiumRow key={point.date}>
+                <PremiumTd strong>{point.date}</PremiumTd>
+                <PremiumTd align="right">{formatMoney(point.buysAud, 2)}</PremiumTd>
+                <PremiumTd align="right">{formatMoney(point.sellsAud, 2)}</PremiumTd>
+                <PremiumTd align="right">{formatMoney(point.dividendsAud, 2)}</PremiumTd>
+                <PremiumTd align="right">{formatMoney(point.feesAud, 2)}</PremiumTd>
+                <PremiumTd align="right" strong>{formatMoney(point.netActivityAud, 2)}</PremiumTd>
+              </PremiumRow>
+            ))}
+          </PremiumTableBody>
+        </PremiumTable>
+      </WorkspacePanel>
+
+
       <WorkspacePanel title="Return Metrics">
         <div className="grid gap-3 md:grid-cols-3">
           <PremiumStatCard icon={<TrendingUp />} label="Total Gain" value={formatMoney(data.returnMetrics.totalGainAud)} helper={formatPercent(data.returnMetrics.totalGainPercent)} tone="green" />
