@@ -1,3 +1,4 @@
+import { getTransactionTotal } from "@/lib/portfolio/safeTransaction";
 import type { DividendRecord, LedgerRow } from "./types";
 
 function round(value: number, decimals = 2) {
@@ -29,23 +30,23 @@ export function calculatePerformanceMetrics(params: {
 }): PortfolioPerformanceMetrics {
   const buyValueAud = params.transactions
     .filter((tx) => tx.action === "Buy")
-    .reduce((sum, tx) => sum + tx.totalFeesIncludedAud, 0);
+    .reduce((sum, tx) => sum + getTransactionTotal(tx), 0);
 
   const sellValueAud = params.transactions
     .filter((tx) => tx.action === "Sell")
-    .reduce((sum, tx) => sum + tx.totalFeesIncludedAud, 0);
+    .reduce((sum, tx) => sum + getTransactionTotal(tx), 0);
 
   const depositsAud = params.transactions
     .filter((tx) => tx.action === "Cash Deposit" || tx.action === "Transfer Deposit")
-    .reduce((sum, tx) => sum + tx.totalFeesIncludedAud, 0);
+    .reduce((sum, tx) => sum + getTransactionTotal(tx), 0);
 
   const withdrawalsAud = params.transactions
     .filter((tx) => tx.action === "Cash Withdrawal" || tx.action === "Transfer Send")
-    .reduce((sum, tx) => sum + tx.totalFeesIncludedAud, 0);
+    .reduce((sum, tx) => sum + getTransactionTotal(tx), 0);
 
   const feesAud = params.transactions
     .filter((tx) => tx.action === "Fee")
-    .reduce((sum, tx) => sum + Math.abs(tx.totalFeesIncludedAud || tx.fiatFees), 0);
+    .reduce((sum, tx) => sum + Math.abs(getTransactionTotal(tx) || tx.fiatFees), 0);
 
   const dividendIncomeAud = params.dividends.reduce((sum, dividend) => sum + dividend.amountAud, 0);
 

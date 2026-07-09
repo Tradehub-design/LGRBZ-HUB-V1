@@ -1,0 +1,18 @@
+esimport { seedTransactions001 } from "./transactions-001";
+import { seedTransactions002 } from "./transactions-002";
+
+export const coreSeedTransactions = [
+  ...seedTransactions001,
+  ...seedTransactions002,
+import { seedTransactions001 } from "./transactions-001";
+import { seedTransactions002 } from "./transactions-002";
+
+export const coreSeedTransactions = [
+  ...seedTransactions001,
+  ...seedTransactio];import { seedTransactions001 } from "./transactions-001";
+
+export const coreSeedTransactions = [
+  ...seedTransactions001,
+];
+
+export type CoreSeedTransaction = typeof coreSeedTransactions[number];

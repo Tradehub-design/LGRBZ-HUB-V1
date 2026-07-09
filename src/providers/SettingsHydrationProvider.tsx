@@ -12,7 +12,7 @@ export function SettingsHydrationProvider({ children }: SettingsHydrationProvide
   const setHydrated = useSettingsStore((state) => state.setHydrated);
 
   useEffect(() => {
-    setHydrated();
+    setHydrated(true);
   }, [setHydrated]);
 
   return <>{children}</>;

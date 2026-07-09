@@ -1,0 +1,14 @@
+import type { SeedTransaction } from "../types";
+
+export const transactions009: SeedTransaction[] = [
+  { id: "txn_000084", source: "initial_excel_import", sourceRow: 86, date: "2022-07-15", action: "Cash Dividend", assetTicker: "ASX:SEMI", quantity: 1, price: 2.03, fees: 0, currency: "AUD", platform: "CDIA - Dividends", assetClass: "Stock", sector: "Others", country: "Australia", strategy: "Dividend", notes: null },
+  { id: "txn_000085", source: "initial_excel_import", sourceRow: 87, date: "2022-07-21", action: "Cash Deposit", assetTicker: "Cash", quantity: 1, price: 125, fees: 0, currency: "AUD", platform: "Commsec Bank", assetClass: "Cash", notes: "Sam Thomas" },
+  { id: "txn_000086", source: "initial_excel_import", sourceRow: 88, date: "2022-08-12", action: "Cash Deposit", assetTicker: "Cash", quantity: 1, price: 125, fees: 0, currency: "AUD", platform: "Commsec Bank", assetClass: "Cash", notes: "Kieren Chan" },
+  { id: "txn_000087", source: "initial_excel_import", sourceRow: 89, date: "2022-08-19", action: "Cash Deposit", assetTicker: "Cash", quantity: 1, price: 125, fees: 0, currency: "AUD", platform: "Commsec Bank", assetClass: "Cash", notes: "Marc Mario" },
+  { id: "txn_000088", source: "initial_excel_import", sourceRow: 90, date: "2022-08-22", action: "Cash Deposit", assetTicker: "Cash", quantity: 1, price: 125, fees: 0, currency: "AUD", platform: "Commsec Bank", assetClass: "Cash", notes: "Sam Thomas" },
+  { id: "txn_000089", source: "initial_excel_import", sourceRow: 91, date: "2022-08-22", action: "Cash Deposit", assetTicker: "Cash", quantity: 1, price: 125, fees: 0, currency: "AUD", platform: "Commsec Bank", assetClass: "Cash", notes: "Tom Flitcroft" },
+  { id: "txn_000090", source: "initial_excel_import", sourceRow: 92, date: "2022-09-14", action: "Cash Deposit", assetTicker: "Cash", quantity: 1, price: 125, fees: 0, currency: "AUD", platform: "Commsec Bank", assetClass: "Cash", notes: "Kieren Chan" },
+  { id: "txn_000091", source: "initial_excel_import", sourceRow: 93, date: "2022-09-16", action: "Cash Dividend", assetTicker: "ASX:EDV", quantity: 1, price: 11.63, fees: 0, currency: "AUD", platform: "CDIA - Dividends", assetClass: "Stock", sector: "Consumer Staples", country: "Australia", strategy: "Dividend", notes: null },
+  { id: "txn_000092", source: "initial_excel_import", sourceRow: 94, date: "2022-09-16", action: "Cash Deposit", assetTicker: "Cash", quantity: 1, price: 125, fees: 0, currency: "AUD", platform: "Commsec Bank", assetClass: "Cash", notes: "Sam Thomas" },
+  { id: "txn_000093", source: "initial_excel_import", sourceRow: 95, date: "2022-09-29", action: "Cash Dividend", assetTicker: "ASX:FMG", quantity: 1, price: 70.18, fees: 0, currency: "AUD", platform: "CDIA - Dividends", assetClass: "Stock", sector: "Materials", country: "Australia", strategy: "Dividend", notes: null },
+];

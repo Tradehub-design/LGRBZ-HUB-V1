@@ -1,3 +1,4 @@
+import { getTransactionTotal } from "@/lib/portfolio/safeTransaction";
 import type { DividendRecord, LedgerRow } from "./types";
 
 export type FinancialYearSummary = {
@@ -49,10 +50,10 @@ export function calculateFinancialYears(params: {
     const row = getRow(tx.date);
     row.transactionCount += 1;
 
-    if (tx.action === "Buy") row.buysAud += tx.totalFeesIncludedAud;
-    if (tx.action === "Sell") row.sellsAud += tx.totalFeesIncludedAud;
-    if (tx.action === "Fee") row.feesAud += Math.abs(tx.totalFeesIncludedAud || tx.fiatFees);
-    if (tx.action === "Cash Interest") row.interestAud += tx.totalFeesIncludedAud;
+    if (tx.action === "Buy") row.buysAud += getTransactionTotal(tx);
+    if (tx.action === "Sell") row.sellsAud += getTransactionTotal(tx);
+    if (tx.action === "Fee") row.feesAud += Math.abs(getTransactionTotal(tx) || tx.fiatFees);
+    if (tx.action === "Cash Interest") row.interestAud += getTransactionTotal(tx);
   });
 
   params.dividends.forEach((dividend) => {

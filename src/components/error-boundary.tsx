@@ -1,44 +1,27 @@
 "use client";
 
-import React, { ErrorInfo, ReactNode } from "react";
+import React from "react";
 
 type Props = {
-  children: ReactNode;
+  children: React.ReactNode;
 };
 
 type State = {
   hasError: boolean;
 };
 
-export class ErrorBoundary extends React.Component<Props, State> {
-  state: State = {
-    hasError: false,
-  };
+export default class ErrorBoundary extends React.Component<Props, State> {
+  state: State = { hasError: false };
 
   static getDerivedStateFromError(): State {
-    return {
-      hasError: true,
-    };
-  }
-
-  componentDidCatch(error: Error, info: ErrorInfo) {
-    console.error(error);
-    console.error(info);
+    return { hasError: true };
   }
 
   render() {
     if (this.state.hasError) {
       return (
-        <div className="flex min-h-screen items-center justify-center">
-          <div className="rounded-2xl border border-slate-200 bg-white p-10 shadow">
-            <h1 className="text-2xl font-bold">
-              Something went wrong.
-            </h1>
-
-            <p className="mt-3 text-slate-500">
-              Please refresh the application.
-            </p>
-          </div>
+        <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-200">
+          Something went wrong.
         </div>
       );
     }

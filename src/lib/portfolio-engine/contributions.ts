@@ -1,3 +1,4 @@
+import { getTransactionTotal } from "@/lib/portfolio/safeTransaction";
 import type { LedgerRow, MemberContribution } from "./types";
 import { round } from "@/utils/math";
 
@@ -28,7 +29,7 @@ export function calculateMemberContributions(rows: LedgerRow[]): MemberContribut
         netAud: 0,
       } satisfies MemberContribution);
 
-    const amount = row.totalFeesIncludedAud || row.totalAud || row.price || 0;
+    const amount = getTransactionTotal(row) || row.totalAud || row.price || 0;
 
     if (row.action === "Cash Deposit") {
       current.depositsAud += amount;

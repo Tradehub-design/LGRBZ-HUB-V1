@@ -1,5 +1,7 @@
 "use client";
 
+import { getTransactionTotal } from "@/lib/portfolio/safeTransaction";
+
 import { useMemo } from "react";
 import { Activity, BarChart3, Coins, Shield, TrendingUp, Wallet } from "lucide-react";
 import { IncomeBarChart, EquityAreaChart } from "@/components/workspace/portfolio-charts";
@@ -49,10 +51,22 @@ export default function AnalyticsPage() {
       const month = transaction.date.slice(0, 7);
       const current = map.get(month) ?? { buys: 0, sells: 0, dividends: 0, deposits: 0 };
 
-      if (transaction.action === "Buy") current.buys += transaction.totalFeesIncludedAud;
-      if (transaction.action === "Sell") current.sells += transaction.totalFeesIncludedAud;
-      if (transaction.action === "Cash Dividend") current.dividends += transaction.totalFeesIncludedAud;
-      if (transaction.action === "Cash Deposit") current.deposits += transaction.totalFeesIncludedAud;
+      const transactionRecord = transaction as unknown as Record<string, number | string | undefined>;
+      const quantity = Number(transactionRecord.quantity ?? transactionRecord.units ?? 0);
+      const price = Number(transactionRecord.priceAud ?? transactionRecord.price ?? transactionRecord.unitPrice ?? 0);
+      const transactionTotal =
+        Math.abs(Number(getTransactionTotal(transactionRecord) ?? 0)) ||
+        Math.abs(Number(transactionRecord.totalAud ?? 0)) ||
+        Math.abs(Number(transactionRecord.valueAud ?? 0)) ||
+        Math.abs(Number(transactionRecord.amountAud ?? 0)) ||
+        Math.abs(Number(transactionRecord.amount ?? 0)) ||
+        Math.abs(quantity * price) ||
+        0;
+
+      if (transaction.action === "Buy") current.buys += transactionTotal;
+      if (transaction.action === "Sell") current.sells += transactionTotal;
+      if (transaction.action === "Cash Dividend") current.dividends += transactionTotal;
+      if (transaction.action === "Cash Deposit") current.deposits += transactionTotal;
 
       map.set(month, current);
     });

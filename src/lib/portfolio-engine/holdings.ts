@@ -1,3 +1,4 @@
+import { getTransactionTotal } from "@/lib/portfolio/safeTransaction";
 import type { CalculatedHolding, HoldingLot, LedgerRow } from "./types";
 import { round } from "@/utils/math";
 
@@ -57,12 +58,12 @@ export function calculateHoldings(rows: LedgerRow[]): CalculatedHolding[] {
         date: row.date,
         quantity: row.quantity,
         remainingQuantity: row.quantity,
-        costAud: row.totalFeesIncludedAud,
+        costAud: getTransactionTotal(row),
         feesAud: row.fiatFees,
       };
 
       holding.quantity += row.quantity;
-      holding.totalCostAud += row.totalFeesIncludedAud;
+      holding.totalCostAud += getTransactionTotal(row);
       holding.lots.push(lot);
     }
 
@@ -72,7 +73,7 @@ export function calculateHoldings(rows: LedgerRow[]): CalculatedHolding[] {
 
     if (row.action === "Cash Dividend") {
       holding.dividendsAud +=
-        row.totalFeesIncludedAud || row.totalAud || row.price;
+        getTransactionTotal(row) || row.totalAud || row.price;
     }
 
     //---------------------------------------
@@ -99,7 +100,7 @@ export function calculateHoldings(rows: LedgerRow[]): CalculatedHolding[] {
           sellQty * lotAverage;
 
         const proceeds =
-          (row.totalFeesIncludedAud / row.quantity) *
+          (getTransactionTotal(row) / row.quantity) *
           sellQty;
 
         holding.realisedPlAud +=

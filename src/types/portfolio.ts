@@ -1,102 +1,139 @@
-export type CurrencyCode = "AUD" | "USD" | "GBP" | "EUR" | "CAD" | "NZD" | "JPY" | "CNY";
+export type CurrencyCode =
+  | "AUD"
+  | "USD"
+  | "GBP"
+  | "EUR"
+  | "NZD"
+  | "CAD"
+  | "JPY"
+  | "HKD"
+  | "SGD"
+  | "CHF"
+  | "CNY";
 
-export type AssetClass =
-  | "Stock"
-  | "ETF"
-  | "Crypto"
-  | "Cash"
-  | "Bond"
-  | "Fund"
-  | "Other";
+export type AssetClass = string;
+export type TransactionType = string;
 
-export type RiskLevel = "Low Risk" | "Medium Risk" | "High Risk" | "Dividend" | "Unrated";
-
-export type TransactionAction =
-  | "Buy"
-  | "Sell"
-  | "Cash Deposit"
-  | "Cash Withdrawal"
-  | "Transfer Send"
-  | "Transfer Deposit"
-  | "Cash Dividend"
-  | "Cash Interest"
-  | "Fee"
-  | "FX"
-  | "Adjustment"
-  | "Other";
-
-export type Transaction = {
-  id: string;
-  date: string;
-  action: TransactionAction;
-  assetTicker: string;
-  cryptoUrlName?: string;
-  quantity: number;
-  price: number;
-  fiatFees: number;
-  currency: CurrencyCode;
-  platform: string;
-  assetClass: AssetClass;
-  sector?: string;
-  country?: string;
-  strategy?: string;
-  notes?: string;
-  total?: number;
-  totalFeesIncluded?: number;
-  totalAud?: number;
-  totalFeesIncludedAud?: number;
-};
-
-export type HoldingStatus = "Open" | "Closed" | "Sold" | "Watchlist";
-
-export type Holding = {
+export type DividendRecord = {
   id: string;
   ticker: string;
-  name?: string;
+  assetTicker?: string;
+  date: string;
+  paymentDate?: string;
+  amount: number;
+  amountAud: number;
   platform: string;
-  assetClass: AssetClass;
-  sector?: string;
-  country?: string;
-  risk: RiskLevel;
   currency: CurrencyCode;
-  quantity: number;
-  averageCost: number;
-  averageCostAud: number;
-  marketPrice?: number;
-  marketValue?: number;
-  marketValueAud?: number;
-  totalCostAud: number;
-  unrealisedPlAud: number;
-  realisedPlAud: number;
-  dividendsAud: number;
-  totalReturnAud: number;
-  totalReturnPercent: number;
-  status: HoldingStatus;
+  sector: string;
+  country: string;
+  notes: string;
 };
 
-export type Account = {
+export type CashAccount = {
   id: string;
   name: string;
   platform: string;
   currency: CurrencyCode;
-  type: "Broker" | "Bank" | "Crypto" | "Cash" | "Other";
   balance: number;
   balanceAud: number;
-};
-
-export type PortfolioSummary = {
-  totalValueAud: number;
-  totalCostAud: number;
-  totalCashAud: number;
-  totalDividendsAud: number;
-  realisedPlAud: number;
-  unrealisedPlAud: number;
-  totalReturnAud: number;
-  totalReturnPercent: number;
+  totalCash: number;
+  totalDeposits: number;
+  totalWithdrawals: number;
+  totalDividends: number;
+  totalInterest: number;
   depositsAud: number;
   withdrawalsAud: number;
+  dividendsAud: number;
+  interestAud: number;
   feesAud: number;
-  holdingsCount: number;
-  openHoldingsCount: number;
-  closedHoldingsCount: number;
 };
+
+export type HoldingMetrics = {
+  marketPrice: number;
+  marketValue: number;
+  unrealisedProfit: number;
+  unrealisedPercent: number;
+  averageCost: number;
+  costBasis: number;
+  realisedProfit: number;
+  totalProfit: number;
+  totalReturnPercent: number;
+  allocationPercent: number;
+  dividendYield: number;
+  yieldOnCost: number;
+};
+
+export type CalculatedHolding = {
+  id: string;
+  ticker: string;
+  assetTicker: string;
+  name: string;
+  company: string;
+  platform: string;
+  exchange: string;
+  assetClass: AssetClass;
+  sector: string;
+  industry: string;
+  country: string;
+  strategy: string;
+  risk: string;
+  currency: CurrencyCode;
+  status: string;
+  quantity: number;
+  averagePriceAud: number;
+  averageCostAud: number;
+  priceAud: number;
+  marketPriceAud: number;
+  valueAud: number;
+  marketValueAud: number;
+  costBaseAud: number;
+  totalCostAud: number;
+  realisedPlAud: number;
+  unrealisedPlAud: number;
+  unrealisedPlPercent: number;
+  dividendsAud: number;
+  weightPercent: number;
+  portfolioWeightPercent: number;
+  lots: unknown[];
+  metrics: HoldingMetrics;
+  [key: string]: unknown;
+};
+
+export type HoldingDetail = CalculatedHolding;
+
+export type PortfolioPerformance = {
+  realisedPnL: number;
+  realisedPlAud: number;
+  winRate: number;
+  totalReturnAud: number;
+  totalReturnPercent: number;
+  allTime?: {
+    marketValue: number;
+    totalCash: number;
+  };
+};
+
+export type Portfolio = {
+  generatedAt: string;
+  transactions: unknown[];
+  holdings: CalculatedHolding[];
+  realisedTrades: unknown[];
+  cash: CashAccount[];
+  dividends: DividendRecord[];
+  dashboard: Record<string, unknown>;
+  replay: Record<string, unknown>;
+  timeline: {
+    date: string;
+    portfolioValue: number;
+    valueAud: number;
+    investedAud: number;
+    cumulativeCashFlowAud: number;
+    profit: number;
+  }[];
+  performance: PortfolioPerformance;
+  [key: string]: unknown;
+};
+
+
+export type RiskLevel = string;
+export type TransactionAction = string;

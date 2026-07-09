@@ -1,0 +1,11 @@
+src/components/transactions/AddTransactionDialog.tsx(49,16): error TS2345: Argument of type '{ id: string; source: string; sourceRow: number; date: string; action: TransactionType; assetTicker: string; quantity: number; price: number; fees: number; currency: any; platform: string; ... 6 more ...; notes: string; }' is not assignable to parameter of type 'LedgerRow'.
+  Type '{ id: string; source: string; sourceRow: number; date: string; action: TransactionType; assetTicker: string; quantity: number; price: number; fees: number; currency: any; platform: string; ... 6 more ...; notes: string; }' is missing the following properties from type 'LedgerRow': raw, rowNumber, ticker, priceAud, and 9 more.
+src/lib/portfolio-engine/normalise.ts(1,41): error TS2305: Module '"@/types/portfolio"' has no exported member 'RiskLevel'.
+src/lib/portfolio-engine/normalise.ts(1,52): error TS2305: Module '"@/types/portfolio"' has no exported member 'TransactionAction'.
+src/lib/portfolio-engine/normalise.ts(42,5): error TS2322: Type '"AUD" | "USD" | "GBP" | "EUR" | "NZD" | "CAD" | "JPY" | "CNY"' is not assignable to type 'CurrencyCode'.
+  Type '"CNY"' is not assignable to type 'CurrencyCode'.
+src/lib/portfolio-engine/types.ts(1,41): error TS2305: Module '"@/types/portfolio"' has no exported member 'RiskLevel'.
+src/lib/portfolio-engine/types.ts(1,52): error TS2305: Module '"@/types/portfolio"' has no exported member 'TransactionAction'.
+src/store/portfolioStore.ts(462,3): error TS2739: Type '{ id: string; raw: Record<string, unknown>; rowNumber: number; date: string; action: string; type: string; assetTicker: string; ticker: string; platform: string; currency: CurrencyCode; ... 17 more ...; notes: string; }' is missing the following properties from type 'LedgerRow': marketPriceAud, amount
+src/store/portfolioStore.ts(561,5): error TS2353: Object literal may only specify known properties, and 'amount' does not exist in type 'PortfolioDividend'.
+src/types/research.ts(1,29): error TS2305: Module '"./portfolio"' has no exported member 'RiskLevel'.

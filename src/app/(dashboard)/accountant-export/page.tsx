@@ -1,59 +1,38 @@
 "use client";
 
-import { Download, FileText, PackageCheck } from "lucide-react";
-import { PremiumStatCard } from "@/components/workspace/premium-stat-card";
-import { StatusPill } from "@/components/workspace/status-pill";
-import { useSeedPortfolio } from "@/features/transactions/useSeedPortfolio";
 import { useDashboardData } from "@/features/dashboard/useDashboardData";
-import {
-  Workspace,
-  WorkspaceGrid,
-  WorkspaceHeader,
-  WorkspaceLink,
-  WorkspacePanel,
-} from "@/components/workspace";
 
 export default function AccountantExportPage() {
-  useSeedPortfolio();
   const data = useDashboardData();
+  const sections = data.taxExportSummary?.sections ?? [];
 
   return (
-    <Workspace>
-      <WorkspaceHeader
-        eyebrow="Tax Centre"
-        title="Accountant Export"
-        description="Accountant-ready tax package summary. File export will be added later."
-        actions={<WorkspaceLink href="/tax-report">Tax Report</WorkspaceLink>}
-      />
+    <div className="space-y-6 p-6">
+      <h1 className="text-2xl font-bold">Accountant Export</h1>
 
-      <WorkspaceGrid columns="xl:grid-cols-3">
-        <PremiumStatCard icon={<PackageCheck />} label="Export Status" value={data.taxExportSummary.ready ? "Ready" : "Draft"} tone="green" />
-        <PremiumStatCard icon={<FileText />} label="Sections" value={String(data.taxExportSummary.sections.length)} tone="blue" />
-        <PremiumStatCard icon={<Download />} label="Output" value="Pending" helper="PDF/CSV later" tone="amber" />
-      </WorkspaceGrid>
+      <div className="grid gap-4 md:grid-cols-3">
+        <Card label="Export Status" value={data.taxExportSummary?.ready ? "Ready" : "Draft"} />
+        <Card label="Sections" value={String(sections.length)} />
+        <Card label="Output" value="Pending" />
+      </div>
 
-      <section className="grid gap-4 xl:grid-cols-2">
-        <WorkspacePanel title="Included Sections">
-          <div className="space-y-3">
-            {data.taxExportSummary.sections.map((section) => (
-              <div key={section} className="flex items-center justify-between rounded-lg border border-[#173047] bg-[#0b1e30] p-3">
-                <span className="text-sm font-semibold text-white">{section}</span>
-                <StatusPill tone="green">Included</StatusPill>
-              </div>
-            ))}
-          </div>
-        </WorkspacePanel>
+      <div className="rounded-xl border p-4">
+        <h2 className="font-semibold">Export Sections</h2>
+        <div className="mt-3 space-y-2">
+          {sections.map((section: string) => (
+            <div key={section} className="rounded-lg border p-3 text-sm">{section}</div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
-        <WorkspacePanel title="Export Notes">
-          <div className="space-y-3">
-            {data.taxExportSummary.notes.map((note) => (
-              <p key={note} className="rounded-lg border border-[#173047] bg-[#0b1e30] p-3 text-sm text-slate-300">
-                {note}
-              </p>
-            ))}
-          </div>
-        </WorkspacePanel>
-      </section>
-    </Workspace>
+function Card({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-xl border p-4">
+      <p className="text-sm text-slate-400">{label}</p>
+      <p className="mt-1 text-xl font-semibold">{value}</p>
+    </div>
   );
 }

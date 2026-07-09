@@ -1,3 +1,4 @@
+import { getTransactionTotal } from "@/lib/portfolio/safeTransaction";
 import type { CashAccount, LedgerRow } from "./types";
 import { round } from "@/utils/math";
 
@@ -24,7 +25,7 @@ export function calculateCashAccounts(rows: LedgerRow[]): CashAccount[] {
         feesAud: 0,
       } satisfies CashAccount);
 
-    const amountAud = row.totalFeesIncludedAud || row.totalAud || row.price || 0;
+    const amountAud = getTransactionTotal(row) || row.totalAud || row.price || 0;
     const amount = row.totalFeesIncluded || row.total || row.price || 0;
 
     if (row.action === "Cash Deposit" || row.action === "Transfer Deposit") {

@@ -1,0 +1,8 @@
+src/components/dashboard/DashboardGrid.tsx(39,1): error TS1005: '=' expected.
+src/components/dashboard/DashboardGrid.tsx(40,1): error TS1005: '=' expected.
+src/components/dashboard/DashboardV2.tsx(12,1): error TS1005: '=' expected.
+src/components/dashboard/DashboardV2.tsx(13,1): error TS1005: '=' expected.
+src/components/dashboard/DashboardV2.tsx(14,1): error TS1005: '=' expected.
+src/components/dashboard/DashboardV2.tsx(15,1): error TS1005: '=' expected.
+src/components/dashboard/DashboardV2.tsx(16,1): error TS1005: '=' expected.
+src/components/dashboard/DashboardV2.tsx(17,1): error TS1005: '=' expected.

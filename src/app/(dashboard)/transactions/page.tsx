@@ -1,7 +1,10 @@
 "use client";
 
+import { getTransactionTotal } from "@/lib/portfolio/safeTransaction";
+
 import { useMemo, useState } from "react";
 import { AssetLogo } from "@/components/workspace/asset-logo";
+import { TransactionEntryForm } from "@/components/transactions/transaction-entry-form";
 import { FilterBar } from "@/components/workspace/filter-bar";
 import { useWorkspaceSearch } from "@/hooks/useWorkspaceSearch";
 import { TransactionTimeline } from "@/components/workspace/transaction-timeline";
@@ -101,6 +104,8 @@ export default function TransactionsPage() {
         }
       />
 
+      <TransactionEntryForm />
+
       <FilterBar placeholder="Search transactions..." value={transactionSearch.query} onChange={transactionSearch.setQuery} />
 
       <WorkspaceGrid columns="xl:grid-cols-7">
@@ -167,7 +172,18 @@ export default function TransactionsPage() {
 
 
       <WorkspacePanel title="Recent Activity Timeline">
-        <TransactionTimeline transactions={recentTransactions} />
+        <TransactionTimeline
+          transactions={recentTransactions.map((tx, index) => ({
+            ...tx,
+            raw: tx,
+            rowNumber: index + 1,
+            fiatFees: 0,
+            total: getTransactionTotal(tx),
+            totalFeesIncludedAud: getTransactionTotal(tx),
+            platform: "Manual",
+            currency: "AUD",
+          })) as any}
+        />
       </WorkspacePanel>
 
 
@@ -204,7 +220,7 @@ export default function TransactionsPage() {
                     <td className="px-3 py-3 text-right">{transaction.quantity ? formatNumber(transaction.quantity) : "-"}</td>
                     <td className="px-3 py-3 text-right">{transaction.price ? formatMoney(transaction.price, 2) : "-"}</td>
                     <td className="px-3 py-3 text-right font-medium text-white">
-                      {formatMoney(transaction.totalFeesIncludedAud, 2)}
+                      {formatMoney(getTransactionTotal(transaction), 2)}
                     </td>
                   </tr>
                 ))}

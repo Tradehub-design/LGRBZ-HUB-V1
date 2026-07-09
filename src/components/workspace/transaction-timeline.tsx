@@ -1,3 +1,4 @@
+import { getTransactionTotal } from "@/lib/portfolio/safeTransaction";
 import { AssetLogo } from "@/components/workspace/asset-logo";
 import { StatusPill } from "@/components/workspace/status-pill";
 import { formatMoney } from "@/lib/portfolio-engine/format";
@@ -7,7 +8,7 @@ export function TransactionTimeline({ transactions }: { transactions: LedgerRow[
   return (
     <div className="space-y-3">
       {transactions.slice(0, 12).map((tx) => (
-        <div key={tx.id} className="flex gap-3 rounded-xl border border-[#173047] bg-[#0b1e30] p-3">
+        <div key={tx.id} className="flex gap-3 rounded-2xl border border-[#173047] bg-[#0b1e30] p-3">
           <AssetLogo symbol={tx.assetTicker} />
 
           <div className="min-w-0 flex-1">
@@ -18,7 +19,7 @@ export function TransactionTimeline({ transactions }: { transactions: LedgerRow[
             <p className="mt-1 text-xs text-slate-500">{tx.date} · {tx.platform}</p>
           </div>
 
-          <p className="text-sm font-semibold text-white">{formatMoney(tx.totalFeesIncludedAud, 2)}</p>
+          <p className="text-sm font-semibold text-white">{formatMoney(getTransactionTotal(tx), 2)}</p>
         </div>
       ))}
     </div>

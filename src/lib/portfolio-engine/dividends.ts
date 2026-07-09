@@ -1,3 +1,4 @@
+import { getTransactionTotal } from "@/lib/portfolio/safeTransaction";
 import type { DividendRecord, LedgerRow } from "./types";
 
 export function calculateDividends(rows: LedgerRow[]): DividendRecord[] {
@@ -8,7 +9,7 @@ export function calculateDividends(rows: LedgerRow[]): DividendRecord[] {
       date: row.date,
       ticker: row.assetTicker,
       platform: row.platform,
-      amountAud: row.totalFeesIncludedAud || row.totalAud || row.price || 0,
+      amountAud: getTransactionTotal(row) || row.totalAud || row.price || 0,
       currency: row.currency,
       sector: row.sector,
       country: row.country,

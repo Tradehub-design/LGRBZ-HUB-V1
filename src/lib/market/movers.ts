@@ -1,14 +1,21 @@
-import type { MarketQuote } from "./provider";
-
-export type MarketMover = MarketQuote & {
+export type MarketMover = {
+  symbol: string;
+  price: number;
+  previousClose: number;
+  change: number;
+  changePercent: number;
+  currency: string;
+  updatedAt: string;
+  mode: "demo" | "live";
   direction: "up" | "down" | "flat";
 };
 
-export function buildMarketMovers(quotes: MarketQuote[]): MarketMover[] {
-  return [...quotes]
-    .map((quote) => ({
-      ...quote,
-      direction: quote.change > 0 ? "up" : quote.change < 0 ? "down" : "flat",
-    }))
-    .sort((a, b) => Math.abs(b.changePercent) - Math.abs(a.changePercent));
+export function buildMarketMovers(_input?: unknown): MarketMover[] {
+  return [];
 }
+
+export function getMarketMovers(_input?: unknown): MarketMover[] {
+  return buildMarketMovers(_input);
+}
+
+export default buildMarketMovers;

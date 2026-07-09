@@ -1,0 +1,40 @@
+import type { DividendForecastRow } from "./types";
+
+export const dividendForecastRows: DividendForecastRow[] = [
+  {
+    id: "1",
+    symbol: "VAS",
+    company: "Vanguard Australian Shares ETF",
+    shares: 280,
+    dividendPerShare: 2.88,
+    annualIncome: 806.4,
+    yieldOnCost: 3.23,
+    paymentFrequency: "Quarterly",
+    nextExDate: "2026-09-28",
+    nextPaymentDate: "2026-10-16",
+  },
+  {
+    id: "2",
+    symbol: "NAB",
+    company: "National Australia Bank",
+    shares: 510,
+    dividendPerShare: 1.46,
+    annualIncome: 744.6,
+    yieldOnCost: 4.59,
+    paymentFrequency: "Semi-Annual",
+    nextExDate: "2026-11-07",
+    nextPaymentDate: "2026-12-12",
+  },
+  {
+    id: "3",
+    symbol: "COH",
+    company: "Cochlear Limited",
+    shares: 34,
+    dividendPerShare: 1.85,
+    annualIncome: 62.9,
+    yieldOnCost: 0.65,
+    paymentFrequency: "Semi-Annual",
+    nextExDate: "2026-08-22",
+    nextPaymentDate: "2026-09-18",
+  },
+];

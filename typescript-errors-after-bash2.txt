@@ -1,0 +1,222 @@
+src/components/ai/DailySummaryCard.tsx(16,31): error TS2345: Argument of type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").Portfolio' is not assignable to parameter of type 'import("/workspaces/LGRBZ-HUB-V1/src/core/portfolio/types").Portfolio'.
+  Types of property 'transactions' are incompatible.
+    Type 'LedgerRow[]' is not assignable to type 'PortfolioTransaction[]'.
+      Type 'LedgerRow' is not assignable to type 'PortfolioTransaction'.
+        Types of property 'action' are incompatible.
+          Type 'string' is not assignable to type 'TransactionType'.
+src/components/ai/PortfolioInsights.tsx(25,1): error TS2345: Argument of type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").Portfolio' is not assignable to parameter of type 'import("/workspaces/LGRBZ-HUB-V1/src/core/portfolio/types").Portfolio'.
+  Types of property 'transactions' are incompatible.
+    Type 'LedgerRow[]' is not assignable to type 'PortfolioTransaction[]'.
+      Type 'LedgerRow' is not assignable to type 'PortfolioTransaction'.
+        Types of property 'action' are incompatible.
+          Type 'string' is not assignable to type 'TransactionType'.
+src/components/analytics/DrawdownChart.tsx(49,12): error TS2339: Property 'date' does not exist on type '{ portfolioValue: number; }'.
+src/components/analytics/PerformanceSummary.tsx(25,1): error TS2345: Argument of type '{ generatedAt: string; value: number; portfolioValue: number; totalReturn: number; totalReturnPercent: number; realisedTrades: any[]; cash: PortfolioCashAccount[]; dividends: PortfolioDividend[]; holdings: PortfolioHolding[]; transactions: LedgerRow[]; timeline: { ...; }[]; performance: { ...; }; }' is not assignable to parameter of type 'Portfolio'.
+  Type '{ generatedAt: string; value: number; portfolioValue: number; totalReturn: number; totalReturnPercent: number; realisedTrades: any[]; cash: PortfolioCashAccount[]; dividends: PortfolioDividend[]; holdings: PortfolioHolding[]; transactions: LedgerRow[]; timeline: { ...; }[]; performance: { ...; }; }' is missing the following properties from type 'Portfolio': dashboard, replay
+src/components/dashboard/CashPositionCard.tsx(31,8): error TS2339: Property 'totalCash' does not exist on type 'PortfolioCashAccount[]'.
+src/components/dashboard/CashPositionCard.tsx(43,8): error TS2339: Property 'totalDeposits' does not exist on type 'PortfolioCashAccount[]'.
+src/components/dashboard/CashPositionCard.tsx(55,8): error TS2339: Property 'totalWithdrawals' does not exist on type 'PortfolioCashAccount[]'.
+src/components/dashboard/CashPositionCard.tsx(67,8): error TS2339: Property 'totalDividends' does not exist on type 'PortfolioCashAccount[]'.
+src/components/dashboard/CashPositionCard.tsx(79,8): error TS2339: Property 'totalInterest' does not exist on type 'PortfolioCashAccount[]'.
+src/components/dashboard/DividendIncomeCard.tsx(29,5): error TS2339: Property 'yearly' does not exist on type 'PortfolioDividend[]'.
+src/components/dashboard/DividendIncomeCard.tsx(41,5): error TS2339: Property 'monthly' does not exist on type 'PortfolioDividend[]'.
+src/components/dashboard/DividendIncomeCard.tsx(53,5): error TS2339: Property 'forwardIncome' does not exist on type 'PortfolioDividend[]'.
+src/components/dashboard/DividendIncomeCard.tsx(65,5): error TS2339: Property 'total' does not exist on type 'PortfolioDividend[]'.
+src/components/dashboard/PortfolioHealthCard.tsx(16,1): error TS2345: Argument of type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").Portfolio' is not assignable to parameter of type 'import("/workspaces/LGRBZ-HUB-V1/src/core/portfolio/types").Portfolio'.
+  Types of property 'transactions' are incompatible.
+    Type 'LedgerRow[]' is not assignable to type 'PortfolioTransaction[]'.
+      Type 'LedgerRow' is not assignable to type 'PortfolioTransaction'.
+        Types of property 'action' are incompatible.
+          Type 'string' is not assignable to type 'TransactionType'.
+src/components/dashboard/PortfolioSummary.tsx(15,3): error TS2552: Cannot find name 'usePortfolio'. Did you mean 'portfolio'?
+src/components/dividends/DividendDashboard.tsx(16,1): error TS2345: Argument of type '{ generatedAt: string; value: number; portfolioValue: number; totalReturn: number; totalReturnPercent: number; realisedTrades: any[]; cash: PortfolioCashAccount[]; dividends: PortfolioDividend[]; holdings: PortfolioHolding[]; transactions: LedgerRow[]; timeline: { ...; }[]; performance: { ...; }; }' is not assignable to parameter of type 'Portfolio'.
+  Type '{ generatedAt: string; value: number; portfolioValue: number; totalReturn: number; totalReturnPercent: number; realisedTrades: any[]; cash: PortfolioCashAccount[]; dividends: PortfolioDividend[]; holdings: PortfolioHolding[]; transactions: LedgerRow[]; timeline: { ...; }[]; performance: { ...; }; }' is missing the following properties from type 'Portfolio': dashboard, replay
+src/components/dividends/FutureIncome.tsx(13,21): error TS2339: Property 'forwardIncome' does not exist on type 'PortfolioDividend[]'.
+src/components/dividends/IncomeCalendar.tsx(23,22): error TS2339: Property 'records' does not exist on type 'PortfolioDividend[]'.
+src/components/error-boundary.tsx(3,8): error TS2300: Duplicate identifier 'React'.
+src/components/error-boundary.tsx(4,8): error TS2300: Duplicate identifier 'React'.
+src/components/holdings/HoldingDividends.tsx(20,21): error TS2339: Property 'records' does not exist on type 'PortfolioDividend[]'.
+src/components/holdings/PositionDetails.tsx(126,19): error TS2339: Property 'map' does not exist on type 'unknown'.
+src/components/replay/AnimatedPortfolioValue.tsx(31,10): error TS2339: Property 'marketValue' does not exist on type 'number'.
+src/components/replay/AnimatedPortfolioValue.tsx(33,16): error TS2339: Property 'totalCash' does not exist on type 'PortfolioCashAccount[]'.
+src/components/replay/HistoricalHoldings.tsx(43,11): error TS2339: Property 'map' does not exist on type 'unknown'.
+src/components/replay/ReplayBanner.tsx(39,1): error TS2322: Type 'unknown' is not assignable to type 'ReactNode'.
+src/components/replay/ReplayStatistics.tsx(35,17): error TS2339: Property 'totalCash' does not exist on type 'unknown'.
+src/components/replay/ReplayStatistics.tsx(37,17): error TS2339: Property 'totalCash' does not exist on type 'PortfolioCashAccount[]'.
+src/components/replay/ReplayStatistics.tsx(53,11): error TS2339: Property 'length' does not exist on type 'unknown'.
+src/components/transactions/AddTransactionDialog.tsx(69,1): error TS2322: Type 'Currency' is not assignable to type 'CurrencyCode'.
+  Type '"JPY"' is not assignable to type 'CurrencyCode'.
+src/core/ai/confidence/confidenceEngine.ts(15,26): error TS2339: Property 'winRate' does not exist on type 'PortfolioPerformance'.
+src/core/ai/diagnostics/drawdown.ts(15,11): error TS2339: Property 'unrealisedPercent' does not exist on type 'HoldingMetrics'.
+src/core/ai/diagnostics/drawdown.ts(23,20): error TS2339: Property 'unrealisedPercent' does not exist on type 'HoldingMetrics'.
+src/core/ai/opportunities/opportunityScore.ts(17,17): error TS2339: Property 'unrealisedPercent' does not exist on type 'HoldingMetrics'.
+src/core/ai/scoring/health.ts(17,26): error TS2339: Property 'winRate' does not exist on type 'PortfolioPerformance'.
+src/core/ai/watchlist/watchlistSuggestions.ts(19,11): error TS2339: Property 'unrealisedPercent' does not exist on type 'HoldingMetrics'.
+src/core/business/calculators/cashCalculator.ts(21,6): error TS2678: Type '"Deposit"' is not comparable to type 'TransactionType'.
+src/core/business/calculators/cashCalculator.ts(27,6): error TS2678: Type '"Withdrawal"' is not comparable to type 'TransactionType'.
+src/core/business/calculators/cashCalculator.ts(45,6): error TS2678: Type '"Dividend"' is not comparable to type 'TransactionType'.
+src/core/business/calculators/cashCalculator.ts(53,6): error TS2678: Type '"Interest"' is not comparable to type 'TransactionType'.
+src/core/business/services/buildPortfolioSnapshot.ts(35,1): error TS2554: Expected 0 arguments, but got 1.
+src/core/business/services/buildPortfolioSnapshot.ts(51,10): error TS2339: Property 'costBasis' does not exist on type '{ totalValueAud: number; totalCostAud: number; unrealisedPlAud: number; unrealisedPlPercent: number; }'.
+src/core/business/services/buildPortfolioSnapshot.ts(53,10): error TS2339: Property 'marketValue' does not exist on type '{ totalValueAud: number; totalCostAud: number; unrealisedPlAud: number; unrealisedPlPercent: number; }'.
+src/core/business/services/buildPortfolioSnapshot.ts(55,23): error TS2339: Property 'realisedPnL' does not exist on type 'PortfolioPerformance'.
+src/core/business/services/buildPortfolioSnapshot.ts(69,10): error TS2339: Property 'marketValue' does not exist on type '{ totalValueAud: number; totalCostAud: number; unrealisedPlAud: number; unrealisedPlPercent: number; }'.
+src/core/business/services/buildPortfolioSnapshot.ts(73,10): error TS2339: Property 'costBasis' does not exist on type '{ totalValueAud: number; totalCostAud: number; unrealisedPlAud: number; unrealisedPlPercent: number; }'.
+src/core/business/services/buildPortfolioSnapshot.ts(81,10): error TS2339: Property 'marketValue' does not exist on type '{ totalValueAud: number; totalCostAud: number; unrealisedPlAud: number; unrealisedPlPercent: number; }'.
+src/core/business/services/buildPortfolioSnapshot.ts(87,23): error TS2339: Property 'realisedPnL' does not exist on type 'PortfolioPerformance'.
+src/core/business/services/buildPortfolioSnapshot.ts(91,10): error TS2339: Property 'unrealised' does not exist on type '{ totalValueAud: number; totalCostAud: number; unrealisedPlAud: number; unrealisedPlPercent: number; }'.
+src/core/business/services/buildPortfolioSnapshot.ts(119,23): error TS2339: Property 'winRate' does not exist on type 'PortfolioPerformance'.
+src/core/intelligence/engines/opportunities.ts(25,11): error TS2339: Property 'unrealisedPercent' does not exist on type 'HoldingMetrics'.
+src/core/intelligence/engines/opportunities.ts(43,34): error TS2339: Property 'unrealisedPercent' does not exist on type 'HoldingMetrics'.
+src/core/intelligence/scoring/portfolioScore.ts(37,23): error TS2339: Property 'winRate' does not exist on type 'PortfolioPerformance'.
+src/core/market/liveValuation.ts(17,15): error TS2339: Property 'price' does not exist on type 'unknown'.
+src/core/market/liveValuation.ts(32,29): error TS2339: Property 'price' does not exist on type 'unknown'.
+src/core/market/services/fullSnapshot.ts(35,1): error TS2349: This expression is not callable.
+  Type 'DividendSnapshot' has no call signatures.
+src/core/repository/adapters/holdingRepository.ts(15,24): error TS2344: Type 'Holding' does not satisfy the constraint '{ id: string; }'.
+  Property 'id' is missing in type 'Holding' but required in type '{ id: string; }'.
+src/features/dashboard/useDashboardData.ts(63,56): error TS2345: Argument of type 'PortfolioHolding[]' is not assignable to parameter of type 'CalculatedHolding[]'.
+  Type 'PortfolioHolding' is not assignable to type 'CalculatedHolding'.
+    Types of property 'assetClass' are incompatible.
+      Type 'string' is not assignable to type 'AssetClass'.
+src/features/dashboard/useDashboardData.ts(110,24): error TS2304: Cannot find name 'validatePortfolioData'.
+src/features/dashboard/useDashboardData.ts(112,36): error TS2345: Argument of type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").LedgerRow[]' is not assignable to parameter of type 'import("/workspaces/LGRBZ-HUB-V1/src/lib/portfolio-engine/types").LedgerRow[]'.
+  Type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").LedgerRow' is not assignable to type 'import("/workspaces/LGRBZ-HUB-V1/src/lib/portfolio-engine/types").LedgerRow'.
+    Types of property 'raw' are incompatible.
+      Type 'Record<string, unknown>' is not assignable to type 'Record<string, string>'.
+        'string' index signatures are incompatible.
+          Type 'unknown' is not assignable to type 'string'.
+src/features/dashboard/useDashboardData.ts(121,7): error TS2448: Block-scoped variable 'financialYears' used before its declaration.
+src/features/dashboard/useDashboardData.ts(131,7): error TS2322: Type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").LedgerRow[]' is not assignable to type 'import("/workspaces/LGRBZ-HUB-V1/src/lib/portfolio-engine/types").LedgerRow[]'.
+  Type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").LedgerRow' is not assignable to type 'import("/workspaces/LGRBZ-HUB-V1/src/lib/portfolio-engine/types").LedgerRow'.
+    Types of property 'raw' are incompatible.
+      Type 'Record<string, unknown>' is not assignable to type 'Record<string, string>'.
+        'string' index signatures are incompatible.
+          Type 'unknown' is not assignable to type 'string'.
+src/features/dashboard/useDashboardData.ts(132,7): error TS2322: Type 'unknown[]' is not assignable to type 'LedgerIssue[]'.
+  Type '{}' is missing the following properties from type 'LedgerIssue': rowNumber, severity, field, message
+src/features/dashboard/useDashboardData.ts(136,7): error TS2322: Type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").LedgerRow[]' is not assignable to type 'import("/workspaces/LGRBZ-HUB-V1/src/lib/portfolio-engine/types").LedgerRow[]'.
+  Type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").LedgerRow' is not assignable to type 'import("/workspaces/LGRBZ-HUB-V1/src/lib/portfolio-engine/types").LedgerRow'.
+    Types of property 'raw' are incompatible.
+      Type 'Record<string, unknown>' is not assignable to type 'Record<string, string>'.
+        'string' index signatures are incompatible.
+          Type 'unknown' is not assignable to type 'string'.
+src/features/dashboard/useDashboardData.ts(146,7): error TS2322: Type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").LedgerRow[]' is not assignable to type 'import("/workspaces/LGRBZ-HUB-V1/src/lib/portfolio-engine/types").LedgerRow[]'.
+  Type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").LedgerRow' is not assignable to type 'import("/workspaces/LGRBZ-HUB-V1/src/lib/portfolio-engine/types").LedgerRow'.
+    Types of property 'raw' are incompatible.
+      Type 'Record<string, unknown>' is not assignable to type 'Record<string, string>'.
+        'string' index signatures are incompatible.
+          Type 'unknown' is not assignable to type 'string'.
+src/features/dashboard/useDashboardData.ts(152,7): error TS2322: Type 'PortfolioHolding[]' is not assignable to type 'CalculatedHolding[]'.
+  Type 'PortfolioHolding' is not assignable to type 'CalculatedHolding'.
+    Types of property 'assetClass' are incompatible.
+      Type 'string' is not assignable to type 'AssetClass'.
+src/features/dashboard/useDashboardData.ts(153,7): error TS2322: Type 'PortfolioHolding[]' is not assignable to type 'CalculatedHolding[]'.
+  Type 'PortfolioHolding' is not assignable to type 'CalculatedHolding'.
+    Types of property 'assetClass' are incompatible.
+      Type 'string' is not assignable to type 'AssetClass'.
+src/features/dashboard/useDashboardData.ts(156,7): error TS2322: Type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").LedgerRow[]' is not assignable to type 'import("/workspaces/LGRBZ-HUB-V1/src/lib/portfolio-engine/types").LedgerRow[]'.
+  Type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").LedgerRow' is not assignable to type 'import("/workspaces/LGRBZ-HUB-V1/src/lib/portfolio-engine/types").LedgerRow'.
+    Types of property 'raw' are incompatible.
+      Type 'Record<string, unknown>' is not assignable to type 'Record<string, string>'.
+        'string' index signatures are incompatible.
+          Type 'unknown' is not assignable to type 'string'.
+src/features/dashboard/useDashboardData.ts(160,7): error TS2322: Type 'PortfolioHolding[]' is not assignable to type 'CalculatedHolding[]'.
+  Type 'PortfolioHolding' is not assignable to type 'CalculatedHolding'.
+    Types of property 'assetClass' are incompatible.
+      Type 'string' is not assignable to type 'AssetClass'.
+src/features/dashboard/useDashboardData.ts(169,7): error TS2322: Type 'PortfolioHolding[]' is not assignable to type 'CalculatedHolding[]'.
+  Type 'PortfolioHolding' is not assignable to type 'CalculatedHolding'.
+    Types of property 'assetClass' are incompatible.
+      Type 'string' is not assignable to type 'AssetClass'.
+src/features/dashboard/useDashboardData.ts(180,46): error TS2345: Argument of type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").LedgerRow[]' is not assignable to parameter of type 'import("/workspaces/LGRBZ-HUB-V1/src/lib/portfolio-engine/types").LedgerRow[]'.
+  Type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").LedgerRow' is not assignable to type 'import("/workspaces/LGRBZ-HUB-V1/src/lib/portfolio-engine/types").LedgerRow'.
+    Types of property 'raw' are incompatible.
+      Type 'Record<string, unknown>' is not assignable to type 'Record<string, string>'.
+        'string' index signatures are incompatible.
+          Type 'unknown' is not assignable to type 'string'.
+src/features/dashboard/useDashboardData.ts(182,54): error TS2345: Argument of type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").LedgerRow[]' is not assignable to parameter of type 'import("/workspaces/LGRBZ-HUB-V1/src/lib/portfolio-engine/types").LedgerRow[]'.
+  Type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").LedgerRow' is not assignable to type 'import("/workspaces/LGRBZ-HUB-V1/src/lib/portfolio-engine/types").LedgerRow'.
+    Types of property 'raw' are incompatible.
+      Type 'Record<string, unknown>' is not assignable to type 'Record<string, string>'.
+        'string' index signatures are incompatible.
+          Type 'unknown' is not assignable to type 'string'.
+src/features/dashboard/useDashboardData.ts(184,48): error TS2345: Argument of type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").LedgerRow[]' is not assignable to parameter of type 'import("/workspaces/LGRBZ-HUB-V1/src/lib/portfolio-engine/types").LedgerRow[]'.
+  Type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").LedgerRow' is not assignable to type 'import("/workspaces/LGRBZ-HUB-V1/src/lib/portfolio-engine/types").LedgerRow'.
+    Types of property 'raw' are incompatible.
+      Type 'Record<string, unknown>' is not assignable to type 'Record<string, string>'.
+        'string' index signatures are incompatible.
+          Type 'unknown' is not assignable to type 'string'.
+src/features/dashboard/useDashboardData.ts(203,28): error TS2448: Block-scoped variable 'retirementProjection' used before its declaration.
+src/features/dashboard/useDashboardData.ts(213,7): error TS2322: Type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").LedgerRow[]' is not assignable to type 'import("/workspaces/LGRBZ-HUB-V1/src/lib/portfolio-engine/types").LedgerRow[]'.
+  Type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").LedgerRow' is not assignable to type 'import("/workspaces/LGRBZ-HUB-V1/src/lib/portfolio-engine/types").LedgerRow'.
+    Types of property 'raw' are incompatible.
+      Type 'Record<string, unknown>' is not assignable to type 'Record<string, string>'.
+        'string' index signatures are incompatible.
+          Type 'unknown' is not assignable to type 'string'.
+src/hooks/useAIEngine.ts(55,1): error TS2345: Argument of type 'import("/workspaces/LGRBZ-HUB-V1/src/core/ai/models/types").AIInsight[]' is not assignable to parameter of type 'import("/workspaces/LGRBZ-HUB-V1/src/store/ai/insightStore").AIInsight[]'.
+  Property 'detail' is missing in type 'import("/workspaces/LGRBZ-HUB-V1/src/core/ai/models/types").AIInsight' but required in type 'import("/workspaces/LGRBZ-HUB-V1/src/store/ai/insightStore").AIInsight'.
+src/hooks/useAIEngine.ts(57,1): error TS2345: Argument of type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").Portfolio' is not assignable to parameter of type 'import("/workspaces/LGRBZ-HUB-V1/src/core/portfolio/types").Portfolio'.
+  Types of property 'transactions' are incompatible.
+    Type 'LedgerRow[]' is not assignable to type 'PortfolioTransaction[]'.
+      Type 'LedgerRow' is not assignable to type 'PortfolioTransaction'.
+        Types of property 'action' are incompatible.
+          Type 'string' is not assignable to type 'TransactionType'.
+src/hooks/useAISummary.ts(63,1): error TS2345: Argument of type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").Portfolio' is not assignable to parameter of type 'import("/workspaces/LGRBZ-HUB-V1/src/core/portfolio/types").Portfolio'.
+  Types of property 'transactions' are incompatible.
+    Type 'LedgerRow[]' is not assignable to type 'PortfolioTransaction[]'.
+      Type 'LedgerRow' is not assignable to type 'PortfolioTransaction'.
+        Types of property 'action' are incompatible.
+          Type 'string' is not assignable to type 'TransactionType'.
+src/hooks/useAIWorkspace.ts(63,1): error TS2345: Argument of type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").Portfolio' is not assignable to parameter of type 'import("/workspaces/LGRBZ-HUB-V1/src/core/portfolio/types").Portfolio'.
+  Types of property 'transactions' are incompatible.
+    Type 'LedgerRow[]' is not assignable to type 'PortfolioTransaction[]'.
+      Type 'LedgerRow' is not assignable to type 'PortfolioTransaction'.
+        Types of property 'action' are incompatible.
+          Type 'string' is not assignable to type 'TransactionType'.
+src/hooks/useAdvancedBusinessEngine.ts(45,1): error TS2345: Argument of type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").Portfolio' is not assignable to parameter of type 'import("/workspaces/LGRBZ-HUB-V1/src/core/portfolio/types").Portfolio'.
+  Types of property 'transactions' are incompatible.
+    Type 'LedgerRow[]' is not assignable to type 'PortfolioTransaction[]'.
+      Type 'LedgerRow' is not assignable to type 'PortfolioTransaction'.
+        Types of property 'action' are incompatible.
+          Type 'string' is not assignable to type 'TransactionType'.
+src/hooks/useBusinessEngine.ts(45,1): error TS2345: Argument of type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").Portfolio' is not assignable to parameter of type 'import("/workspaces/LGRBZ-HUB-V1/src/core/portfolio/types").Portfolio'.
+  Types of property 'transactions' are incompatible.
+    Type 'LedgerRow[]' is not assignable to type 'PortfolioTransaction[]'.
+      Type 'LedgerRow' is not assignable to type 'PortfolioTransaction'.
+        Types of property 'action' are incompatible.
+          Type 'string' is not assignable to type 'TransactionType'.
+src/hooks/useBusinessSnapshot.ts(29,46): error TS2339: Property 'realisedPlAud' does not exist on type 'PortfolioPerformanceMetrics'.
+src/hooks/useDashboardSummary.ts(25,9): error TS2339: Property 'setSummary' does not exist on type '{}'.
+src/hooks/useDashboardSummary.ts(41,1): error TS2345: Argument of type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").Portfolio' is not assignable to parameter of type 'import("/workspaces/LGRBZ-HUB-V1/src/core/portfolio/types").Portfolio'.
+  Types of property 'transactions' are incompatible.
+    Type 'LedgerRow[]' is not assignable to type 'PortfolioTransaction[]'.
+      Type 'LedgerRow' is not assignable to type 'PortfolioTransaction'.
+        Types of property 'action' are incompatible.
+          Type 'string' is not assignable to type 'TransactionType'.
+src/hooks/useMarketSnapshots.ts(53,1): error TS2554: Expected 1 arguments, but got 2.
+src/hooks/usePortfolioIntelligence.ts(45,1): error TS2345: Argument of type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").Portfolio' is not assignable to parameter of type 'import("/workspaces/LGRBZ-HUB-V1/src/core/portfolio/types").Portfolio'.
+  Types of property 'transactions' are incompatible.
+    Type 'LedgerRow[]' is not assignable to type 'PortfolioTransaction[]'.
+      Type 'LedgerRow' is not assignable to type 'PortfolioTransaction'.
+        Types of property 'action' are incompatible.
+          Type 'string' is not assignable to type 'TransactionType'.
+src/hooks/usePortfolioLiveSync.ts(39,1): error TS2345: Argument of type 'PortfolioHolding[]' is not assignable to parameter of type 'Holding[]'.
+  Type 'PortfolioHolding' is missing the following properties from type 'Holding': openLots, firstPurchaseDate, lastPurchaseDate, isClosed
+src/hooks/usePortfolioLiveSync.ts(45,1): error TS2345: Argument of type '{ metrics: { marketPrice: any; marketValue: number; unrealisedProfit: number; unrealisedPercent: number; averageCost: number; costBasis: number; realisedProfit: number; totalProfit: number; totalReturnPercent: number; allocationPercent: number; dividendYield: number; yieldOnCost: number; }; ... 14 more ...; isClosed...' is not assignable to parameter of type 'PortfolioHolding[]'.
+  Type '{ metrics: { marketPrice: any; marketValue: number; unrealisedProfit: number; unrealisedPercent: number; averageCost: number; costBasis: number; realisedProfit: number; totalProfit: number; totalReturnPercent: number; allocationPercent: number; dividendYield: number; yieldOnCost: number; }; ... 14 more ...; isClosed...' is missing the following properties from type 'PortfolioHolding': id, assetTicker, name, platform, and 14 more.
+src/hooks/usePortfolioTimeline.ts(35,15): error TS2345: Argument of type 'import("/workspaces/LGRBZ-HUB-V1/src/store/portfolioStore").Portfolio' is not assignable to parameter of type 'import("/workspaces/LGRBZ-HUB-V1/src/core/portfolio/types").Portfolio'.
+  Types of property 'transactions' are incompatible.
+    Type 'LedgerRow[]' is not assignable to type 'PortfolioTransaction[]'.
+      Type 'LedgerRow' is not assignable to type 'PortfolioTransaction'.
+        Types of property 'action' are incompatible.
+          Type 'string' is not assignable to type 'TransactionType'.
+src/lib/market/movers.ts(8,3): error TS2322: Type '{ direction: string; symbol: string; price: number; previousClose: number; change: number; changePercent: number; currency: string; updatedAt: string; mode: "demo" | "live"; }[]' is not assignable to type 'MarketMover[]'.
+  Type '{ direction: string; symbol: string; price: number; previousClose: number; change: number; changePercent: number; currency: string; updatedAt: string; mode: "demo" | "live"; }' is not assignable to type 'MarketMover'.
+    Type '{ direction: string; symbol: string; price: number; previousClose: number; change: number; changePercent: number; currency: string; updatedAt: string; mode: "demo" | "live"; }' is not assignable to type '{ direction: "flat" | "up" | "down"; }'.
+      Types of property 'direction' are incompatible.
+        Type 'string' is not assignable to type '"flat" | "up" | "down"'.
+src/lib/portfolio-engine/movers.ts(13,3): error TS2322: Type '{ ticker: string; name: string; valueAud: number; changeAud: number; changePercent: number; direction: string; }[]' is not assignable to type 'PortfolioMover[]'.
+  Type '{ ticker: string; name: string; valueAud: number; changeAud: number; changePercent: number; direction: string; }' is not assignable to type 'PortfolioMover'.
+    Types of property 'direction' are incompatible.
+      Type 'string' is not assignable to type '"flat" | "up" | "down"'.

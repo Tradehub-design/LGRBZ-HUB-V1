@@ -1,3 +1,4 @@
+import { getTransactionTotal } from "@/lib/portfolio/safeTransaction";
 import type {
   CashAccount,
   CalculatedHolding,
@@ -38,7 +39,7 @@ export function buildSummary(
       .reduce(
         (a, b) =>
           a +
-          (b.totalFeesIncludedAud ||
+          (getTransactionTotal(b) ||
             b.totalAud),
         0,
       ),
@@ -51,7 +52,7 @@ export function buildSummary(
       .reduce(
         (a, b) =>
           a +
-          (b.totalFeesIncludedAud ||
+          (getTransactionTotal(b) ||
             b.totalAud),
         0,
       ),
@@ -61,7 +62,7 @@ export function buildSummary(
       .reduce(
         (a, b) =>
           a +
-          (b.totalFeesIncludedAud ||
+          (getTransactionTotal(b) ||
             b.totalAud),
         0,
       ),

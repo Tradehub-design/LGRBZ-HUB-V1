@@ -1,3 +1,4 @@
+import { getTransactionTotal } from "@/lib/portfolio/safeTransaction";
 import type { LedgerRow } from "./types";
 
 export type CashflowPlan = {
@@ -25,18 +26,18 @@ export function calculateCashflowPlan(transactions: LedgerRow[]): CashflowPlan {
     let value = 0;
 
     if (tx.action === "Cash Deposit" || tx.action === "Transfer Deposit") {
-      depositsAud += tx.totalFeesIncludedAud;
-      value += tx.totalFeesIncludedAud;
+      depositsAud += getTransactionTotal(tx);
+      value += getTransactionTotal(tx);
     }
 
     if (tx.action === "Cash Withdrawal" || tx.action === "Transfer Send") {
-      withdrawalsAud += tx.totalFeesIncludedAud;
-      value -= tx.totalFeesIncludedAud;
+      withdrawalsAud += getTransactionTotal(tx);
+      value -= getTransactionTotal(tx);
     }
 
     if (tx.action === "Cash Dividend") {
-      dividendsAud += tx.totalFeesIncludedAud;
-      value += tx.totalFeesIncludedAud;
+      dividendsAud += getTransactionTotal(tx);
+      value += getTransactionTotal(tx);
     }
 
     if (value !== 0) {

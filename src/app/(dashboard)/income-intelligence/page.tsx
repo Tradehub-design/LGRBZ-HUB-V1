@@ -19,7 +19,7 @@ export default function IncomeIntelligencePage() {
   useSeedPortfolio();
   const data = useDashboardData();
 
-  const monthly = data.dividends.reduce<Record<string, number>>((acc, item) => {
+  const monthly = data.dividends.reduce((acc, item) => {
     const month = item.date.slice(0, 7);
     acc[month] = (acc[month] ?? 0) + item.amountAud;
     return acc;
@@ -52,7 +52,7 @@ export default function IncomeIntelligencePage() {
 
       <section className="grid gap-4 xl:grid-cols-[1fr_0.8fr]">
         <WorkspacePanel title="Income Chart">
-          <IncomeBarChart data={chartData} />
+          <IncomeBarChart data={chartData.map((item) => ({ month: item.month, amount: Number(item.amount ?? 0) }))} />
         </WorkspacePanel>
 
         <WorkspacePanel title="Income Insights">

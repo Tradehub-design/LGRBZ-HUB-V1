@@ -1,3 +1,4 @@
+import { getTransactionTotal } from "@/lib/portfolio/safeTransaction";
 import type { LedgerIssue, LedgerRow } from "./types";
 
 export type DataQualityScore = {
@@ -25,7 +26,7 @@ export function calculateDataQuality(params: {
     warnings.push(`${missingTicker} transaction(s) have unknown ticker.`);
   }
 
-  const zeroAmount = params.transactions.filter((tx) => tx.totalFeesIncludedAud === 0 && tx.action !== "Other").length;
+  const zeroAmount = params.transactions.filter((tx) => getTransactionTotal(tx) === 0 && tx.action !== "Other").length;
   if (zeroAmount > 0) {
     score -= Math.min(15, zeroAmount);
     warnings.push(`${zeroAmount} transaction(s) have zero AUD amount.`);

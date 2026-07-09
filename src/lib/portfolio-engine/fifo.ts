@@ -1,3 +1,4 @@
+import { getTransactionTotal } from "@/lib/portfolio/safeTransaction";
 import type { LedgerRow } from "./types";
 
 export type FifoLot = {
@@ -38,7 +39,7 @@ export function calculateFifoLots(transactions: LedgerRow[]): FifoResult {
 
   sorted.forEach((tx) => {
     if (tx.action === "Buy" && tx.quantity > 0) {
-      const totalCostAud = Math.abs(tx.totalFeesIncludedAud || tx.totalAud || tx.quantity * tx.price);
+      const totalCostAud = Math.abs(getTransactionTotal(tx) || tx.totalAud || tx.quantity * tx.price);
 
       openLots.push({
         id: `lot-${tx.id}`,
@@ -70,7 +71,7 @@ export function calculateFifoLots(transactions: LedgerRow[]): FifoResult {
         quantityToSell = round(quantityToSell - quantityUsed);
       });
 
-      const proceedsAud = Math.abs(tx.totalFeesIncludedAud || tx.totalAud);
+      const proceedsAud = Math.abs(getTransactionTotal(tx) || tx.totalAud);
 
       disposals.push({
         id: `disposal-${tx.id}`,

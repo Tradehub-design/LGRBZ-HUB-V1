@@ -1,3 +1,4 @@
+import { getTransactionTotal } from "@/lib/portfolio/safeTransaction";
 import type { LedgerRow } from "./types";
 
 export type PortfolioReplayPoint = {
@@ -37,7 +38,7 @@ export function calculatePortfolioReplay(transactions: LedgerRow[]): PortfolioRe
 
   transactions.forEach((tx) => {
     const point = getPoint(tx.date);
-    const value = tx.totalFeesIncludedAud;
+    const value = getTransactionTotal(tx);
 
     if (tx.action === "Buy") point.buysAud += value;
     if (tx.action === "Sell") point.sellsAud += value;

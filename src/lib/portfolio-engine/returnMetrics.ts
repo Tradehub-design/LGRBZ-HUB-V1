@@ -1,3 +1,4 @@
+import { getTransactionTotal } from "@/lib/portfolio/safeTransaction";
 import type { LedgerRow } from "./types";
 
 export type ReturnMetrics = {
@@ -34,11 +35,11 @@ export function calculateReturnMetrics(params: {
     const value = byMonth.get(month) ?? 0;
 
     if (tx.action === "Cash Deposit" || tx.action === "Transfer Deposit") {
-      byMonth.set(month, value + tx.totalFeesIncludedAud);
+      byMonth.set(month, value + getTransactionTotal(tx));
     }
 
     if (tx.action === "Cash Withdrawal" || tx.action === "Transfer Send") {
-      byMonth.set(month, value - tx.totalFeesIncludedAud);
+      byMonth.set(month, value - getTransactionTotal(tx));
     }
   });
 

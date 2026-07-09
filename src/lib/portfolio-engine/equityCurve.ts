@@ -1,3 +1,4 @@
+import { getTransactionTotal } from "@/lib/portfolio/safeTransaction";
 import type { LedgerRow } from "./types";
 
 export type EquityPoint = {
@@ -17,11 +18,11 @@ export function calculateEquityCurve(transactions: LedgerRow[]): EquityPoint[] {
   let cashFlow = 0;
 
   return sorted.map((tx) => {
-    if (tx.action === "Buy") invested += tx.totalFeesIncludedAud;
-    if (tx.action === "Sell") invested -= tx.totalFeesIncludedAud;
+    if (tx.action === "Buy") invested += getTransactionTotal(tx);
+    if (tx.action === "Sell") invested -= getTransactionTotal(tx);
 
-    if (tx.action === "Cash Deposit") cashFlow += tx.totalFeesIncludedAud;
-    if (tx.action === "Cash Withdrawal") cashFlow -= tx.totalFeesIncludedAud;
+    if (tx.action === "Cash Deposit") cashFlow += getTransactionTotal(tx);
+    if (tx.action === "Cash Withdrawal") cashFlow -= getTransactionTotal(tx);
 
     return {
       date: tx.date,

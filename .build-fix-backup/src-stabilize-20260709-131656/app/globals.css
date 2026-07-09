@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: #020617;
+}
+
+body {
+  min-height: 100vh;
+  background: #020617;
+  color: #f8fafc;
+}
+
+::selection {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.65);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.35);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.5);
+}
+
+input,
+textarea,
+select,
+button {
+  font: inherit;
+}
+
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+
+  aside,
+  header,
+  nav,
+  button {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  table {
+    min-width: 760px;
+  }
+
+  .mobile-tight {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #173047 #061421;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #061421;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #173047;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1f8cff;
+}
+
+@keyframes lgrbzFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.lgrbz-fade-up {
+  animation: lgrbzFadeUp 420ms ease-out both;
+}
+
+.lgrbz-card-hover {
+  transition: transform 240ms ease, border-color 240ms ease, box-shadow 240ms ease;
+}
+
+.lgrbz-card-hover:hover {
+  transform: translateY(-3px);
+  border-color: rgba(56, 189, 248, 0.7);
+  box-shadow: 0 24px 70px rgba(31, 140, 255, 0.14);
+}
