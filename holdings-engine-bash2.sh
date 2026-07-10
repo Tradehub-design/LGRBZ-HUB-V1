@@ -1,3 +1,9 @@
+#!/usr/bin/env bash
+set -e
+
+echo "🔧 Holdings Engine Bash 2/4: holdings page from ledger..."
+
+cat > 'src/app/(dashboard)/holdings/page.tsx' <<'TSX'
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
@@ -158,3 +164,6 @@ function Stat({ label, value }: { label: string; value: string }) {
     </div>
   );
 }
+TSX
+
+npm run build

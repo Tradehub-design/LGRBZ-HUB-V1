@@ -1,3 +1,9 @@
+#!/usr/bin/env bash
+set -e
+
+echo "🔧 Holdings Engine Bash 3/4: dashboard from transaction ledger..."
+
+cat > 'src/app/(dashboard)/dashboard/page.tsx' <<'TSX'
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
@@ -129,3 +135,6 @@ function Stat({ label, value }: { label: string; value: string }) {
     </div>
   );
 }
+TSX
+
+npm run build

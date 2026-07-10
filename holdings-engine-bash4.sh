@@ -1,3 +1,9 @@
+#!/usr/bin/env bash
+set -e
+
+echo "🔧 Holdings Engine Bash 4/4: allocation from holdings..."
+
+cat > 'src/app/(dashboard)/portfolio-allocation/page.tsx' <<'TSX'
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
@@ -106,3 +112,6 @@ function money(value: number) {
     maximumFractionDigits: 2,
   }).format(Number(value || 0));
 }
+TSX
+
+npm run build
