@@ -61,6 +61,7 @@ export default function ImportCentrePage() {
     try {
       const imported = await importIntoPortfolio(selectedFile, { apply: true });
       setResult(imported as ImportResult);
+      window.location.href = "/transactions";
       window.location.href = "/dashboard";
     } catch (err) {
       setError(err instanceof Error ? err.message : "Import failed.");

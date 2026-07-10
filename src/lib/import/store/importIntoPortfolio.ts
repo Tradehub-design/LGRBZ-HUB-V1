@@ -1,5 +1,6 @@
 import { importMasterWorkbook } from "@/lib/import/services/importMasterWorkbook";
-import { applyLedger } from "@/lib/transactions/applyLedger";
+import { normaliseLedgerRows } from "@/lib/transactions/normaliseLedgerRow";
+import { saveTxLedger } from "@/lib/transactions/ledgerStorage";
 
 export async function importIntoPortfolio(file: File, options?: { apply?: boolean }) {
   const result = await importMasterWorkbook(file);
@@ -12,17 +13,19 @@ export async function importIntoPortfolio(file: File, options?: { apply?: boolea
     };
   }
 
-  const engine = applyLedger(result.transactions, "excel-seed-import");
+  const transactions = normaliseLedgerRows(result.transactions);
+
+  saveTxLedger(transactions);
 
   return {
     ...result,
     applied: true,
-    applyMethod: "transaction-ledger",
+    applyMethod: "safe-ledger-storage-only",
     engineStatus: {
-      transactions: engine.transactions.length,
-      holdings: engine.holdings.length,
-      openHoldings: engine.openHoldings.length,
-      dividends: engine.dividends.length,
+      transactions: transactions.length,
+      holdings: 0,
+      openHoldings: 0,
+      dividends: 0,
     },
   };
 }

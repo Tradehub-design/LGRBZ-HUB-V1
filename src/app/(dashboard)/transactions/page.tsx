@@ -1,15 +1,24 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { PlusCircle, Trash2 } from "lucide-react";
 import { applyLedger } from "@/lib/transactions/applyLedger";
+import { loadTxLedger } from "@/lib/transactions/ledgerStorage";
 import { clearTxLedger } from "@/lib/transactions/ledgerStorage";
 import { usePortfolioStore, type CurrencyCode } from "@/store/portfolioStore";
 
 const currencies: CurrencyCode[] = ["AUD", "USD", "GBP", "EUR", "NZD", "CAD", "JPY", "HKD", "SGD", "CHF", "CNY"];
 
 export default function TransactionsPage() {
-  const transactions = usePortfolioStore((state) => state.transactions);
+  const storeTransactions = usePortfolioStore((state) => state.transactions);
+  const [localTransactions, setLocalTransactions] = useState<any[]>([]);
+
+  useEffect(() => {
+    const saved = loadTxLedger();
+    setLocalTransactions(saved);
+  }, []);
+
+  const transactions = storeTransactions.length ? storeTransactions : localTransactions;
 
   const [form, setForm] = useState({
     ticker: "",
