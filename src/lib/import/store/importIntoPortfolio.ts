@@ -1,12 +1,10 @@
-import { usePortfolioStore } from "@/store/portfolioStore";
 import { importMasterWorkbook } from "@/lib/import/services/importMasterWorkbook";
-import { buildEngineFromTransactions } from "@/lib/portfolio/buildEngineFromTransactions";
+import { applyPortfolioTransactions } from "@/core/portfolio-v2/apply";
 
 export async function importIntoPortfolio(file: File, options?: { apply?: boolean }) {
   const result = await importMasterWorkbook(file);
-  const shouldApply = options?.apply ?? true;
 
-  if (!shouldApply) {
+  if (!(options?.apply ?? true)) {
     return {
       ...result,
       applied: false,
@@ -14,18 +12,11 @@ export async function importIntoPortfolio(file: File, options?: { apply?: boolea
     };
   }
 
-  const engine = buildEngineFromTransactions(result.transactions as any);
-  const store = usePortfolioStore.getState();
-
-  store.setEngine(engine, "master-workbook-import");
-
-  if (typeof window !== "undefined") {
-    window.localStorage.setItem("lgrbz.masterTransactions.v1", JSON.stringify(result.transactions));
-  }
+  applyPortfolioTransactions(result.transactions, "excel-seed");
 
   return {
     ...result,
     applied: true,
-    applyMethod: "setEngine",
+    applyMethod: "portfolio-engine-v2",
   };
 }

@@ -1,10 +1,9 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { applyPortfolioTransactions } from "@/core/portfolio-v2/apply";
+import { loadStoredTransactions, saveStoredTransactions } from "@/core/portfolio-v2/storage";
 import { usePortfolioStore } from "@/store/portfolioStore";
-import { buildEngineFromTransactions } from "@/lib/portfolio/buildEngineFromTransactions";
-
-const STORAGE_KEY = "lgrbz.masterTransactions.v1";
 
 function signature(transactions: unknown[]) {
   return JSON.stringify(
@@ -20,42 +19,33 @@ function signature(transactions: unknown[]) {
   );
 }
 
-export default function PortfolioPersistenceProvider({ children }: { children: React.ReactNode }) {
+export default function PortfolioPersistenceProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const hydrated = useRef(false);
-  const syncing = useRef(false);
   const lastSignature = useRef("");
 
   useEffect(() => {
     if (hydrated.current) return;
     hydrated.current = true;
 
-    const saved = window.localStorage.getItem(STORAGE_KEY);
+    const stored = loadStoredTransactions();
 
-    if (saved) {
-      try {
-        const transactions = JSON.parse(saved);
-        if (Array.isArray(transactions) && transactions.length > 0) {
-          syncing.current = true;
-          lastSignature.current = signature(transactions);
-          usePortfolioStore.getState().setEngine(buildEngineFromTransactions(transactions), "local-storage");
-          syncing.current = false;
-        }
-      } catch {
-        window.localStorage.removeItem(STORAGE_KEY);
-        syncing.current = false;
-      }
+    if (stored.length > 0) {
+      lastSignature.current = signature(stored);
+      applyPortfolioTransactions(stored, "local-storage-v2");
     }
 
     const unsubscribe = usePortfolioStore.subscribe((state) => {
-      if (syncing.current) return;
-
-      const transactions = state.transactions ?? [];
-      const nextSignature = signature(transactions);
+      const tx = state.transactions ?? [];
+      const nextSignature = signature(tx);
 
       if (nextSignature === lastSignature.current) return;
 
       lastSignature.current = nextSignature;
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions));
+      saveStoredTransactions(tx as any);
     });
 
     return () => unsubscribe();
