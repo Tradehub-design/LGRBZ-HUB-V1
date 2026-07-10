@@ -26,12 +26,8 @@ export const NAV_GROUPS: NavGroup[] = [
     items: [
       { id: "dashboard", label: "Dashboard", href: "/dashboard", icon: "LayoutDashboard", description: "Executive summary." },
       { id: "holdings", label: "Holdings", href: "/holdings", icon: "BriefcaseBusiness", description: "Current positions." },
-      { id: "transactions", label: "Transactions", href: "/transactions",
-        },
-        {
-          id: "import-centre",
-          label: "Import Centre",
-          href: "/import-centre", icon: "ArrowLeftRight", description: "Source ledger." },
+      { id: "transactions", label: "Transactions", href: "/transactions", icon: "ArrowLeftRight", description: "Source ledger." },
+      { id: "import-centre", label: "Import Centre", href: "/import-centre", icon: "UploadCloud", description: "One-time workbook import." },
       { id: "analytics", label: "Analytics", href: "/analytics", icon: "ChartNoAxesCombined", description: "Portfolio analysis." },
       { id: "dividends", label: "Dividends", href: "/dividends", icon: "BadgeDollarSign", description: "Income history." },
       { id: "dividend-forecast", label: "Dividend Forecast", href: "/dividend-forecast", icon: "TrendingUp", description: "Projected income." },
