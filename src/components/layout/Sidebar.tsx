@@ -15,7 +15,7 @@ export function Sidebar() {
   return (
     <aside
       className={cn(
-        "fixed left-0 top-0 z-40 hidden h-dvh border-r border-[#173047] bg-[#071827] transition-all duration-300 lg:block",
+        "fixed left-0 top-0 z-50 hidden h-dvh overflow-hidden border-r border-[#173047] bg-[#071827] transition-all duration-300 lg:block",
         collapsed ? "w-[84px]" : "w-[264px]",
       )}
     >
@@ -28,7 +28,7 @@ export function Sidebar() {
           </Button>
         </div>
 
-        <nav className="flex-1 space-y-5 overflow-y-auto px-3 py-4">
+        <nav className="flex-1 space-y-5 overflow-y-auto px-3 py-4 pb-10">
           {NAV_GROUPS.map((group) => (
             <div key={group.id}>
               {!collapsed ? (
