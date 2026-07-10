@@ -1,3 +1,9 @@
+#!/usr/bin/env bash
+set -e
+
+echo "🔧 Hard-coding one-time LGRBZ master workbook importer..."
+
+cat > src/lib/import/excel/readMasterWorkbook.ts <<'TS'
 import * as XLSX from "xlsx";
 
 import { MasterTransactionRow } from "../types/masterWorkbook";
@@ -109,3 +115,6 @@ export async function readMasterWorkbook(
     transactions,
   };
 }
+TS
+
+npm run build
