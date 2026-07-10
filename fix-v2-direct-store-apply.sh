@@ -1,3 +1,9 @@
+#!/usr/bin/env bash
+set -e
+
+echo "🔧 Fixing Portfolio V2 apply to avoid recursive normalise loop..."
+
+cat > src/core/portfolio-v2/apply.ts <<'TS'
 import type { MasterTransaction } from "./types";
 import { normaliseTransactions } from "./normalise";
 import { buildPortfolioEngineV2 } from "./engine";
@@ -31,3 +37,35 @@ export function applyPortfolioTransactions(rows: any[], source = "portfolio-v2")
     legacyEngine,
   };
 }
+TS
+
+cat > src/providers/PortfolioPersistenceProvider.tsx <<'TSX'
+"use client";
+
+import { useEffect, useRef } from "react";
+import { applyPortfolioTransactions } from "@/core/portfolio-v2/apply";
+import { loadStoredTransactions } from "@/core/portfolio-v2/storage";
+
+export default function PortfolioPersistenceProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const hydrated = useRef(false);
+
+  useEffect(() => {
+    if (hydrated.current) return;
+    hydrated.current = true;
+
+    const stored = loadStoredTransactions();
+
+    if (stored.length > 0) {
+      applyPortfolioTransactions(stored, "local-storage-v2");
+    }
+  }, []);
+
+  return <>{children}</>;
+}
+TSX
+
+npm run build
