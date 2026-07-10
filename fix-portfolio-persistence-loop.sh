@@ -1,3 +1,9 @@
+#!/usr/bin/env bash
+set -e
+
+echo "🔧 Fixing portfolio persistence infinite loop..."
+
+cat > src/providers/PortfolioPersistenceProvider.tsx <<'TSX'
 "use client";
 
 import { useEffect, useRef } from "react";
@@ -20,7 +26,11 @@ function signature(transactions: unknown[]) {
   );
 }
 
-export default function PortfolioPersistenceProvider({ children }: { children: React.ReactNode }) {
+export default function PortfolioPersistenceProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const hydrated = useRef(false);
   const syncing = useRef(false);
   const lastSignature = useRef("");
@@ -34,10 +44,14 @@ export default function PortfolioPersistenceProvider({ children }: { children: R
     if (saved) {
       try {
         const transactions = JSON.parse(saved);
+
         if (Array.isArray(transactions) && transactions.length > 0) {
           syncing.current = true;
           lastSignature.current = signature(transactions);
-          usePortfolioStore.getState().setEngine(buildEngineFromTransactions(transactions), "local-storage");
+          usePortfolioStore.getState().setEngine(
+            buildEngineFromTransactions(transactions),
+            "local-storage",
+          );
           syncing.current = false;
         }
       } catch {
@@ -63,3 +77,6 @@ export default function PortfolioPersistenceProvider({ children }: { children: R
 
   return <>{children}</>;
 }
+TSX
+
+npm run build
