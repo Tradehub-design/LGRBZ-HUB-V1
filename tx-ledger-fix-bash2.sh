@@ -1,3 +1,9 @@
+#!/usr/bin/env bash
+set -e
+
+echo "🔧 Transaction Ledger Fix Bash 2/4: transactions page..."
+
+cat > 'src/app/(dashboard)/transactions/page.tsx' <<'TSX'
 "use client";
 
 import { useMemo, useState } from "react";
@@ -308,3 +314,6 @@ function Select({
     </label>
   );
 }
+TSX
+
+npm run build

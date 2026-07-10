@@ -1,3 +1,9 @@
+#!/usr/bin/env bash
+set -e
+
+echo "🔧 Transaction Ledger Fix Bash 3/4: import applies to transaction ledger..."
+
+cat > src/lib/import/store/importIntoPortfolio.ts <<'TS'
 import { importMasterWorkbook } from "@/lib/import/services/importMasterWorkbook";
 import { applyLedger } from "@/lib/transactions/applyLedger";
 
@@ -26,3 +32,6 @@ export async function importIntoPortfolio(file: File, options?: { apply?: boolea
     },
   };
 }
+TS
+
+npm run build

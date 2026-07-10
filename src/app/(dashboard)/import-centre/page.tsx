@@ -15,6 +15,12 @@ type ImportResult = {
     errors: string[];
     warnings: string[];
   };
+  engineStatus?: {
+    transactions: number;
+    holdings: number;
+    openHoldings: number;
+    dividends: number;
+  };
   summary?: {
     sheetCount: number;
     transactionCount: number;
@@ -165,6 +171,8 @@ export default function ImportCentrePage() {
             <Stat label="Detected Columns" value={String(Object.keys(result.detectedHeaders ?? {}).length)} />
             <Stat label="Applied To Store" value={result.applied ? "Yes" : "No"} />
             <Stat label="Apply Method" value={result.applyMethod ?? "none"} />
+            <Stat label="Ledger Rows" value={String(result.engineStatus?.transactions ?? 0)} />
+            <Stat label="Holdings Built" value={String(result.engineStatus?.holdings ?? 0)} />
           </div>
 
           <div className="mt-5 rounded-xl border border-white/10 bg-black/20 p-4">

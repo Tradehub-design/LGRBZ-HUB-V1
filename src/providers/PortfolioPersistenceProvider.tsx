@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { applyPortfolioTransactions } from "@/core/portfolio-v2/apply";
-import { loadStoredTransactions } from "@/core/portfolio-v2/storage";
+import { applyLedger } from "@/lib/transactions/applyLedger";
+import { loadTxLedger } from "@/lib/transactions/ledgerStorage";
 
 export default function PortfolioPersistenceProvider({
   children,
@@ -15,10 +15,10 @@ export default function PortfolioPersistenceProvider({
     if (hydrated.current) return;
     hydrated.current = true;
 
-    const stored = loadStoredTransactions();
+    const saved = loadTxLedger();
 
-    if (stored.length > 0) {
-      applyPortfolioTransactions(stored, "local-storage-v2");
+    if (saved.length > 0) {
+      applyLedger(saved, "local-ledger");
     }
   }, []);
 
