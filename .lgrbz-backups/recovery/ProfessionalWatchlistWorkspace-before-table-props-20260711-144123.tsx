@@ -222,16 +222,6 @@ export function ProfessionalWatchlistWorkspace() {
         onSort={
           handleSort
         }
-      
-        onEdit={() => {
-          // Edit workflow will be connected by the next Watchlist repair.
-        }}
-        onRemove={() => {
-          // Remove workflow will be connected by the next Watchlist repair.
-        }}
-        onTransfer={() => {
-          // Transfer workflow will be connected by the next Watchlist repair.
-        }}
       />
     </div>
   );

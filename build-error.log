@@ -1,0 +1,23 @@
+
+> lgrbz-hub-v1@1.0.0 build
+> next build
+
+  ▲ Next.js 14.2.35
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Skipping linting
+   Checking validity of types ...
+Failed to compile.
+
+./src/components/transactions/ProfessionalTransactionsWorkspace.tsx:1823:17
+Type error: Cannot find name 'columnLayout'.
+
+[0m [90m 1821 |[39m               }[0m
+[0m [90m 1822 |[39m               columnLayout[33m=[39m{[0m
+[0m[31m[1m>[22m[39m[90m 1823 |[39m                 columnLayout[0m
+[0m [90m      |[39m                 [31m[1m^[22m[39m[0m
+[0m [90m 1824 |[39m               }[0m
+[0m [90m 1825 |[39m               onColumnLayoutChange[33m=[39m{[0m
+[0m [90m 1826 |[39m                 updateColumnLayout[0m
+Next.js build worker exited with code: 1 and signal: null

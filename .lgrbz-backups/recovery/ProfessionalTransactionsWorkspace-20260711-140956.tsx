@@ -113,8 +113,7 @@ export function ProfessionalTransactionsWorkspace({
   onBulkDeleteTransactions,
   onRestoreTransactions,
 }: Props) {
-
-const workspaceRef =
+  const workspaceRef =
     useRef<HTMLDivElement | null>(null);
 
   const [filters, setFilters] =

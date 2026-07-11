@@ -98,3 +98,176 @@ Working tree:
 ============================================================
 3. CREATING RECOVERY SNAPSHOT
 ============================================================
+[main b65619c3] chore: recovery snapshot before build 20260711-133114
+ 79 files changed, 18360 insertions(+), 320 deletions(-)
+ create mode 100644 .lgrbz-backups/professional-transactions/transactions-page-before-professional-integration-20260711-125653.tsx
+ create mode 100644 .lgrbz-recovery/recovery-20260711-133114.log
+ create mode 100644 scripts/verify-professional-transactions.mjs
+ create mode 100644 scripts/verify-professional-watchlist-foundation.mjs
+ create mode 100644 scripts/verify-transaction-productivity.mjs
+ create mode 100644 src/app/(dashboard)/transactions/error.tsx
+ create mode 100644 src/app/(dashboard)/transactions/legacy-transactions-page.tsx
+ create mode 100644 src/app/(dashboard)/transactions/loading.tsx
+ create mode 100644 src/app/(dashboard)/transactions/not-found.tsx
+ create mode 100644 src/app/(dashboard)/transactions/professional-transactions-route.tsx
+ create mode 100644 src/components/transactions/ProfessionalLedgerTransactions.tsx
+ create mode 100644 src/components/transactions/ProfessionalTransactionTable.tsx
+ create mode 100644 src/components/transactions/ProfessionalTransactionsSection.tsx
+ create mode 100644 src/components/transactions/ProfessionalTransactionsWorkspace.tsx
+ create mode 100644 src/components/transactions/TransactionAdvancedFilters.tsx
+ create mode 100644 src/components/transactions/TransactionBulkActionBar.tsx
+ create mode 100644 src/components/transactions/TransactionChangeSummary.tsx
+ create mode 100644 src/components/transactions/TransactionColumnLayoutPanel.tsx
+ create mode 100644 src/components/transactions/TransactionContextMenu.tsx
+ create mode 100644 src/components/transactions/TransactionDeleteDialog.tsx
+ create mode 100644 src/components/transactions/TransactionEditDrawer.tsx
+ create mode 100644 src/components/transactions/TransactionEditField.tsx
+ create mode 100644 src/components/transactions/TransactionEmptyState.tsx
+ create mode 100644 src/components/transactions/TransactionErrorState.tsx
+ create mode 100644 src/components/transactions/TransactionKeyboardHelp.tsx
+ create mode 100644 src/components/transactions/TransactionLoadingState.tsx
+ create mode 100644 src/components/transactions/TransactionMobileCards.tsx
+ create mode 100644 src/components/transactions/TransactionMultiSortPanel.tsx
+ create mode 100644 src/components/transactions/TransactionOperationHistory.tsx
+ create mode 100644 src/components/transactions/TransactionPagination.tsx
+ create mode 100644 src/components/transactions/TransactionPerformanceNotice.tsx
+ create mode 100644 src/components/transactions/TransactionPresetManager.tsx
+ create mode 100644 src/components/transactions/TransactionQualityPanel.tsx
+ create mode 100644 src/components/transactions/TransactionResultStatus.tsx
+ create mode 100644 src/components/transactions/TransactionSortStatus.tsx
+ create mode 100644 src/components/transactions/TransactionStickyWorkspaceBar.tsx
+ create mode 100644 src/components/transactions/TransactionSummaryCards.tsx
+ create mode 100644 src/components/transactions/TransactionToastViewport.tsx
+ create mode 100644 src/components/transactions/TransactionToolbar.tsx
+ create mode 100644 src/components/transactions/TransactionUnsavedChangesDialog.tsx
+ create mode 100644 src/components/transactions/TransactionValidationPanel.tsx
+ create mode 100644 src/components/transactions/TransactionViewSettings.tsx
+ create mode 100644 src/components/transactions/index.ts
+ create mode 100644 src/components/watchlist/ProfessionalWatchlistWorkspace.tsx
+ create mode 100644 src/components/watchlist/WatchlistDeleteDialog.tsx
+ create mode 100644 src/components/watchlist/WatchlistGroupDeleteDialog.tsx
+ create mode 100644 src/components/watchlist/WatchlistGroupDialog.tsx
+ create mode 100644 src/components/watchlist/WatchlistGroupTabs.tsx
+ create mode 100644 src/components/watchlist/WatchlistSecurityDrawer.tsx
+ create mode 100644 src/components/watchlist/WatchlistStarterTable.tsx
+ create mode 100644 src/components/watchlist/WatchlistSummaryCards.tsx
+ create mode 100644 src/components/watchlist/WatchlistToolbar.tsx
+ create mode 100644 src/components/watchlist/WatchlistTransferDialog.tsx
+ create mode 100644 src/components/watchlist/index.ts
+ create mode 100644 src/hooks/useDeferredTransactionSearch.ts
+ create mode 100644 src/hooks/useWatchlistState.ts
+ create mode 100644 src/lib/transactions/ledgerEvents.ts
+ create mode 100644 src/lib/transactions/professionalLedgerBridge.ts
+ create mode 100644 src/lib/transactions/professionalTransactions.ts
+ create mode 100644 src/lib/transactions/transactionClipboard.ts
+ create mode 100644 src/lib/transactions/transactionColumnLayout.ts
+ create mode 100644 src/lib/transactions/transactionDuplicate.ts
+ create mode 100644 src/lib/transactions/transactionHistory.ts
+ create mode 100644 src/lib/transactions/transactionKeyboard.ts
+ create mode 100644 src/lib/transactions/transactionMultiSort.ts
+ create mode 100644 src/lib/transactions/transactionOptimisticState.ts
+ create mode 100644 src/lib/transactions/transactionPreferences.ts
+ create mode 100644 src/lib/transactions/transactionQuality.ts
+ create mode 100644 src/lib/transactions/transactionTablePreferences.ts
+ create mode 100644 src/lib/transactions/transactionToast.ts
+ create mode 100644 src/lib/transactions/transactionValidation.ts
+ create mode 100644 src/lib/watchlist/watchlistDefaults.ts
+ create mode 100644 src/lib/watchlist/watchlistEngine.ts
+ create mode 100644 src/lib/watchlist/watchlistGroups.ts
+ create mode 100644 src/lib/watchlist/watchlistSecurityEditor.ts
+ create mode 100644 src/lib/watchlist/watchlistStorage.ts
+ create mode 100644 src/lib/watchlist/watchlistTypes.ts
+✅ Recovery snapshot committed.
+
+Current commit:
+b65619c3 chore: recovery snapshot before build 20260711-133114
+
+============================================================
+4. INSTALLING DEPENDENCIES
+============================================================
+
+up to date, audited 485 packages in 16s
+
+160 packages are looking for funding
+  run `npm fund` for details
+
+6 vulnerabilities (1 moderate, 5 high)
+
+To address all issues possible (including breaking changes), run:
+  npm audit fix --force
+
+Some issues need review, and may require choosing
+a different dependency.
+
+Run `npm audit` for details.
+✅ Dependencies installed from package-lock.json.
+
+============================================================
+5. RUNNING AVAILABLE VERIFICATION SCRIPTS
+============================================================
+
+▶ npm run verify:transactions
+
+> lgrbz-hub-v1@1.0.0 verify:transactions
+> node scripts/verify-professional-transactions.mjs
+
+🔎 Verifying Professional Transactions...
+
+✅ Professional Transactions verification passed.
+✅ Checked 31 required files.
+✅ Existing ledger route preservation confirmed.
+✅ Ledger bridge destructive-operation check passed.
+✅ Core professional transaction capabilities confirmed.
+✅ Passed: verify:transactions
+
+▶ npm run verify:transaction-productivity
+
+> lgrbz-hub-v1@1.0.0 verify:transaction-productivity
+> node scripts/verify-transaction-productivity.mjs
+
+✅ Transaction productivity verification passed.
+✅ Context menu is connected to desktop and mobile transaction rows.
+✅ Copy symbol, details and CSV actions are available.
+✅ Duplicate transaction workflow is available.
+✅ Passed: verify:transaction-productivity
+⚠️ Skipped: verify:transaction-columns is not registered
+⚠️ Skipped: verify:transaction-multi-sort is not registered
+⚠️ Skipped: verify:transaction-bulk-edit is not registered
+⚠️ Skipped: verify:transactions-final is not registered
+
+▶ npm run verify:watchlist-foundation
+
+> lgrbz-hub-v1@1.0.0 verify:watchlist-foundation
+> node scripts/verify-professional-watchlist-foundation.mjs
+
+✅ Professional Watchlist foundation verification passed.
+✅ Watchlist state, storage, filtering, sorting and summary engines are ready.
+✅ Starter professional workspace is ready for route integration.
+✅ Passed: verify:watchlist-foundation
+⚠️ Skipped: verify:watchlist-security-management is not registered
+⚠️ Skipped: verify:watchlist-groups is not registered
+⚠️ Skipped: verify:watchlist-views is not registered
+⚠️ Skipped: verify:watchlist-alerts is not registered
+
+✅ All registered verification scripts passed.
+
+============================================================
+6. RUNNING TYPESCRIPT CHECK WHEN AVAILABLE
+============================================================
+src/components/transactions/ProfessionalTransactionsWorkspace.tsx(1800,14): error TS2739: Type '{ rows: NormalisedTransaction[]; selectedIds: Set<string>; focusedId: string; sortKey: TransactionSortKey; sortDirection: "desc" | "asc"; ... 8 more ...; onDelete: (transaction: NormalisedTransaction) => void; }' is missing the following properties from type 'Props': columnLayout, onColumnLayoutChange
+src/components/transactions/TransactionChangeSummary.tsx(64,9): error TS2322: Type '{ key: string; label: string; before: string; after: string; }[]' is not assignable to type 'DisplayRow[]'.
+  Type '{ key: string; label: string; before: string; after: string; }' is not assignable to type 'DisplayRow'.
+    Types of property 'key' are incompatible.
+      Type 'string' is not assignable to type 'keyof NormalisedTransaction'.
+src/components/watchlist/ProfessionalWatchlistWorkspace.tsx(214,8): error TS2739: Type '{ securities: WatchlistSecurity[]; sortKey: WatchlistSortKey; sortDirection: WatchlistSortDirection; onSort: (key: WatchlistSortKey) => void; }' is missing the following properties from type 'Props': onEdit, onRemove, onTransfer
+
+============================================================
+❌ RECOVERY STOPPED
+============================================================
+TypeScript checking failed.
+
+No deployment was performed.
+Current files remain available in the Codespace.
+Full report:
+  .lgrbz-recovery/recovery-20260711-133114.log
+exit

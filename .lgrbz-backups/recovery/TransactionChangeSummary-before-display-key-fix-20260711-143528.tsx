@@ -17,7 +17,7 @@ type Props = {
 };
 
 type DisplayRow = {
-  key: string;
+  key: keyof NormalisedTransaction;
   label: string;
   before: string;
   after: string;

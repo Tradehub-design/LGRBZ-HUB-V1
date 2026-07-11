@@ -114,7 +114,27 @@ export function ProfessionalTransactionsWorkspace({
   onRestoreTransactions,
 }: Props) {
 
-const workspaceRef =
+  const [
+    columnLayout,
+    setColumnLayout,
+  ] = useState<TransactionColumnLayout>(
+    () =>
+      loadTransactionColumnLayout()
+  );
+
+  const updateColumnLayout = (
+    layout: TransactionColumnLayout
+  ) => {
+    setColumnLayout(
+      layout
+    );
+
+    saveTransactionColumnLayout(
+      layout
+    );
+  };
+
+  const workspaceRef =
     useRef<HTMLDivElement | null>(null);
 
   const [filters, setFilters] =

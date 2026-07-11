@@ -40,12 +40,6 @@ import {
   TransactionTablePreferences,
 } from "@/lib/transactions/transactionTablePreferences";
 import {
-  defaultTransactionColumnLayout,
-  loadTransactionColumnLayout,
-  saveTransactionColumnLayout,
-  TransactionColumnLayout,
-} from "@/lib/transactions/transactionColumnLayout";
-import {
   getTransactionFieldValue,
   transactionToClipboardCsv,
   transactionToClipboardText,
@@ -113,8 +107,7 @@ export function ProfessionalTransactionsWorkspace({
   onBulkDeleteTransactions,
   onRestoreTransactions,
 }: Props) {
-
-const workspaceRef =
+  const workspaceRef =
     useRef<HTMLDivElement | null>(null);
 
   const [filters, setFilters] =
@@ -284,14 +277,6 @@ const workspaceRef =
       defaultTransactionTablePreferences
     );
 
-  const [
-    columnLayout,
-    setColumnLayout,
-  ] =
-    useState<TransactionColumnLayout>(
-      defaultTransactionColumnLayout
-    );
-
   const sourceNormalised =
     useMemo(
       () =>
@@ -317,12 +302,6 @@ const workspaceRef =
   useEffect(() => {
     setTablePreferences(
       loadTransactionTablePreferences()
-    );
-  }, []);
-
-  useEffect(() => {
-    setColumnLayout(
-      loadTransactionColumnLayout()
     );
   }, []);
 
@@ -651,18 +630,6 @@ const workspaceRef =
       tone: "success",
       duration: 3500,
     });
-  };
-
-  const updateColumnLayout = (
-    layout: TransactionColumnLayout
-  ) => {
-    setColumnLayout(
-      layout
-    );
-
-    saveTransactionColumnLayout(
-      layout
-    );
   };
 
   const focusSearch =
