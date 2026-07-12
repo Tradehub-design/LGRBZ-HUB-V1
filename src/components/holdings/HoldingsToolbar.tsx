@@ -1,70 +1,38 @@
 "use client";
 
-import {
+interface Props{
+search:string;
+onSearch(v:string):void;
+}
 
-Download,
-
-RefreshCw,
-
-Search,
-
-Settings2
-
-} from "lucide-react";
-
-export default function HoldingsToolbar(){
+export default function HoldingsToolbar({
+search,
+onSearch
+}:Props){
 
 return(
 
-<div className="flex flex-wrap items-center justify-between gap-4">
+<div className="flex flex-wrap gap-3">
 
-<div>
+<input
+value={search}
+onChange={e=>onSearch(e.target.value)}
+placeholder="Search holdings..."
+className="w-full rounded-xl border p-3 md:max-w-md"
+/>
 
-<h1 className="text-3xl font-bold">
-
-Holdings
-
-</h1>
-
-<p className="text-muted-foreground">
-
-Professional Portfolio Workspace
-
-</p>
-
-</div>
-
-<div className="flex gap-2">
-
-<button className="rounded-lg border p-2">
-
-<Search size={18}/>
-
+<button
+className="rounded-xl border px-4 py-2">
+Export CSV
 </button>
 
-<button className="rounded-lg border p-2">
-
-<RefreshCw size={18}/>
-
+<button
+className="rounded-xl border px-4 py-2">
+Filters
 </button>
-
-<button className="rounded-lg border p-2">
-
-<Download size={18}/>
-
-</button>
-
-<button className="rounded-lg border p-2">
-
-<Settings2 size={18}/>
-
-</button>
-
-</div>
 
 </div>
 
 );
 
 }
-

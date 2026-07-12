@@ -22,3 +22,4 @@ build-error.lognpm
 # LGRBZ local recovery and diagnostics
 
 *.bak
+.lgrbz-audit/

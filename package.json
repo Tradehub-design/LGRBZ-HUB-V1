@@ -17,7 +17,10 @@
     "verify:dashboard-v2-foundation": "node scripts/verify-dashboard-v2-foundation.mjs",
     "verify:holdings-v2-foundation": "node scripts/verify-holdings-v2-foundation.mjs",
     "typecheck": "tsc --noEmit --pretty false",
-    "verify": "npm run typecheck && npm run build"
+    "verify": "npm run typecheck && npm run build",
+    "verify:live-data-foundation": "node scripts/verify-live-data-foundation.mjs",
+    "verify:dividend-data-engine": "node scripts/verify-dividend-data-engine.mjs",
+    "verify:dividend-centre-v2": "node scripts/verify-dividend-centre-v2.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",
