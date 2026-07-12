@@ -11,3 +11,14 @@ yarn-error.log*
 Thumbs.db
 coverage/
 .vscode/
+# LGRBZ local recovery and build diagnostics
+.lgrbz-backups/
+.lgrbz-recovery/
+build-error.log
+build-error.lognpm
+/build
+/run
+*.local-build.log
+# LGRBZ local recovery and diagnostics
+
+*.bak

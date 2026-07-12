@@ -10,7 +10,14 @@
     "generate:ledger": "node scripts/generate-embedded-ledger.mjs",
     "verify:transactions": "node scripts/verify-professional-transactions.mjs",
     "verify:transaction-productivity": "node scripts/verify-transaction-productivity.mjs",
-    "verify:watchlist-foundation": "node scripts/verify-professional-watchlist-foundation.mjs"
+    "verify:watchlist-foundation": "node scripts/verify-professional-watchlist-foundation.mjs",
+    "verify:watchlist-quotes": "node scripts/verify-watchlist-quotes.mjs",
+    "verify:watchlist-intelligence": "node scripts/verify-watchlist-intelligence.mjs",
+    "verify:watchlist-productivity": "node scripts/verify-watchlist-productivity.mjs",
+    "verify:dashboard-v2-foundation": "node scripts/verify-dashboard-v2-foundation.mjs",
+    "verify:holdings-v2-foundation": "node scripts/verify-holdings-v2-foundation.mjs",
+    "typecheck": "tsc --noEmit --pretty false",
+    "verify": "npm run typecheck && npm run build"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",

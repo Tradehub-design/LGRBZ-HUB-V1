@@ -32,15 +32,17 @@ export type WatchlistSecurity = {
   fiftyTwoWeekHigh: number;
   fiftyTwoWeekLow: number;
   volume: number;
-  averageVolume: number;
-  marketCapitalisation: number;
+  averageVolume?: number;
+  marketCapitalisation?: number;
   targetPrice: number | null;
   analystRating: string;
   note: string;
   tags: string[];
   alertCount: number;
-  addedAt: string;
-  updatedAt: string;
+  addedAt?: string;
+  updatedAt?: string;
+
+  createdAt?: string;
 };
 
 export type WatchlistGroup = {
@@ -62,6 +64,8 @@ export type WatchlistState = {
   viewMode: WatchlistViewMode;
   sortKey: WatchlistSortKey;
   sortDirection: WatchlistSortDirection;
+  /** Last modification timestamp for persistence and exports. */
+  updatedAt?: string;
 };
 
 export type WatchlistFilters = {
