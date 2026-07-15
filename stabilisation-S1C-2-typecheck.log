@@ -1,0 +1,25 @@
+src/app/(dashboard)/dashboard/page.tsx(161,38): error TS2322: Type '(symbol?: string) => void' is not assignable to type 'readonly unknown[]'.
+src/app/(dashboard)/holdings/page.tsx(182,30): error TS2322: Type '(symbol?: string) => void' is not assignable to type 'readonly unknown[]'.
+src/app/(dashboard)/holdings/page.tsx(186,37): error TS2322: Type '(symbol?: string) => void' is not assignable to type 'readonly unknown[]'.
+src/app/api/market-data/market-hours/route.ts(55,7): error TS2552: Cannot find name 'runMarketHoursDiagnosticSummary'. Did you mean 'createMarketHoursDiagnosticSummary'?
+src/app/api/market-data/market-hours/route.ts(60,12): error TS2554: Expected 3-4 arguments, but got 2.
+src/hooks/useLiveQuotes.ts(347,15): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(message?: string, options?: ErrorOptions): Error', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type 'string'.
+  Overload 2 of 2, '(message?: string): Error', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type 'string'.
+src/hooks/useLiveQuotes.ts(357,31): error TS2339: Property 'quotes' does not exist on type 'unknown'.
+src/hooks/useLiveQuotes.ts(358,15): error TS2740: Type '{}' is missing the following properties from type 'MarketDataProviderHealth[]': length, pop, push, concat, and 35 more.
+src/hooks/useLiveQuotes.ts(367,31): error TS2339: Property 'completedAt' does not exist on type 'unknown'.
+src/lib/market-data/adaptiveQuoteFreshness.ts(599,5): error TS2561: Object literal may only specify known properties, but 'acceptableForValuation' does not exist in type 'AdaptiveQuoteFreshnessResult'. Did you mean to write 'isAcceptableForValuation'?
+src/lib/market-data/marketDataRefreshDiagnostics.ts(10,3): error TS2305: Module '"./marketDataRefreshTypes"' has no exported member 'DiagnosticRefreshJob'.
+src/lib/market-data/marketSessionDiagnostics.ts(122,31): error TS2304: Cannot find name 'MarketSessionSnapshot'.
+src/lib/market-data/multiProviderQuoteResolver.ts(624,11): error TS2345: Argument of type 'string' is not assignable to parameter of type 'MarketDataAdapterError'.
+src/lib/market-data/multiProviderQuoteResolver.ts(648,9): error TS2322: Type 'string' is not assignable to type 'MarketDataAdapterError'.
+src/lib/market-data/quoteCache.ts(105,5): error TS2345: Argument of type '{ quote: MarketQuote; storedAt: number; expiresAt: number; }' is not assignable to parameter of type 'QuoteCacheEntry'.
+  Type '{ quote: MarketQuote; storedAt: number; expiresAt: number; }' is missing the following properties from type 'QuoteCacheEntry': key, createdAt
+src/lib/market-data/quoteCache.ts(174,5): error TS2363: The right-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+src/lib/market-data/quoteQuality.ts(717,7): error TS2353: Object literal may only specify known properties, and 'receivedAt' does not exist in type 'AdaptiveQuoteFreshnessInput'.
+src/lib/market-data/quoteQuality.ts(872,3): error TS2739: Type '{ symbol: string; canonicalSymbol: string; displaySymbol: string; price: number; previousClose: number; open: number; high: number; low: number; change: number; changePercent: number; volume: number; ... 19 more ...; warnings: string[]; }' is missing the following properties from type 'NormalisedMarketQuote': marketState, adaptiveCacheTtlSeconds, adaptiveStaleWhileRevalidateSeconds, freshnessLabel, freshnessExplanation
+src/lib/market-data/quoteService.ts(149,9): error TS2345: Argument of type 'string' is not assignable to parameter of type 'MarketDataProviderId'.
+src/lib/market-data/symbolNormaliser.ts(214,7): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string'.

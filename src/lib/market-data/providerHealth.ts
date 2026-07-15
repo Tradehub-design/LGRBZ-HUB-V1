@@ -645,3 +645,172 @@ export function providerHealthMap(
     )
   );
 }
+
+
+// STABILISATION_S1A_PROVIDER_HEALTH_COMPATIBILITY
+
+type CompatibilityProviderState = {
+  configured: boolean;
+  attempts: number;
+  successes: number;
+  failures: number;
+
+  lastAttemptAt: string | null;
+  lastSuccessAt: string | null;
+  lastFailureAt: string | null;
+  lastError: string | null;
+};
+
+const compatibilityProviderState =
+  new Map<
+    string,
+    CompatibilityProviderState
+  >();
+
+function compatibilityStateFor(
+  provider: string
+): CompatibilityProviderState {
+  const key =
+    String(provider);
+
+  const existing =
+    compatibilityProviderState.get(
+      key
+    );
+
+  if (existing) {
+    return existing;
+  }
+
+  const created:
+    CompatibilityProviderState = {
+      configured: false,
+      attempts: 0,
+      successes: 0,
+      failures: 0,
+
+      lastAttemptAt: null,
+      lastSuccessAt: null,
+      lastFailureAt: null,
+      lastError: null,
+    };
+
+  compatibilityProviderState.set(
+    key,
+    created
+  );
+
+  return created;
+}
+
+export function registerProviderConfiguration(
+  provider: string,
+  configured = true,
+  ..._compatibilityArguments: unknown[]
+){
+  const state =
+    compatibilityStateFor(
+      provider
+    );
+
+  state.configured =
+    configured;
+
+  return {
+    provider,
+    ...state,
+  };
+}
+
+export function recordProviderAttempt(
+  provider: string,
+  ..._compatibilityArguments: unknown[]
+){
+  const state =
+    compatibilityStateFor(
+      provider
+    );
+
+  state.attempts +=
+    1;
+
+  state.lastAttemptAt =
+    new Date().toISOString();
+
+  return {
+    provider,
+    ...state,
+  };
+}
+
+export function recordProviderSuccess(
+  provider: string,
+  ..._compatibilityArguments: unknown[]
+){
+  const state =
+    compatibilityStateFor(
+      provider
+    );
+
+  state.successes +=
+    1;
+
+  state.lastSuccessAt =
+    new Date().toISOString();
+
+  state.lastError =
+    null;
+
+  return {
+    provider,
+    ...state,
+  };
+}
+
+export function recordProviderFailure(
+  provider: string,
+  error?: unknown,
+  ..._compatibilityArguments: unknown[]
+){
+  const state =
+    compatibilityStateFor(
+      provider
+    );
+
+  state.failures +=
+    1;
+
+  state.lastFailureAt =
+    new Date().toISOString();
+
+  state.lastError =
+    error instanceof Error
+      ? error.message
+      : error === undefined
+        ? "Unknown provider failure"
+        : String(error);
+
+  return {
+    provider,
+    ...state,
+  };
+}
+
+export function getCompatibilityProviderHealth() {
+  return Array.from(
+    compatibilityProviderState.entries()
+  ).map(
+    ([provider, state]) => ({
+      provider,
+      ...state,
+
+      available:
+        state.configured,
+
+      healthy:
+        state.failures === 0 ||
+        state.successes >=
+          state.failures,
+    })
+  );
+}

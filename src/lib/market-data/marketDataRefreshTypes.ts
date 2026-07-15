@@ -199,3 +199,26 @@ export type RefreshIntervalRecommendation = {
 
   reason: string;
 };
+
+
+export type MarketDataRefreshDiagnosticSummary = {
+  generatedAt: string;
+
+  policy: unknown;
+  statistics: unknown;
+  jobs: unknown[];
+
+  activeJobs: unknown[];
+  queuedJobs: unknown[];
+  completedJobs: unknown[];
+  failedJobs: unknown[];
+
+  activeJobCount: number;
+  queuedJobCount: number;
+  completedJobCount: number;
+  failedJobCount: number;
+
+  warnings: string[];
+
+  [key: string]: unknown;
+};

@@ -16,7 +16,7 @@ import {
 } from "./providerUtils";
 
 const PROVIDER_ID =
-  "alpha-vantage" as const;
+  "ALPHA_VANTAGE" as const;
 
 function apiKey() {
   return (
@@ -212,6 +212,7 @@ async function getQuotes(
     return {
       provider:
         PROVIDER_ID,
+    ok: false,
       quotes: [],
       unresolvedSymbols:
         symbols,
@@ -288,6 +289,7 @@ async function getQuotes(
     return {
       provider:
         PROVIDER_ID,
+    ok: true,
       quotes,
       unresolvedSymbols,
       requestedAt,
@@ -309,6 +311,7 @@ async function getQuotes(
     return {
       provider:
         PROVIDER_ID,
+    ok: false,
       quotes: [],
       unresolvedSymbols:
         symbols,

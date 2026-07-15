@@ -12,7 +12,7 @@ import {
 } from "../dividendUtils";
 
 const PROVIDER_ID =
-  "alpha-vantage" as const;
+  "ALPHA_VANTAGE" as const;
 
 function apiKey() {
   return (

@@ -1,0 +1,11 @@
+
+> lgrbz-hub-v1@1.0.0 typecheck
+> tsc --noEmit --pretty false
+
+src/app/api/market-data/market-hours/route.ts(47,23): error TS1005: ',' expected.
+src/app/api/market-data/market-hours/route.ts(50,7): error TS1128: Declaration or statement expected.
+src/app/api/market-data/market-hours/route.ts(53,5): error TS1472: 'catch' or 'finally' expected.
+src/app/api/market-data/market-hours/route.ts(56,5): error TS1005: 'try' expected.
+src/app/api/market-data/market-hours/route.ts(64,1): error TS1128: Declaration or statement expected.
+src/app/api/market-data/market-hours/route.ts(69,3): error TS1128: Declaration or statement expected.
+src/app/api/market-data/market-hours/route.ts(70,1): error TS1128: Declaration or statement expected.

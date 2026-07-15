@@ -1,3 +1,4 @@
+export { normaliseLegacyProviderId } from "./compatibility/legacyMarketDataCompatibility";
 export * from "./marketDataReliabilityTypes";
 export * from "./client";
 export * from "./marketDataRefreshQueue";
@@ -10,7 +11,10 @@ export * from "./marketSessionTypes";
 export * from "./marketSessionDiagnostics";
 export * from "./marketClock";
 export * from "./exchangeTradingCalendar";
-export * from "./adaptiveQuoteFreshness";
+export {
+  calculateAdaptiveQuoteFreshness,
+  createAdaptiveQuoteFreshness,
+} from "./adaptiveQuoteFreshness";
 export * from "./providerSymbolMapper";
 export * from "./multiProviderQuoteResolver";
 export * from "./marketDataHttpClient";
@@ -29,3 +33,5 @@ export * from "./providerHealth";
 export * from "./providerRegistry";
 export * from "./providerSelector";
 export * from "./quoteQuality";
+
+export * from "./symbolNormaliser";

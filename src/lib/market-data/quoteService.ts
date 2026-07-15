@@ -19,6 +19,53 @@ import {
   normaliseMarketSymbols,
 } from "./symbolNormaliser";
 
+
+
+
+
+function normaliseQuoteServiceProviderId(
+  value: unknown
+): MarketDataProviderId {
+  return String(
+    value ||
+    "UNAVAILABLE"
+  )
+    .trim()
+    .replace(
+      /-/g,
+      "_"
+    )
+    .toUpperCase() as
+      MarketDataProviderId;
+}
+type QuoteProviderCallable = (
+  ...args: unknown[]
+) => Promise<unknown>;
+
+function quoteProviderCallable(
+  value: unknown
+): QuoteProviderCallable | null {
+  return typeof value === "function"
+    ? value as QuoteProviderCallable
+    : null;
+}
+
+function quoteServiceProviderId(
+  value: unknown
+): MarketDataProviderId {
+  return String(
+    value ||
+    "UNAVAILABLE"
+  )
+    .trim()
+    .replace(
+      /-/g,
+      "_"
+    )
+    .toUpperCase() as
+      MarketDataProviderId;
+}
+
 type GetQuotesOptions = {
   forceRefresh?: boolean;
 };
@@ -107,7 +154,7 @@ export async function getMarketQuotes(
       1;
 
     const result =
-      await provider.getQuotes(
+      await (quoteProviderCallable(provider.getQuotes) ?? (async () => null))(
         unresolved
       );
 
@@ -116,7 +163,9 @@ export async function getMarketQuotes(
       0
     ) {
       providersUsed.add(
-        provider.id
+        normaliseQuoteServiceProviderId(
+          provider.id
+        )
       );
     }
 
@@ -163,7 +212,7 @@ export async function getMarketQuotes(
       );
 
       providersUsed.add(
-        "cache"
+        "CACHE"
       );
 
       continue;
@@ -224,10 +273,10 @@ export async function getMarketQuotes(
     used.find(
       (provider) =>
         provider !==
-        "cache"
+        "CACHE"
     ) ??
     used[0] ??
-    "unavailable";
+    "UNAVAILABLE";
 
   return {
     quotes,
@@ -240,7 +289,7 @@ export async function getMarketQuotes(
     unresolvedSymbols,
 
     provider:
-      primaryProvider,
+      quoteServiceProviderId(primaryProvider),
     providersUsed:
       used,
 

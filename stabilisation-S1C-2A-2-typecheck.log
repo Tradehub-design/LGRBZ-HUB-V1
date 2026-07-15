@@ -1,0 +1,22 @@
+
+> lgrbz-hub-v1@1.0.0 typecheck
+> tsc --noEmit --pretty false
+
+src/app/api/market-data/market-hours/route.ts(26,3): error TS2552: Cannot find name 'createMarketSessionSnapshot'. Did you mean 'callMarketSessionSnapshot'?
+src/app/api/market-data/market-hours/route.ts(67,12): error TS2554: Expected 3-4 arguments, but got 2.
+src/hooks/useLiveQuotes.ts(387,15): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(message?: string, options?: ErrorOptions): Error', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type 'string'.
+  Overload 2 of 2, '(message?: string): Error', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type 'string'.
+src/hooks/useLiveQuotes.ts(397,31): error TS2339: Property 'quotes' does not exist on type 'unknown'.
+src/hooks/useLiveQuotes.ts(398,15): error TS2740: Type '{}' is missing the following properties from type 'MarketDataProviderHealth[]': length, pop, push, concat, and 35 more.
+src/hooks/useLiveQuotes.ts(407,31): error TS2339: Property 'completedAt' does not exist on type 'unknown'.
+src/lib/market-data/adaptiveQuoteFreshness.ts(599,5): error TS2561: Object literal may only specify known properties, but 'acceptableForValuation' does not exist in type 'AdaptiveQuoteFreshnessResult'. Did you mean to write 'isAcceptableForValuation'?
+src/lib/market-data/marketSessionDiagnostics.ts(122,31): error TS2304: Cannot find name 'MarketSessionSnapshot'.
+src/lib/market-data/multiProviderQuoteResolver.ts(56,4): error TS2304: Cannot find name 'MarketDataAdapterError'.
+src/lib/market-data/multiProviderQuoteResolver.ts(62,7): error TS2304: Cannot find name 'MarketDataAdapterError'.
+src/lib/market-data/multiProviderQuoteResolver.ts(76,8): error TS2304: Cannot find name 'MarketDataAdapterError'.
+src/lib/market-data/quoteCache.ts(181,9): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string | number'.
+src/lib/market-data/quoteQuality.ts(717,7): error TS2353: Object literal may only specify known properties, and 'receivedAt' does not exist in type 'AdaptiveQuoteFreshnessInput'.
+src/lib/market-data/quoteQuality.ts(872,3): error TS2739: Type '{ symbol: string; canonicalSymbol: string; displaySymbol: string; price: number; previousClose: number; open: number; high: number; low: number; change: number; changePercent: number; volume: number; ... 19 more ...; warnings: string[]; }' is missing the following properties from type 'NormalisedMarketQuote': marketState, adaptiveCacheTtlSeconds, adaptiveStaleWhileRevalidateSeconds, freshnessLabel, freshnessExplanation

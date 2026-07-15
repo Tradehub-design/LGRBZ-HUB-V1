@@ -127,21 +127,21 @@ function providerLabel(
 
   if (
     provider ===
-    "twelve-data"
+    "TWELVE_DATA"
   ) {
     return "Twelve Data";
   }
 
   if (
     provider ===
-    "alpha-vantage"
+    "ALPHA_VANTAGE"
   ) {
     return "Alpha Vantage";
   }
 
   if (
     provider ===
-    "finnhub"
+    "FINNHUB"
   ) {
     return "Finnhub";
   }

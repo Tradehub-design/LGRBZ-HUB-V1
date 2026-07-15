@@ -1,0 +1,80 @@
+
+> lgrbz-hub-v1@1.0.0 typecheck
+> tsc --noEmit --pretty false
+
+src/app/(dashboard)/dashboard/page.tsx(142,48): error TS2304: Cannot find name 'openHoldings'.
+src/app/(dashboard)/holdings/page.tsx(163,40): error TS2304: Cannot find name 'openHoldings'.
+src/app/(dashboard)/holdings/page.tsx(167,47): error TS2304: Cannot find name 'openHoldings'.
+src/app/api/market-data/market-hours/route.ts(59,12): error TS2554: Expected 3-4 arguments, but got 2.
+src/components/market-data/MarketDataProviderStatus.tsx(175,21): error TS2322: Type 'unknown' is not assignable to type 'ReactNode'.
+src/hooks/useLiveQuotes.ts(254,15): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(message?: string, options?: ErrorOptions): Error', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type 'string'.
+  Overload 2 of 2, '(message?: string): Error', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type 'string'.
+src/hooks/useLiveQuotes.ts(264,31): error TS2339: Property 'quotes' does not exist on type 'unknown'.
+src/hooks/useLiveQuotes.ts(265,15): error TS2740: Type '{}' is missing the following properties from type 'MarketDataProviderHealth[]': length, pop, push, concat, and 35 more.
+src/hooks/useLiveQuotes.ts(274,31): error TS2339: Property 'completedAt' does not exist on type 'unknown'.
+src/lib/market-data/marketDataRefreshDiagnostics.ts(108,3): error TS2740: Type '{ generatedAt: string; policy: unknown; statistics: any; activeJobs: { updatedAt: string; }[]; queuedJobs: { updatedAt: string; }[]; retryJobs: { updatedAt: string; }[]; recentCompletedJobs: { updatedAt: string; }[]; recentFailedJobs: { ...; }[]; providerHealth: ProviderHealthStore; }' is missing the following properties from type 'MarketDataRefreshDiagnosticSummary': jobs, completedJobs, failedJobs, activeJobCount, and 4 more.
+src/lib/market-data/marketDataRefreshDiagnostics.ts(117,7): error TS2349: This expression is not callable.
+  Type '{}' has no call signatures.
+src/lib/market-data/marketDataRefreshDiagnostics.ts(121,9): error TS2345: Argument of type 'unknown[]' is not assignable to parameter of type '{ updatedAt: string; }[]'.
+  Property 'updatedAt' is missing in type '{}' but required in type '{ updatedAt: string; }'.
+src/lib/market-data/marketDataRefreshDiagnostics.ts(125,17): error TS2339: Property 'state' does not exist on type 'unknown'.
+src/lib/market-data/marketDataRefreshDiagnostics.ts(132,9): error TS2345: Argument of type 'unknown[]' is not assignable to parameter of type '{ updatedAt: string; }[]'.
+  Property 'updatedAt' is missing in type '{}' but required in type '{ updatedAt: string; }'.
+src/lib/market-data/marketDataRefreshDiagnostics.ts(136,17): error TS2339: Property 'state' does not exist on type 'unknown'.
+src/lib/market-data/marketDataRefreshDiagnostics.ts(143,9): error TS2345: Argument of type 'unknown[]' is not assignable to parameter of type '{ updatedAt: string; }[]'.
+  Property 'updatedAt' is missing in type '{}' but required in type '{ updatedAt: string; }'.
+src/lib/market-data/marketDataRefreshDiagnostics.ts(147,17): error TS2339: Property 'state' does not exist on type 'unknown'.
+src/lib/market-data/marketDataRefreshDiagnostics.ts(154,9): error TS2345: Argument of type 'unknown[]' is not assignable to parameter of type '{ updatedAt: string; }[]'.
+  Property 'updatedAt' is missing in type '{}' but required in type '{ updatedAt: string; }'.
+src/lib/market-data/marketDataRefreshDiagnostics.ts(158,17): error TS2339: Property 'state' does not exist on type 'unknown'.
+src/lib/market-data/marketDataRefreshDiagnostics.ts(168,9): error TS2345: Argument of type 'unknown[]' is not assignable to parameter of type '{ updatedAt: string; }[]'.
+  Property 'updatedAt' is missing in type '{}' but required in type '{ updatedAt: string; }'.
+src/lib/market-data/marketDataRefreshDiagnostics.ts(172,17): error TS2339: Property 'state' does not exist on type 'unknown'.
+src/lib/market-data/marketSessionDiagnostics.ts(106,11): error TS2367: This comparison appears to be unintentional because the types '"UNKNOWN" | "PRE_MARKET" | "AFTER_HOURS" | "CLOSED" | "CONTINUOUS"' and '"REGULAR"' have no overlap.
+src/lib/market-data/marketSessionDiagnostics.ts(121,5): error TS2322: Type 'CompatibilityMarketSessionSnapshot[]' is not assignable to type 'MarketSessionSnapshot[]'.
+  Type 'CompatibilityMarketSessionSnapshot' is missing the following properties from type 'MarketSessionSnapshot': localDate, dayName, tradingStatus, closureReason, and 9 more.
+src/lib/market-data/multiProviderQuoteResolver.ts(482,35): error TS2339: Property 'error' does not exist on type 'ProviderQuoteResult'.
+  Property 'error' does not exist on type 'ProviderQuoteSuccess'.
+src/lib/market-data/multiProviderQuoteResolver.ts(584,27): error TS2339: Property 'error' does not exist on type 'ProviderQuoteResult'.
+  Property 'error' does not exist on type 'ProviderQuoteSuccess'.
+src/lib/market-data/providers/alphaVantageProvider.ts(212,5): error TS2741: Property 'ok' is missing in type '{ provider: "ALPHA_VANTAGE"; quotes: undefined[]; unresolvedSymbols: NormalisedMarketSymbol[]; requestedAt: string; completedAt: string; durationMs: number; }' but required in type 'MarketDataProviderResult'.
+src/lib/market-data/providers/alphaVantageProvider.ts(278,9): error TS2554: Expected 1 arguments, but got 2.
+src/lib/market-data/providers/alphaVantageProvider.ts(284,9): error TS2554: Expected 1-2 arguments, but got 3.
+src/lib/market-data/providers/alphaVantageProvider.ts(288,5): error TS2741: Property 'ok' is missing in type '{ provider: "ALPHA_VANTAGE"; quotes: MarketQuote[]; unresolvedSymbols: NormalisedMarketSymbol[]; requestedAt: string; completedAt: string; durationMs: number; }' but required in type 'MarketDataProviderResult'.
+src/lib/market-data/providers/alphaVantageProvider.ts(306,7): error TS2554: Expected 1-2 arguments, but got 3.
+src/lib/market-data/providers/alphaVantageProvider.ts(309,5): error TS2741: Property 'ok' is missing in type '{ provider: "ALPHA_VANTAGE"; quotes: undefined[]; unresolvedSymbols: NormalisedMarketSymbol[]; requestedAt: string; completedAt: string; durationMs: number; }' but required in type 'MarketDataProviderResult'.
+src/lib/market-data/providers/finnhubProvider.ts(158,5): error TS2741: Property 'ok' is missing in type '{ provider: "FINNHUB"; quotes: undefined[]; unresolvedSymbols: NormalisedMarketSymbol[]; requestedAt: string; completedAt: string; durationMs: number; }' but required in type 'MarketDataProviderResult'.
+src/lib/market-data/providers/finnhubProvider.ts(241,9): error TS2554: Expected 1 arguments, but got 2.
+src/lib/market-data/providers/finnhubProvider.ts(247,9): error TS2554: Expected 1-2 arguments, but got 3.
+src/lib/market-data/providers/finnhubProvider.ts(251,5): error TS2741: Property 'ok' is missing in type '{ provider: "FINNHUB"; quotes: MarketQuote[]; unresolvedSymbols: NormalisedMarketSymbol[]; requestedAt: string; completedAt: string; durationMs: number; }' but required in type 'MarketDataProviderResult'.
+src/lib/market-data/providers/finnhubProvider.ts(269,7): error TS2554: Expected 1-2 arguments, but got 3.
+src/lib/market-data/providers/finnhubProvider.ts(272,5): error TS2741: Property 'ok' is missing in type '{ provider: "FINNHUB"; quotes: undefined[]; unresolvedSymbols: NormalisedMarketSymbol[]; requestedAt: string; completedAt: string; durationMs: number; }' but required in type 'MarketDataProviderResult'.
+src/lib/market-data/providers/providerUtils.ts(173,7): error TS2322: Type 'string' is not assignable to type 'MarketDataExchange'.
+src/lib/market-data/providers/providerUtils.ts(224,5): error TS2322: Type 'QuoteConfidence | "NONE"' is not assignable to type 'QuoteConfidence'.
+  Type '"NONE"' is not assignable to type 'QuoteConfidence'.
+src/lib/market-data/providers/providerUtils.ts(251,5): error TS2322: Type '"UNAVAILABLE"' is not assignable to type 'MarketDataProviderId'.
+src/lib/market-data/providers/twelveDataProvider.ts(112,5): error TS2741: Property 'ok' is missing in type '{ provider: "TWELVE_DATA"; quotes: undefined[]; unresolvedSymbols: NormalisedMarketSymbol[]; requestedAt: string; completedAt: string; durationMs: number; }' but required in type 'MarketDataProviderResult'.
+src/lib/market-data/providers/twelveDataProvider.ts(288,7): error TS2554: Expected 1 arguments, but got 2.
+src/lib/market-data/providers/twelveDataProvider.ts(291,5): error TS2741: Property 'ok' is missing in type '{ provider: "TWELVE_DATA"; quotes: MarketQuote[]; unresolvedSymbols: NormalisedMarketSymbol[]; requestedAt: string; completedAt: string; durationMs: number; }' but required in type 'MarketDataProviderResult'.
+src/lib/market-data/providers/twelveDataProvider.ts(309,7): error TS2554: Expected 1-2 arguments, but got 3.
+src/lib/market-data/providers/twelveDataProvider.ts(312,5): error TS2741: Property 'ok' is missing in type '{ provider: "TWELVE_DATA"; quotes: undefined[]; unresolvedSymbols: NormalisedMarketSymbol[]; requestedAt: string; completedAt: string; durationMs: number; }' but required in type 'MarketDataProviderResult'.
+src/lib/market-data/quoteCache.ts(51,7): error TS2322: Type 'number' is not assignable to type 'string'.
+src/lib/market-data/quoteCache.ts(86,5): error TS2365: Operator '>' cannot be applied to types 'number' and 'string'.
+src/lib/market-data/quoteCache.ts(117,5): error TS2363: The right-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+src/lib/market-data/quoteFreshness.ts(79,7): error TS2322: Type '"MANUAL"' is not assignable to type 'QuoteFreshnessStatus'.
+src/lib/market-data/quoteFreshness.ts(99,7): error TS2322: Type '"NONE"' is not assignable to type 'QuoteConfidence'.
+src/lib/market-data/quoteFreshness.ts(157,7): error TS2322: Type '"END_OF_DAY"' is not assignable to type 'QuoteFreshnessStatus'.
+src/lib/market-data/quoteFreshness.ts(202,5): error TS2322: Type '"REAL_TIME"' is not assignable to type 'QuoteFreshnessStatus'.
+src/lib/market-data/quoteQuality.ts(617,7): error TS2353: Object literal may only specify known properties, and 'receivedAt' does not exist in type 'AdaptiveQuoteFreshnessInput'.
+src/lib/market-data/quoteQuality.ts(641,26): error TS2339: Property 'thresholds' does not exist on type 'AdaptiveQuoteFreshnessResult'.
+src/lib/market-data/quoteQuality.ts(770,23): error TS2551: Property 'acceptableForValuation' does not exist on type 'AdaptiveQuoteFreshnessResult'. Did you mean 'isAcceptableForValuation'?
+src/lib/market-data/quoteQuality.ts(772,3): error TS2740: Type '{ symbol: string; canonicalSymbol: string; displaySymbol: string; price: number; previousClose: number; open: number; high: number; low: number; change: number; changePercent: number; volume: number; ... 19 more ...; warnings: string[]; }' is missing the following properties from type 'NormalisedMarketQuote': marketState, marketTimezone, nextMarketOpenAt, nextMarketCloseAt, and 4 more.
+src/lib/market-data/quoteQuality.ts(873,14): error TS2339: Property 'marketSession' does not exist on type 'AdaptiveQuoteFreshnessResult'.
+src/lib/market-data/quoteService.ts(110,22): error TS2349: This expression is not callable.
+  Type '{}' has no call signatures.
+src/lib/market-data/quoteService.ts(119,9): error TS2345: Argument of type 'string' is not assignable to parameter of type 'MarketDataProviderId'.
+src/lib/market-data/symbolNormaliser.ts(201,7): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string'.
+src/lib/market-data/symbolNormaliser.ts(242,3): error TS2741: Property 'symbol' is missing in type '{ originalSymbol: string; canonicalSymbol: string; providerSymbol: string; displaySymbol: string; exchange: MarketDataExchange; currency: string; }' but required in type 'NormalisedMarketSymbol'.

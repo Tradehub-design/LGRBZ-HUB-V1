@@ -1,3 +1,17 @@
+import type {
+  MarketDataProvider as LegacyMarketDataProvider,
+  MarketDataProviderHealth as LegacyMarketDataProviderHealth,
+  MarketDataProviderResult as LegacyMarketDataProviderResult,
+  MarketQuote as LegacyMarketQuote,
+  MarketQuoteBatch as LegacyMarketQuoteBatch,
+  NormalisedMarketSymbol as LegacyNormalisedMarketSymbol,
+  QuoteApiResponse as LegacyQuoteApiResponse,
+  QuoteCacheEntry as LegacyQuoteCacheEntry,
+  QuoteConfidence as LegacyQuoteConfidence,
+  QuoteFreshnessStatus as LegacyQuoteFreshnessStatus,
+  QuoteRequestSecurity as LegacyQuoteRequestSecurity,
+} from "./compatibility/legacyMarketDataCompatibility";
+
 export type MarketDataAssetType =
   | "EQUITY"
   | "ETF"
@@ -211,7 +225,7 @@ export type NormalisedMarketQuote = {
   freshness: QuoteFreshness;
 
   latencyClass: MarketDataLatencyClass;
-  tradingStatus: QuoteTradingStatus;
+  tradingStatus?: QuoteTradingStatus;
 
   marketState:
     | "OPEN"
@@ -222,15 +236,15 @@ export type NormalisedMarketQuote = {
     | "HOLIDAY"
     | "UNKNOWN";
 
-  marketTimezone: string | null;
-  nextMarketOpenAt: string | null;
-  nextMarketCloseAt: string | null;
+  marketTimezone?: string | null;
+  nextMarketOpenAt?: string | null;
+  nextMarketCloseAt?: string | null;
 
-  adaptiveCacheTtlSeconds: number | null;
-  adaptiveStaleWhileRevalidateSeconds: number | null;
+  adaptiveCacheTtlSeconds?: number | null;
+  adaptiveStaleWhileRevalidateSeconds?: number | null;
 
-  freshnessLabel: string;
-  freshnessExplanation: string;
+  freshnessLabel?: string;
+  freshnessExplanation?: string;
 
   provider: MarketDataProviderId;
   source: string;
@@ -392,3 +406,29 @@ export type MarketDataDiagnosticSummary = {
     capabilities: MarketDataCapability[];
   }>;
 };
+
+// Legacy compatibility aliases added by Stabilisation Sprint S1A.
+export type MarketDataProvider = LegacyMarketDataProvider;
+export type MarketDataProviderHealth = LegacyMarketDataProviderHealth;
+export type MarketDataProviderResult = LegacyMarketDataProviderResult;
+export type MarketQuote = LegacyMarketQuote;
+export type MarketQuoteBatch = LegacyMarketQuoteBatch;
+export type NormalisedMarketSymbol = LegacyNormalisedMarketSymbol;
+export type QuoteApiResponse = LegacyQuoteApiResponse;
+export type QuoteCacheEntry = LegacyQuoteCacheEntry;
+export type QuoteConfidence = LegacyQuoteConfidence
+  | "HIGH"
+  | "MEDIUM"
+  | "LOW"
+  | "NONE"
+  | "UNAVAILABLE";
+export type QuoteFreshnessStatus = LegacyQuoteFreshnessStatus
+  | "REAL_TIME"
+  | "LIVE"
+  | "FRESH"
+  | "DELAYED"
+  | "END_OF_DAY"
+  | "MANUAL"
+  | "STALE"
+  | "UNAVAILABLE";
+export type QuoteRequestSecurity = LegacyQuoteRequestSecurity;

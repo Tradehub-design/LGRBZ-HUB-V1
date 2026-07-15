@@ -16,7 +16,7 @@ import {
 } from "./providerUtils";
 
 const PROVIDER_ID =
-  "twelve-data" as const;
+  "TWELVE_DATA" as const;
 
 function apiKey() {
   return (
@@ -112,6 +112,7 @@ async function getQuotes(
     return {
       provider:
         PROVIDER_ID,
+    ok: false,
       quotes: [],
       unresolvedSymbols:
         symbols,
@@ -291,6 +292,7 @@ async function getQuotes(
     return {
       provider:
         PROVIDER_ID,
+    ok: true,
       quotes,
       unresolvedSymbols,
       requestedAt,
@@ -312,6 +314,7 @@ async function getQuotes(
     return {
       provider:
         PROVIDER_ID,
+    ok: false,
       quotes: [],
       unresolvedSymbols:
         symbols,

@@ -11,6 +11,72 @@ import type {
   MarketDataProviderHealth,
 } from "@/lib/market-data";
 
+
+
+
+
+function providerDisplayValue(
+  value: unknown
+): string {
+  if (typeof value === "string") {
+    return value;
+  }
+
+  if (
+    typeof value === "number" &&
+    Number.isFinite(value)
+  ) {
+    return String(value);
+  }
+
+  if (typeof value === "boolean") {
+    return value ? "Yes" : "No";
+  }
+
+  return "—";
+}
+
+function providerText(
+  value: unknown,
+  fallback = "—"
+): string {
+  if (
+    typeof value === "string"
+  ) {
+    return value;
+  }
+
+  if (
+    typeof value === "number" &&
+    Number.isFinite(value)
+  ) {
+    return String(value);
+  }
+
+  if (
+    typeof value === "boolean"
+  ) {
+    return value
+      ? "Yes"
+      : "No";
+  }
+
+  return fallback;
+}
+
+function providerNumber(
+  value: unknown,
+  fallback = 0
+): number {
+  return (
+    typeof value === "number" &&
+    Number.isFinite(value)
+  )
+    ? value
+    : fallback;
+}
+
+
 type Props = {
   providers:
     MarketDataProviderHealth[];
@@ -101,7 +167,7 @@ export function MarketDataProviderStatus({
 
                   <div>
                     <p className="text-sm font-semibold text-slate-950 dark:text-slate-50">
-                      {provider.name}
+                      {providerText(provider.name)}
                     </p>
 
                     <p className="mt-1 text-xs text-slate-500">
@@ -129,7 +195,7 @@ export function MarketDataProviderStatus({
                   </p>
 
                   <p className="mt-1 font-bold text-slate-900 dark:text-slate-100">
-                    {provider.requestCount}
+                    {providerDisplayValue(provider.requestCount)}
                   </p>
                 </div>
 
@@ -173,7 +239,7 @@ export function MarketDataProviderStatus({
 
               {provider.lastError && (
                 <p className="mt-3 rounded-xl bg-red-50 px-3 py-2 text-xs text-red-700 dark:bg-red-950/20 dark:text-red-300">
-                  {provider.lastError}
+                  {providerText(provider.lastError)}
                 </p>
               )}
             </article>

@@ -6,6 +6,60 @@ import {
   createMarketSymbolKey,
 } from "./symbolNormaliser";
 
+
+
+function quoteCacheTimestamp(
+  value: unknown
+): number {
+  if (
+    typeof value === "number" &&
+    Number.isFinite(value)
+  ) {
+    return value;
+  }
+
+  if (
+    typeof value === "string"
+  ) {
+    const numeric =
+      Number(value);
+
+    if (
+      Number.isFinite(numeric)
+    ) {
+      return numeric;
+    }
+
+    const parsed =
+      Date.parse(value);
+
+    if (
+      Number.isFinite(parsed)
+    ) {
+      return parsed;
+    }
+  }
+
+  return 0;
+}
+
+function quoteCacheIsoTimestamp(
+  value:
+    string |
+    number |
+    null |
+    undefined
+): string {
+  const timestamp =
+    quoteCacheTimestamp(value);
+
+  return new Date(
+    timestamp > 0
+      ? timestamp
+      : Date.now()
+  ).toISOString();
+}
+
 const quoteCache =
   new Map<
     string,
@@ -45,12 +99,18 @@ export function cacheQuote(
   quoteCache.set(
     key,
     {
+      key,
+
       quote,
       storedAt:
         now,
       expiresAt:
         now +
         ttlMs,
+      createdAt:
+        new Date(
+          now
+        ).toISOString(),
     }
   );
 }
@@ -83,8 +143,7 @@ export function getFreshCachedQuote(
 
   if (
     !entry ||
-    Date.now() >
-      entry.expiresAt
+    Date.now() > quoteCacheTimestamp(entry.expiresAt)
   ) {
     return null;
   }
@@ -92,7 +151,7 @@ export function getFreshCachedQuote(
   return {
     ...entry.quote,
     provider:
-      "cache" as const,
+      "CACHE" as const,
     isFallback:
       false,
   };
@@ -114,7 +173,9 @@ export function getFallbackCachedQuote(
 
   const age =
     Date.now() -
-    entry.storedAt;
+      quoteCacheTimestamp(
+        entry.storedAt
+      );
 
   if (
     age >
@@ -126,7 +187,7 @@ export function getFallbackCachedQuote(
   return {
     ...entry.quote,
     provider:
-      "cache" as const,
+      "CACHE" as const,
     freshness:
       "STALE" as const,
     confidence:

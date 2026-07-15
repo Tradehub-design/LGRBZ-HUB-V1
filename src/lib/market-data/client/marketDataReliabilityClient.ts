@@ -32,7 +32,7 @@ const ENDPOINTS:
       path: "/api/market-data/health",
     },
     {
-      key: "cache",
+      key: "CACHE",
       label: "Quote cache",
       path: "/api/market-data/cache",
     },

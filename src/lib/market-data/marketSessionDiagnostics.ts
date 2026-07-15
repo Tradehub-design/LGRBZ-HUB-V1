@@ -1,4 +1,7 @@
 import type {
+  MarketSessionSnapshot,
+} from "./marketSessionTypes";
+import type {
   MarketDataExchange,
 } from "./marketDataTypes";
 import {
@@ -105,7 +108,7 @@ export function createMarketSessionDiagnosticSummary({
         ) =>
           snapshot
             .sessionType ===
-          "REGULAR"
+          "CONTINUOUS"
       ).length,
 
     afterHoursExchangeCount:
@@ -119,6 +122,74 @@ export function createMarketSessionDiagnosticSummary({
       ).length,
 
     exchanges:
-      snapshots,
+      snapshots as unknown as MarketSessionSnapshot[],
+  };
+}
+
+
+export type MarketHoursDiagnosticSummary = {
+  generatedAt: string;
+  exchangeCount: number;
+  openExchangeCount: number;
+  closedExchangeCount: number;
+  sessions: unknown[];
+  warnings: string[];
+};
+
+export function createMarketHoursDiagnosticSummary(
+  sessions: unknown[] = [],
+  warnings: string[] = []
+): MarketHoursDiagnosticSummary {
+  const safeSessions =
+    Array.isArray(sessions)
+      ? sessions
+      : [];
+
+  const openExchangeCount =
+    safeSessions.filter(
+      session => {
+        if (
+          !session ||
+          typeof session !== "object"
+        ) {
+          return false;
+        }
+
+        const item =
+          session as Record<
+            string,
+            unknown
+          >;
+
+        return (
+          item.isMarketOpen === true ||
+          item.marketOpen === true
+        );
+      }
+    ).length;
+
+  return {
+    generatedAt:
+      new Date().toISOString(),
+
+    exchangeCount:
+      safeSessions.length,
+
+    openExchangeCount,
+
+    closedExchangeCount:
+      Math.max(
+        0,
+        safeSessions.length -
+          openExchangeCount
+      ),
+
+    sessions:
+      safeSessions,
+
+    warnings:
+      Array.isArray(warnings)
+        ? warnings
+        : [],
   };
 }

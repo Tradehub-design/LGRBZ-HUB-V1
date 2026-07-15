@@ -1,0 +1,59 @@
+
+> lgrbz-hub-v1@1.0.0 typecheck
+> tsc --noEmit --pretty false
+
+src/app/(dashboard)/dashboard/page.tsx(142,48): error TS2304: Cannot find name 'openHoldings'.
+src/app/(dashboard)/holdings/page.tsx(163,40): error TS2304: Cannot find name 'openHoldings'.
+src/app/(dashboard)/holdings/page.tsx(167,47): error TS2304: Cannot find name 'openHoldings'.
+src/app/api/market-data/market-hours/route.ts(59,12): error TS2554: Expected 3-4 arguments, but got 2.
+src/components/market-data/MarketDataProviderStatus.tsx(175,21): error TS2322: Type 'unknown' is not assignable to type 'ReactNode'.
+src/hooks/useLiveQuotes.ts(254,15): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(message?: string, options?: ErrorOptions): Error', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type 'string'.
+  Overload 2 of 2, '(message?: string): Error', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type 'string'.
+src/hooks/useLiveQuotes.ts(264,31): error TS2339: Property 'quotes' does not exist on type 'unknown'.
+src/hooks/useLiveQuotes.ts(265,15): error TS2740: Type '{}' is missing the following properties from type 'MarketDataProviderHealth[]': length, pop, push, concat, and 35 more.
+src/hooks/useLiveQuotes.ts(274,31): error TS2339: Property 'completedAt' does not exist on type 'unknown'.
+src/lib/market-data/adaptiveQuoteFreshness.ts(8,3): error TS2440: Import declaration conflicts with local declaration of 'AdaptiveQuoteFreshnessInput'.
+src/lib/market-data/adaptiveQuoteFreshness.ts(10,3): error TS2440: Import declaration conflicts with local declaration of 'AdaptiveQuoteFreshnessResult'.
+src/lib/market-data/adaptiveQuoteFreshness.ts(599,5): error TS2561: Object literal may only specify known properties, but 'acceptableForValuation' does not exist in type 'AdaptiveQuoteFreshnessResult'. Did you mean to write 'isAcceptableForValuation'?
+src/lib/market-data/index.ts(14,1): error TS2308: Module "./marketSessionTypes" has already exported a member named 'AdaptiveQuoteFreshnessInput'. Consider explicitly re-exporting to resolve the ambiguity.
+src/lib/market-data/index.ts(14,1): error TS2308: Module "./marketSessionTypes" has already exported a member named 'AdaptiveQuoteFreshnessResult'. Consider explicitly re-exporting to resolve the ambiguity.
+src/lib/market-data/marketDataRefreshDiagnostics.ts(108,3): error TS2740: Type '{ generatedAt: string; policy: unknown; statistics: any; activeJobs: { updatedAt: string; }[]; queuedJobs: { updatedAt: string; }[]; retryJobs: { updatedAt: string; }[]; recentCompletedJobs: { updatedAt: string; }[]; recentFailedJobs: { ...; }[]; providerHealth: ProviderHealthStore; }' is missing the following properties from type 'MarketDataRefreshDiagnosticSummary': jobs, completedJobs, failedJobs, activeJobCount, and 4 more.
+src/lib/market-data/marketDataRefreshDiagnostics.ts(117,7): error TS2349: This expression is not callable.
+  Type '{}' has no call signatures.
+src/lib/market-data/marketDataRefreshDiagnostics.ts(121,9): error TS2345: Argument of type 'unknown[]' is not assignable to parameter of type '{ updatedAt: string; }[]'.
+  Property 'updatedAt' is missing in type '{}' but required in type '{ updatedAt: string; }'.
+src/lib/market-data/marketDataRefreshDiagnostics.ts(125,17): error TS2339: Property 'state' does not exist on type 'unknown'.
+src/lib/market-data/marketDataRefreshDiagnostics.ts(132,9): error TS2345: Argument of type 'unknown[]' is not assignable to parameter of type '{ updatedAt: string; }[]'.
+  Property 'updatedAt' is missing in type '{}' but required in type '{ updatedAt: string; }'.
+src/lib/market-data/marketDataRefreshDiagnostics.ts(136,17): error TS2339: Property 'state' does not exist on type 'unknown'.
+src/lib/market-data/marketDataRefreshDiagnostics.ts(143,9): error TS2345: Argument of type 'unknown[]' is not assignable to parameter of type '{ updatedAt: string; }[]'.
+  Property 'updatedAt' is missing in type '{}' but required in type '{ updatedAt: string; }'.
+src/lib/market-data/marketDataRefreshDiagnostics.ts(147,17): error TS2339: Property 'state' does not exist on type 'unknown'.
+src/lib/market-data/marketDataRefreshDiagnostics.ts(154,9): error TS2345: Argument of type 'unknown[]' is not assignable to parameter of type '{ updatedAt: string; }[]'.
+  Property 'updatedAt' is missing in type '{}' but required in type '{ updatedAt: string; }'.
+src/lib/market-data/marketDataRefreshDiagnostics.ts(158,17): error TS2339: Property 'state' does not exist on type 'unknown'.
+src/lib/market-data/marketDataRefreshDiagnostics.ts(168,9): error TS2345: Argument of type 'unknown[]' is not assignable to parameter of type '{ updatedAt: string; }[]'.
+  Property 'updatedAt' is missing in type '{}' but required in type '{ updatedAt: string; }'.
+src/lib/market-data/marketDataRefreshDiagnostics.ts(172,17): error TS2339: Property 'state' does not exist on type 'unknown'.
+src/lib/market-data/marketSessionDiagnostics.ts(106,11): error TS2367: This comparison appears to be unintentional because the types '"UNKNOWN" | "CLOSED" | "PRE_MARKET" | "AFTER_HOURS" | "CONTINUOUS"' and '"REGULAR"' have no overlap.
+src/lib/market-data/marketSessionDiagnostics.ts(121,5): error TS2322: Type 'CompatibilityMarketSessionSnapshot[]' is not assignable to type 'MarketSessionSnapshot[]'.
+  Type 'CompatibilityMarketSessionSnapshot' is missing the following properties from type 'MarketSessionSnapshot': localDate, dayName, tradingStatus, closureReason, and 9 more.
+src/lib/market-data/multiProviderQuoteResolver.ts(624,11): error TS2345: Argument of type 'string' is not assignable to parameter of type 'MarketDataAdapterError'.
+src/lib/market-data/multiProviderQuoteResolver.ts(648,9): error TS2322: Type 'string' is not assignable to type 'MarketDataAdapterError'.
+src/lib/market-data/providers/providerUtils.ts(35,4): error TS2304: Cannot find name 'QuoteConfidence'.
+src/lib/market-data/providers/providerUtils.ts(45,5): error TS2304: Cannot find name 'QuoteConfidence'.
+src/lib/market-data/quoteCache.ts(105,5): error TS2345: Argument of type '{ quote: MarketQuote; storedAt: number; expiresAt: number; }' is not assignable to parameter of type 'QuoteCacheEntry'.
+  Type '{ quote: MarketQuote; storedAt: number; expiresAt: number; }' is missing the following properties from type 'QuoteCacheEntry': key, createdAt
+src/lib/market-data/quoteCache.ts(174,5): error TS2363: The right-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+src/lib/market-data/quoteQuality.ts(644,7): error TS2353: Object literal may only specify known properties, and 'receivedAt' does not exist in type 'AdaptiveQuoteFreshnessInput'.
+src/lib/market-data/quoteQuality.ts(720,7): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'QuoteFreshness'.
+src/lib/market-data/quoteQuality.ts(770,11): error TS2322: Type 'unknown' is not assignable to type 'QuoteFreshness'.
+src/lib/market-data/quoteQuality.ts(775,12): error TS2488: Type 'unknown' must have a '[Symbol.iterator]()' method that returns an iterator.
+src/lib/market-data/quoteQuality.ts(888,5): error TS2322: Type 'unknown' is not assignable to type 'number'.
+src/lib/market-data/quoteQuality.ts(890,5): error TS2322: Type 'unknown' is not assignable to type 'QuoteFreshness'.
+src/lib/market-data/quoteQuality.ts(901,14): error TS2339: Property 'tradingStatus' does not exist on type 'unknown'.
+src/lib/market-data/quoteService.ts(149,9): error TS2345: Argument of type 'string' is not assignable to parameter of type 'MarketDataProviderId'.
+src/lib/market-data/symbolNormaliser.ts(214,7): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string'.

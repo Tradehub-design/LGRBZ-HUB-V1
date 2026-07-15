@@ -4,6 +4,39 @@ import type {
   QuoteRequestSecurity,
 } from "./marketDataTypes";
 
+
+
+
+
+function normalisedSymbolText(
+  value: unknown
+): string {
+  if (
+    typeof value === "string"
+  ) {
+    return value;
+  }
+
+  if (
+    value === null ||
+    value === undefined
+  ) {
+    return "";
+  }
+
+  return String(value);
+}
+function stableSymbolText(
+  value: unknown
+): string {
+  return typeof value === "string"
+    ? value
+    : value === null ||
+      value === undefined
+      ? ""
+      : String(value);
+}
+
 const EXCHANGE_ALIASES: Record<
   string,
   MarketDataExchange
@@ -20,8 +53,8 @@ const EXCHANGE_ALIASES: Record<
   NYSE: "NYSE",
   XNYS: "NYSE",
 
-  NYSEARCA: "NYSEARCA",
-  ARCA: "NYSEARCA",
+  NYSEARCA: "NYSE_ARCA",
+  ARCA: "NYSE_ARCA",
 
   LSE: "LSE",
   XLON: "LSE",
@@ -67,7 +100,7 @@ const US_EXCHANGES =
   new Set<MarketDataExchange>([
     "NASDAQ",
     "NYSE",
-    "NYSEARCA",
+    "NYSE_ARCA",
   ]);
 
 function cleanSymbol(
@@ -198,8 +231,10 @@ export function normaliseMarketSymbol(
 
   const cleaned =
     cleanSymbol(
-      security.providerSymbol ||
-      security.symbol
+      normalisedSymbolText(
+        security.providerSymbol ||
+        security.symbol
+      )
     );
 
   const suffix =
@@ -240,6 +275,7 @@ export function normaliseMarketSymbol(
     );
 
   return {
+    symbol: providerSymbol,
     originalSymbol,
     canonicalSymbol:
       providerSymbol,

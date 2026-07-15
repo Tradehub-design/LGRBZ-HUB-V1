@@ -43,7 +43,12 @@
     "verify:holdings-11-3B": "node scripts/verify-holdings-11-3B.mjs",
     "verify:holdings-11-3C-1": "node scripts/verify-holdings-11-3C-1.mjs",
     "verify:holdings-11-3C-2": "node scripts/verify-holdings-11-3C-2.mjs",
-    "verify:holdings-11-3C-3": "node scripts/verify-holdings-11-3C-3.mjs"
+    "verify:holdings-11-3C-3": "node scripts/verify-holdings-11-3C-3.mjs",
+    "verify:stabilisation-S1A": "node scripts/verify-stabilisation-S1A.mjs",
+    "verify:stabilisation-S1B-1": "node scripts/verify-stabilisation-S1B-1.mjs",
+    "verify:stabilisation-S1B-2": "node scripts/verify-stabilisation-S1B-2.mjs",
+    "verify:stabilisation-S1B-3B": "node scripts/verify-stabilisation-S1B-3B.mjs",
+    "verify:stabilisation-S1B-3C": "node scripts/verify-stabilisation-S1B-3C.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",

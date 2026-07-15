@@ -1,0 +1,6 @@
+
+> lgrbz-hub-v1@1.0.0 typecheck
+> tsc --noEmit --pretty false
+
+src/app/(dashboard)/dashboard/page.tsx(77,1): error TS1005: '}' expected.
+src/app/(dashboard)/holdings/page.tsx(81,1): error TS1005: '}' expected.

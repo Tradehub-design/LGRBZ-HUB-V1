@@ -11,7 +11,7 @@ import {
 } from "../dividendUtils";
 
 const PROVIDER_ID =
-  "twelve-data" as const;
+  "TWELVE_DATA" as const;
 
 function apiKey() {
   return (

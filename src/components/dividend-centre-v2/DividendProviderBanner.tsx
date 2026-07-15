@@ -72,7 +72,7 @@ const PROVIDER_PRESENTATION:
         "border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300",
     },
 
-    "twelve-data": {
+    "TWELVE_DATA": {
       label:
         "Twelve Data",
       description:
@@ -83,7 +83,7 @@ const PROVIDER_PRESENTATION:
         "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950/30 dark:text-emerald-300",
     },
 
-    finnhub: {
+    FINNHUB: {
       label:
         "Finnhub",
       description:
@@ -94,7 +94,7 @@ const PROVIDER_PRESENTATION:
         "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950/30 dark:text-emerald-300",
     },
 
-    "alpha-vantage": {
+    "ALPHA_VANTAGE": {
       label:
         "Alpha Vantage",
       description:
@@ -105,7 +105,7 @@ const PROVIDER_PRESENTATION:
         "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950/30 dark:text-emerald-300",
     },
 
-    unavailable: {
+    UNAVAILABLE: {
       label:
         "Unavailable",
       description:
@@ -197,7 +197,7 @@ export function DividendProviderBanner({
         provider !==
           "manual" &&
         provider !==
-          "unavailable"
+          "UNAVAILABLE"
     );
 
   const sourceQuality =

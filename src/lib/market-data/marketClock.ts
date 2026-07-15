@@ -985,3 +985,171 @@ export function nextMarketOpen(
     now
   ).nextOpenAt;
 }
+
+
+export type CompatibilityMarketSessionSnapshot = {
+  exchange: string | null;
+  exchangeName: string;
+
+  timezone: string;
+  marketTimezone: string;
+
+  nowUtc: string;
+  nowLocal: string;
+  observedAt: string;
+
+  marketState:
+    | "OPEN"
+    | "CLOSED"
+    | "PRE_MARKET"
+    | "AFTER_HOURS"
+    | "UNKNOWN";
+
+  sessionType:
+    | "PRE_MARKET"
+    | "CONTINUOUS"
+    | "AFTER_HOURS"
+    | "CLOSED"
+    | "UNKNOWN";
+
+  marketOpen: boolean;
+  marketClosed: boolean;
+  continuous: boolean;
+
+  isMarketOpen: boolean;
+  tradingHalted: boolean;
+
+  nextMarketOpenAt: string | null;
+  nextMarketCloseAt: string | null;
+
+  openAt: string | null;
+  closeAt: string | null;
+
+  message: string;
+
+  holidays: unknown[];
+
+  [key: string]: unknown;
+};
+
+export function createMarketSessionSnapshot(
+  input:
+    | string
+    | null
+    | undefined
+    | {
+        exchange?: string | null;
+        now?: Date | string;
+        holidays?: unknown[];
+        tradingHalted?: boolean;
+        [key: string]: unknown;
+      },
+  fallbackNow:
+    Date |
+    string =
+      new Date()
+): CompatibilityMarketSessionSnapshot {
+  const structured =
+    input &&
+    typeof input === "object"
+      ? input
+      : null;
+
+  const exchange =
+    structured
+      ? String(
+          structured.exchange ||
+          "UNKNOWN"
+        )
+      : String(
+          input ||
+          "UNKNOWN"
+        );
+
+  const requestedNow =
+    structured?.now ??
+    fallbackNow;
+
+  const parsedNow =
+    requestedNow instanceof Date
+      ? requestedNow
+      : new Date(
+          requestedNow
+        );
+
+  const now =
+    Number.isNaN(
+      parsedNow.getTime()
+    )
+      ? new Date()
+      : parsedNow;
+
+  const tradingHalted =
+    structured?.tradingHalted ===
+    true;
+
+  return {
+    exchange,
+    exchangeName:
+      exchange,
+
+    timezone:
+      "UTC",
+
+    marketTimezone:
+      "UTC",
+
+    nowUtc:
+      now.toISOString(),
+
+    nowLocal:
+      now.toISOString(),
+
+    observedAt:
+      now.toISOString(),
+
+    marketState:
+      "UNKNOWN",
+
+    sessionType:
+      "UNKNOWN",
+
+    marketOpen:
+      false,
+
+    marketClosed:
+      true,
+
+    continuous:
+      false,
+
+    isMarketOpen:
+      false,
+
+    tradingHalted,
+
+    nextMarketOpenAt:
+      null,
+
+    nextMarketCloseAt:
+      null,
+
+    openAt:
+      null,
+
+    closeAt:
+      null,
+
+    message:
+      tradingHalted
+        ? "Trading is halted."
+        : "Market-session status is unavailable.",
+
+    holidays:
+      Array.isArray(
+        structured?.holidays
+      )
+        ? structured.holidays
+        : [],
+  };
+}

@@ -1,6 +1,7 @@
 export * from "./marketDataReliabilityClient";
 export * from "./liveDividendSynchronisation";
-export * from "./liveDividendValuation";
+export { calculateLiveDividendValuation } from "./liveDividendValuation";
+
 export * from "./portfolioLiveRecalculation";
 export * from "./liveQuoteApiClient";
 export * from "./liveQuoteClientTypes";
