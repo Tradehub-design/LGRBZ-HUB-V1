@@ -6,3 +6,6 @@ export {default as AnimatedMetric} from "./AnimatedMetric";
 export {default as ChartRenderBoundary} from "./ChartRenderBoundary";
 export {default as AnimatedChartTransition} from "./AnimatedChartTransition";
 export {default as StickyAnalyticsToolbar} from "./StickyAnalyticsToolbar";
+export {default as DeferredChart} from "./DeferredChart";
+export {default as FadeSkeleton} from "./FadeSkeleton";
+export * from "./LazyChartContainer";
