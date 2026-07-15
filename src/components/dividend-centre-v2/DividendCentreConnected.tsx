@@ -35,6 +35,12 @@ export function DividendCentreConnected({
   baseCurrency =
     "AUD",
 }: Props) {
+  const hasPortfolioData =
+    holdings.length >
+      0 ||
+    transactions.length >
+      0;
+
   const intelligence =
     useDividendIntelligence(
       {
@@ -44,8 +50,7 @@ export function DividendCentreConnected({
       },
       {
         enabled:
-          holdings.length >
-          0,
+          hasPortfolioData,
         refreshIntervalMs:
           30 *
           60 *
@@ -58,8 +63,7 @@ export function DividendCentreConnected({
     initialData;
 
   if (
-    holdings.length ===
-    0 &&
+    !hasPortfolioData &&
     !data
   ) {
     return (

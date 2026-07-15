@@ -37,6 +37,29 @@ const EMPTY_STATE:
       null,
   };
 
+function requestItemCount(
+  request:
+    DividendIntelligenceRequest
+): number {
+  return (
+    (
+      request.holdings
+        ?.length ||
+      0
+    ) +
+    (
+      request.securities
+        ?.length ||
+      0
+    ) +
+    (
+      request.transactions
+        ?.length ||
+      0
+    )
+  );
+}
+
 export function useDividendIntelligence(
   request:
     DividendIntelligenceRequest,
@@ -81,20 +104,28 @@ export function useDividendIntelligence(
           baseCurrency:
             request.baseCurrency,
         }),
-      [request]
+      [
+        request.holdings,
+        request.securities,
+        request.transactions,
+        request.startDate,
+        request.endDate,
+        request.baseCurrency,
+      ]
     );
 
   const refresh =
     useCallback(
       async () => {
         const count =
-          request.holdings?.length ||
-          request.securities?.length ||
-          0;
+          requestItemCount(
+            request
+          );
 
         if (
           !enabled ||
-          count === 0
+          count ===
+            0
         ) {
           setState(
             EMPTY_STATE
@@ -103,7 +134,8 @@ export function useDividendIntelligence(
           return;
         }
 
-        abortRef.current?.abort();
+        abortRef.current
+          ?.abort();
 
         const controller =
           new AbortController();
@@ -112,7 +144,9 @@ export function useDividendIntelligence(
           controller;
 
         setState(
-          (current) => ({
+          (
+            current
+          ) => ({
             ...current,
             loading:
               !current.data,
@@ -150,7 +184,8 @@ export function useDividendIntelligence(
             );
 
           const payload =
-            await response.json() as
+            await response
+              .json() as
               DividendIntelligenceResponse;
 
           if (
@@ -173,7 +208,9 @@ export function useDividendIntelligence(
             error:
               null,
           });
-        } catch (error) {
+        } catch (
+          error
+        ) {
           if (
             error instanceof
               DOMException &&
@@ -184,14 +221,17 @@ export function useDividendIntelligence(
           }
 
           setState(
-            (current) => ({
+            (
+              current
+            ) => ({
               ...current,
               loading:
                 false,
               refreshing:
                 false,
               error:
-                error instanceof Error
+                error instanceof
+                  Error
                   ? error.message
                   : "Dividend intelligence refresh failed.",
             })
@@ -204,65 +244,82 @@ export function useDividendIntelligence(
       ]
     );
 
-  useEffect(() => {
-    void refresh();
+  useEffect(
+    () => {
+      void refresh();
 
-    return () =>
-      abortRef.current?.abort();
-  }, [refresh]);
+      return () =>
+        abortRef.current
+          ?.abort();
+    },
+    [
+      refresh,
+    ]
+  );
 
-  useEffect(() => {
-    if (
-      !enabled ||
-      refreshIntervalMs <=
-        0
-    ) {
-      return;
-    }
+  useEffect(
+    () => {
+      if (
+        !enabled ||
+        refreshIntervalMs <=
+          0
+      ) {
+        return;
+      }
 
-    const timer =
-      window.setInterval(
-        () => {
-          void refresh();
-        },
-        Math.max(
-          5 *
-            60 *
-            1000,
-          refreshIntervalMs
-        )
-      );
+      const timer =
+        window.setInterval(
+          () => {
+            void refresh();
+          },
+          Math.max(
+            5 *
+              60 *
+              1000,
+            refreshIntervalMs
+          )
+        );
 
-    return () =>
-      window.clearInterval(
-        timer
-      );
-  }, [
-    enabled,
-    refreshIntervalMs,
-    refresh,
-  ]);
+      return () =>
+        window.clearInterval(
+          timer
+        );
+    },
+    [
+      enabled,
+      refreshIntervalMs,
+      refresh,
+    ]
+  );
 
   return {
     ...state,
+
     events:
-      state.data?.events ||
+      state.data
+        ?.events ||
       [],
+
     eligibility:
       state.data
         ?.eligibility ||
       [],
+
     summary:
-      state.data?.summary ||
+      state.data
+        ?.summary ||
       null,
+
     providersUsed:
       state.data
         ?.providersUsed ||
       [],
+
     unresolvedSymbols:
       state.data
         ?.unresolvedSymbols ||
       [],
+
     refresh,
   };
 }
