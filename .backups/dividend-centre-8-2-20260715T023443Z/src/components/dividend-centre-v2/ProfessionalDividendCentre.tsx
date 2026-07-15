@@ -11,12 +11,6 @@ import type {
   DividendIntelligenceResponse,
 } from "@/lib/dividend-data";
 import {
-  DividendAnalyticsDashboard,
-} from "./DividendAnalyticsDashboard";
-import {
-  DividendAnalyticsExport,
-} from "./DividendAnalyticsExport";
-import {
   DividendCalendar,
 } from "./DividendCalendar";
 import {
@@ -43,9 +37,6 @@ import {
 import {
   DividendUpcomingTimeline,
 } from "./DividendUpcomingTimeline";
-import {
-  DividendUpcomingPaymentsTable,
-} from "./DividendUpcomingPaymentsTable";
 import type {
   DividendCentreFilter,
 } from "./dividendCentreTypes";
@@ -305,19 +296,6 @@ export function ProfessionalDividendCentre({
           }
         />
 
-        <section
-          aria-label="Professional dividend payments table"
-          className="min-w-0"
-        >
-          <DividendUpcomingPaymentsTable
-            rows={
-              resolved.timeline
-            }
-            title="Dividend Payments"
-            description="Review historical receipts, confirmed distributions and forecast payments in one searchable schedule."
-          />
-        </section>
-
         {data.message && (
           <div className="flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800 shadow-sm dark:border-amber-900 dark:bg-amber-950/20 dark:text-amber-300">
             <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0" />
@@ -389,37 +367,12 @@ export function ProfessionalDividendCentre({
         </section>
 
         <section
-          aria-label="Dividend income analytics"
-          className="min-w-0"
-        >
-          <DividendAnalyticsDashboard
-            data={
-              data
-            }
-            loading={
-              loading
-            }
-          />
-        </section>
-
-        <section
           aria-label="Dividend income by holding"
           className="min-w-0"
         >
           <DividendHoldingBreakdown
             items={
               data.summary.holdingSummaries
-            }
-          />
-        </section>
-
-        <section
-          aria-label="Dividend report exports"
-          className="min-w-0"
-        >
-          <DividendAnalyticsExport
-            data={
-              data
             }
           />
         </section>

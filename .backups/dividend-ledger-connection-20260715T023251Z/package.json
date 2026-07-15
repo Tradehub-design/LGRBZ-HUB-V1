@@ -20,13 +20,7 @@
     "verify": "npm run typecheck && npm run build",
     "verify:live-data-foundation": "node scripts/verify-live-data-foundation.mjs",
     "verify:dividend-data-engine": "node scripts/verify-dividend-data-engine.mjs",
-    "verify:dividend-centre-v2": "node scripts/verify-dividend-centre-v2.mjs \"src/app/(dashboard)/dividends/page.tsx\"",
-    "verify:dividend-ledger-connection": "node scripts/verify-dividend-ledger-connection.mjs",
-    "verify:dividend-centre-8-1": "node scripts/verify-dividend-centre-8-1.mjs",
-    "verify:dividend-centre-8-2": "node scripts/verify-dividend-centre-8-2.mjs",
-    "verify:dividend-centre-8-3": "node scripts/verify-dividend-centre-8-3.mjs",
-    "verify:dividend-centre-8-4": "node scripts/verify-dividend-centre-8-4.mjs",
-    "verify:dividend-centre-8-x": "node scripts/verify-dividend-centre-8-x.mjs"
+    "verify:dividend-centre-v2": "node scripts/verify-dividend-centre-v2.mjs \"src/app/(dashboard)/dividends/page.tsx\""
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",

@@ -1,5 +1,3 @@
-export * from "./DividendAnalyticsExport";
-export * from "./DividendAnalyticsDashboard";
 export * from "./DividendCalendar";
 export * from "./DividendCentreConnected";
 export * from "./DividendCentreHero";

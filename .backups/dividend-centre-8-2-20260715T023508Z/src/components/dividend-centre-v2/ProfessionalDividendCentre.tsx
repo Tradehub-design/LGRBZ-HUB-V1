@@ -11,12 +11,6 @@ import type {
   DividendIntelligenceResponse,
 } from "@/lib/dividend-data";
 import {
-  DividendAnalyticsDashboard,
-} from "./DividendAnalyticsDashboard";
-import {
-  DividendAnalyticsExport,
-} from "./DividendAnalyticsExport";
-import {
   DividendCalendar,
 } from "./DividendCalendar";
 import {
@@ -389,37 +383,12 @@ export function ProfessionalDividendCentre({
         </section>
 
         <section
-          aria-label="Dividend income analytics"
-          className="min-w-0"
-        >
-          <DividendAnalyticsDashboard
-            data={
-              data
-            }
-            loading={
-              loading
-            }
-          />
-        </section>
-
-        <section
           aria-label="Dividend income by holding"
           className="min-w-0"
         >
           <DividendHoldingBreakdown
             items={
               data.summary.holdingSummaries
-            }
-          />
-        </section>
-
-        <section
-          aria-label="Dividend report exports"
-          className="min-w-0"
-        >
-          <DividendAnalyticsExport
-            data={
-              data
             }
           />
         </section>

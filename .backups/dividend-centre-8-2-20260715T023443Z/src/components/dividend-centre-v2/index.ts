@@ -1,5 +1,3 @@
-export * from "./DividendAnalyticsExport";
-export * from "./DividendAnalyticsDashboard";
 export * from "./DividendCalendar";
 export * from "./DividendCentreConnected";
 export * from "./DividendCentreHero";
@@ -12,7 +10,6 @@ export * from "./DividendMonthlyForecast";
 export * from "./DividendProviderBanner";
 export * from "./DividendReconciliationPanel";
 export * from "./DividendUpcomingTimeline";
-export * from "./DividendUpcomingPaymentsTable";
 export * from "./ProfessionalDividendCentre";
 export * from "./dividendCentreFormatters";
 export * from "./dividendCentreTypes";

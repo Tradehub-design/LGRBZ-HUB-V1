@@ -66,32 +66,6 @@ export function DividendCentreLoadingState() {
 
         <div className="h-[520px] animate-pulse rounded-2xl border border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-900" />
       </div>
-
-      <div className="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800">
-        <div className="h-24 animate-pulse bg-slate-100 dark:bg-slate-900" />
-
-        <div className="grid gap-3 p-4 sm:grid-cols-2 xl:grid-cols-4">
-          {Array.from({
-            length: 4,
-          }).map(
-            (
-              _,
-              index
-            ) => (
-              <div
-                key={index}
-                className="h-28 animate-pulse rounded-2xl bg-slate-100 dark:bg-slate-900"
-              />
-            )
-          )}
-        </div>
-
-        <div className="grid gap-4 p-4 pt-0 xl:grid-cols-2">
-          <div className="h-80 animate-pulse rounded-2xl bg-slate-100 dark:bg-slate-900" />
-
-          <div className="h-80 animate-pulse rounded-2xl bg-slate-100 dark:bg-slate-900" />
-        </div>
-      </div>
     </div>
   );
 }
