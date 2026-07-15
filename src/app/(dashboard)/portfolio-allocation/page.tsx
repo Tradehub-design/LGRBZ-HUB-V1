@@ -1,5 +1,8 @@
 "use client";
 
+import { PortfolioAllocationLivePanel } from "@/components/market-data/PortfolioAllocationLivePanel";
+
+
 import { useEffect, useMemo, useState } from "react";
 import { loadTxLedger } from "@/lib/transactions/ledgerStorage";
 import { calculateHoldingsFromLedger } from "@/lib/holdings/calculateHoldingsFromLedger";
@@ -50,6 +53,9 @@ export default function PortfolioAllocationPage() {
 
   return (
     <div className="space-y-6 p-6">
+
+      <PortfolioAllocationLivePanel holdings={holdings} />
+
       <div>
         <p className="text-xs uppercase tracking-[0.3em] text-cyan-300">Portfolio Allocation</p>
         <h1 className="mt-2 text-3xl font-bold text-white">Allocation</h1>
