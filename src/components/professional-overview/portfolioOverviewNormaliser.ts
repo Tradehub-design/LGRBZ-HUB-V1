@@ -76,15 +76,21 @@ export type ProfessionalPortfolioOverview = {
     countryCount: number;
   };
 
-  largestHolding: ProfessionalOverviewHolding | null;
-  bestPerformer: ProfessionalOverviewHolding | null;
-  worstPerformer: ProfessionalOverviewHolding | null;
+  largestHolding:
+    ProfessionalOverviewHolding | null;
+
+  bestPerformer:
+    ProfessionalOverviewHolding | null;
+
+  worstPerformer:
+    ProfessionalOverviewHolding | null;
 };
 
-type UnknownRecord = Record<string, unknown>;
+type UnknownRecord =
+  Record<string, unknown>;
 
 function record(
-  value: unknown
+  value: unknown,
 ): UnknownRecord {
   return (
     value &&
@@ -94,18 +100,30 @@ function record(
   ) as UnknownRecord;
 }
 
-function text(
+function nestedRecord(
   source: UnknownRecord,
-  keys: string[]
-): string {
-  for (const key of keys) {
-    const value = source[key];
+  key: string,
+): UnknownRecord {
+  return record(
+    source[key],
+  );
+}
 
-    if (
-      typeof value === "string" &&
-      value.trim()
-    ) {
-      return value.trim();
+function text(
+  sources: readonly UnknownRecord[],
+  keys: readonly string[],
+): string {
+  for (const source of sources) {
+    for (const key of keys) {
+      const value =
+        source[key];
+
+      if (
+        typeof value === "string" &&
+        value.trim()
+      ) {
+        return value.trim();
+      }
     }
   }
 
@@ -113,24 +131,30 @@ function text(
 }
 
 function numeric(
-  source: UnknownRecord,
-  keys: string[]
+  sources: readonly UnknownRecord[],
+  keys: readonly string[],
 ): number | null {
-  for (const key of keys) {
-    const raw = source[key];
+  for (const source of sources) {
+    for (const key of keys) {
+      const raw =
+        source[key];
 
-    if (
-      raw === null ||
-      raw === undefined ||
-      raw === ""
-    ) {
-      continue;
-    }
+      if (
+        raw === null ||
+        raw === undefined ||
+        raw === ""
+      ) {
+        continue;
+      }
 
-    const value = Number(raw);
+      const value =
+        Number(raw);
 
-    if (Number.isFinite(value)) {
-      return value;
+      if (
+        Number.isFinite(value)
+      ) {
+        return value;
+      }
     }
   }
 
@@ -139,7 +163,7 @@ function numeric(
 
 function safePercent(
   numerator: number,
-  denominator: number
+  denominator: number,
 ): number | null {
   if (
     !Number.isFinite(numerator) ||
@@ -156,7 +180,7 @@ function safePercent(
 }
 
 function average(
-  values: number[]
+  values: readonly number[],
 ): number {
   if (values.length === 0) {
     return 0;
@@ -166,190 +190,390 @@ function average(
     values.reduce(
       (
         total,
-        value
+        value,
       ) =>
         total +
         value,
-      0
+      0,
     ) /
     values.length
   );
 }
 
+function quoteStatusLabel(
+  sources: readonly UnknownRecord[],
+): string {
+  const explicitStatus =
+    text(
+      sources,
+      [
+        "quoteStatus",
+        "priceStatus",
+        "freshness",
+      ],
+    );
+
+  if (explicitStatus) {
+    return explicitStatus
+      .toUpperCase();
+  }
+
+  const source =
+    text(
+      sources,
+      [
+        "quoteSource",
+        "source",
+      ],
+    )
+      .toUpperCase();
+
+  switch (source) {
+    case "LIVE":
+      return "LIVE";
+
+    case "CACHE":
+      return "DELAYED CACHE";
+
+    case "PREVIOUS_CLOSE":
+      return "PREVIOUS CLOSE";
+
+    case "TRANSACTION_FALLBACK":
+      return "ESTIMATED TRANSACTION";
+
+    case "UNAVAILABLE":
+      return "UNAVAILABLE";
+
+    default:
+      return source || "UNAVAILABLE";
+  }
+}
+
+function quoteQualityScore(
+  quoteStatus: string,
+  suppliedQuality: number | null,
+): number | null {
+  if (
+    suppliedQuality !== null &&
+    Number.isFinite(
+      suppliedQuality,
+    )
+  ) {
+    return suppliedQuality;
+  }
+
+  const status =
+    quoteStatus.toUpperCase();
+
+  if (status.includes("LIVE")) {
+    return 100;
+  }
+
+  if (
+    status.includes("CACHE") ||
+    status.includes("DELAYED")
+  ) {
+    return 80;
+  }
+
+  if (
+    status.includes("PREVIOUS")
+  ) {
+    return 70;
+  }
+
+  if (
+    status.includes("TRANSACTION") ||
+    status.includes("ESTIMATED")
+  ) {
+    return 40;
+  }
+
+  if (
+    status.includes("UNAVAILABLE")
+  ) {
+    return 0;
+  }
+
+  return null;
+}
+
 function normaliseHolding(
-  value: unknown
+  value: unknown,
 ): Omit<
   ProfessionalOverviewHolding,
   "portfolioWeight"
-> | null {
-  const source = record(value);
+> & {
+  suppliedPortfolioWeight:
+    number | null;
+} | null {
+  const source =
+    record(value);
 
-  const symbol = text(
+  const metrics =
+    nestedRecord(
+      source,
+      "metrics",
+    );
+
+  const valuation =
+    nestedRecord(
+      source,
+      "valuation",
+    );
+
+  const security =
+    nestedRecord(
+      source,
+      "security",
+    );
+
+  const classification =
+    nestedRecord(
+      source,
+      "classification",
+    );
+
+  const sources = [
     source,
-    [
-      "symbol",
-      "ticker",
-      "code",
-      "asset",
-      "instrument",
-    ]
-  )
-    .trim()
-    .toUpperCase();
+    metrics,
+    valuation,
+    security,
+    classification,
+  ];
+
+  const symbol =
+    text(
+      sources,
+      [
+        "symbol",
+        "ticker",
+        "assetTicker",
+        "code",
+        "asset",
+        "instrument",
+      ],
+    )
+      .trim()
+      .toUpperCase();
 
   if (!symbol) {
     return null;
   }
 
   const quantity =
-    numeric(
-      source,
-      [
-        "quantity",
-        "units",
-        "shares",
-        "openQuantity",
-        "remainingQuantity",
-      ]
-    ) || 0;
+    Math.max(
+      0,
+      numeric(
+        sources,
+        [
+          "quantity",
+          "units",
+          "shares",
+          "openQuantity",
+          "remainingQuantity",
+        ],
+      ) ?? 0,
+    );
 
   const averageCost =
     numeric(
-      source,
+      sources,
       [
+        "averageCostAud",
+        "averagePriceAud",
         "averageCost",
         "averagePrice",
         "averageBuyPrice",
         "avgCost",
         "unitCost",
-      ]
-    );
-
-  const explicitCostBasis =
-    numeric(
-      source,
-      [
-        "costBaseAud",
-        "costBasis",
-        "costBasisAud",
-        "totalCost",
-        "investedAmount",
-        "bookValue",
-      ]
+      ],
     );
 
   const costBasis =
-    explicitCostBasis ??
-    (
-      averageCost !== null
-        ? averageCost *
-          quantity
-        : 0
+    Math.max(
+      0,
+      numeric(
+        sources,
+        [
+          "costBaseAud",
+          "totalCostAud",
+          "costBasis",
+          "costBasisAud",
+          "totalCost",
+          "investedAmount",
+          "bookValue",
+        ],
+      ) ??
+      (
+        averageCost !== null
+          ? averageCost *
+            quantity
+          : 0
+      ),
     );
 
   const currentPrice =
     numeric(
-      source,
+      sources,
       [
+        "marketPriceAud",
+        "priceAud",
+        "marketPrice",
         "livePrice",
         "currentPrice",
-        "marketPrice",
         "price",
         "lastPrice",
         "close",
-      ]
+      ],
     );
 
   const explicitMarketValue =
     numeric(
-      source,
+      sources,
       [
         "marketValueAud",
+        "valueAud",
         "marketValue",
         "currentValue",
         "positionValue",
         "liveMarketValue",
-      ]
+      ],
     );
 
+  /**
+   * Missing prices remain unavailable.
+   * Cost base is never substituted as current market value.
+   */
   const marketValue =
-    explicitMarketValue ??
-    (
-      currentPrice !== null
-        ? currentPrice *
-          quantity
-        : costBasis
+    Math.max(
+      0,
+      explicitMarketValue ??
+      (
+        currentPrice !== null &&
+        currentPrice > 0
+          ? currentPrice *
+            quantity
+          : 0
+      ),
     );
 
   const gainLoss =
     numeric(
-      source,
+      sources,
       [
+        "unrealisedPlAud",
+        "unrealisedGainAud",
+        "unrealizedGainAud",
         "gainLoss",
         "unrealisedGainLoss",
         "unrealizedGainLoss",
         "profitLoss",
         "pnl",
-      ]
+        "unrealisedProfit",
+      ],
     ) ??
     (
-      marketValue -
-      costBasis
+      marketValue > 0
+        ? marketValue -
+          costBasis
+        : 0
     );
 
   const gainLossPercent =
     numeric(
-      source,
+      sources,
       [
+        "unrealisedPlPercent",
+        "unrealisedGainPercent",
+        "unrealizedGainPercent",
         "gainLossPercent",
         "returnPercent",
         "unrealisedGainLossPercent",
         "unrealizedGainLossPercent",
         "pnlPercent",
-      ]
-    ) ??
-    safePercent(
-      gainLoss,
-      costBasis
-    );
-
-  const annualDividendIncome =
-    numeric(
-      source,
-      [
-        "annualDividendIncome",
-        "projectedAnnualIncome",
-        "forwardAnnualIncome",
-        "annualIncome",
-      ]
+        "unrealisedPercent",
+      ],
     ) ??
     (
+      marketValue > 0
+        ? safePercent(
+            gainLoss,
+            costBasis,
+          )
+        : null
+    );
+
+  /**
+   * Only explicit future/annual forecast fields are annualised.
+   * dividendsAud is historical received income and is intentionally excluded.
+   */
+  const annualDividendIncome =
+    Math.max(
+      0,
+      numeric(
+        sources,
+        [
+          "forecastAnnualIncomeAud",
+          "projectedAnnualIncomeAud",
+          "forwardAnnualIncomeAud",
+          "annualDividendIncomeAud",
+          "annualDividendIncome",
+          "projectedAnnualIncome",
+          "forwardAnnualIncome",
+          "annualIncome",
+        ],
+      ) ??
       (
-        numeric(
-          source,
-          [
-            "annualDividendPerShare",
-            "forwardAnnualDividend",
-            "dividendRate",
-          ]
-        ) ||
-        0
-      ) *
-      quantity
+        (
+          numeric(
+            sources,
+            [
+              "annualDividendPerShareAud",
+              "annualDividendPerShare",
+              "forwardAnnualDividend",
+              "dividendRate",
+            ],
+          ) ?? 0
+        ) *
+        quantity
+      ),
     );
 
   const dividendYield =
     numeric(
-      source,
+      sources,
       [
+        "forecastDividendYield",
         "dividendYield",
         "forwardYield",
         "currentYield",
-      ]
+      ],
     ) ??
-    safePercent(
-      annualDividendIncome,
-      marketValue
+    (
+      marketValue > 0 &&
+      annualDividendIncome > 0
+        ? safePercent(
+            annualDividendIncome,
+            marketValue,
+          )
+        : null
+    );
+
+  const quoteStatus =
+    quoteStatusLabel(
+      sources,
+    );
+
+  const suppliedPortfolioWeight =
+    numeric(
+      sources,
+      [
+        "portfolioWeightPercent",
+        "weightPercent",
+        "portfolioWeight",
+        "allocationPercent",
+      ],
     );
 
   return {
@@ -357,98 +581,100 @@ function normaliseHolding(
 
     name:
       text(
-        source,
+        sources,
         [
           "name",
+          "company",
           "companyName",
           "securityName",
           "description",
-        ]
+        ],
       ) ||
       symbol,
 
     quantity,
 
     averageCost,
+
     costBasis,
-    currentPrice,
+
+    currentPrice:
+      currentPrice !== null &&
+      currentPrice > 0
+        ? currentPrice
+        : null,
+
     marketValue,
 
     gainLoss,
+
     gainLossPercent,
 
     annualDividendIncome,
+
     dividendYield,
 
     sector:
       text(
-        source,
+        sources,
         [
           "sector",
           "gicsSector",
           "assetClass",
-        ]
+        ],
       ) ||
       "Unclassified",
 
     industry:
       text(
-        source,
+        sources,
         [
           "industry",
           "gicsIndustry",
           "subIndustry",
-        ]
+        ],
       ) ||
       "Unclassified",
 
     country:
       text(
-        source,
+        sources,
         [
           "country",
           "domicile",
           "region",
-        ]
+        ],
       ) ||
       "Unknown",
 
     currency:
       text(
-        source,
+        sources,
         [
           "currency",
           "tradingCurrency",
           "localCurrency",
-        ]
+        ],
       )
         .toUpperCase() ||
       "AUD",
 
     quoteQuality:
-      numeric(
-        source,
-        [
-          "quoteQuality",
-          "qualityScore",
-          "priceQuality",
-        ]
+      quoteQualityScore(
+        quoteStatus,
+        numeric(
+          sources,
+          [
+            "quoteQuality",
+            "qualityScore",
+            "priceQuality",
+          ],
+        ),
       ),
 
-    quoteStatus:
-      text(
-        source,
-        [
-          "quoteStatus",
-          "priceStatus",
-          "freshness",
-        ]
-      ) ||
-      (
-        currentPrice !== null
-          ? "PRICED"
-          : "ESTIMATED"
-      ),
+    quoteStatus,
+
+    suppliedPortfolioWeight,
 
     original:
       value,
@@ -456,228 +682,267 @@ function normaliseHolding(
 }
 
 export function calculateProfessionalPortfolioOverview(
-  values: readonly unknown[]
+  values: readonly unknown[],
 ): ProfessionalPortfolioOverview {
-  const preliminary = values
-    .map(
-      normaliseHolding
-    )
-    .filter(
-      (
-        holding
-      ): holding is NonNullable<
-        ReturnType<
-          typeof normaliseHolding
-        >
-      > =>
-        Boolean(holding)
-    );
+  const preliminary =
+    values
+      .map(
+        normaliseHolding,
+      )
+      .filter(
+        (
+          holding,
+        ): holding is NonNullable<
+          ReturnType<
+            typeof normaliseHolding
+          >
+        > =>
+          Boolean(holding),
+      );
 
-  const marketValue =
+  const totalMarketValue =
     preliminary.reduce(
       (
         total,
-        holding
+        holding,
       ) =>
         total +
         holding.marketValue,
-      0
+      0,
+    );
+
+  const hasCompleteSuppliedWeights =
+    preliminary.length > 0 &&
+    preliminary.every(
+      (holding) =>
+        holding.suppliedPortfolioWeight !== null &&
+        Number.isFinite(
+          holding.suppliedPortfolioWeight,
+        ),
     );
 
   const holdings:
     ProfessionalOverviewHolding[] =
       preliminary.map(
-        (
-          holding
-        ) => ({
+        ({
+          suppliedPortfolioWeight,
+          ...holding
+        }) => ({
           ...holding,
 
           portfolioWeight:
-            marketValue > 0
-              ? (
-                  holding.marketValue /
-                  marketValue
-                ) *
-                100
-              : 0,
-        })
+            hasCompleteSuppliedWeights
+              ? suppliedPortfolioWeight ?? 0
+              : (
+                  totalMarketValue > 0
+                    ? (
+                        holding.marketValue /
+                        totalMarketValue
+                      ) *
+                      100
+                    : 0
+                ),
+        }),
       );
 
-  const costBasis =
+  const totalCostBasis =
     holdings.reduce(
       (
         total,
-        holding
+        holding,
       ) =>
         total +
         holding.costBasis,
-      0
+      0,
     );
 
-  const gainLoss =
-    marketValue -
-    costBasis;
+  const totalGainLoss =
+    holdings.reduce(
+      (
+        total,
+        holding,
+      ) =>
+        total +
+        holding.gainLoss,
+      0,
+    );
 
   const annualDividendIncome =
     holdings.reduce(
       (
         total,
-        holding
+        holding,
       ) =>
         total +
         holding.annualDividendIncome,
-      0
+      0,
     );
 
-  const sortedByWeight =
-    [...holdings].sort(
-      (
-        left,
-        right
-      ) =>
-        right.portfolioWeight -
-        left.portfolioWeight
-    );
-
-  const sortedByPerformance =
-    holdings
-      .filter(
-        (
-          holding
-        ) =>
-          holding.gainLossPercent !==
-          null
-      )
-      .sort(
-        (
-          left,
-          right
-        ) =>
-          (
-            right.gainLossPercent ||
-            0
-          ) -
-          (
-            left.gainLossPercent ||
-            0
-          )
-      );
-
-  const sectorMap = new Map<
-    string,
-    ProfessionalOverviewSector
-  >();
+  const sectorsByName =
+    new Map<
+      string,
+      ProfessionalOverviewSector
+    >();
 
   for (const holding of holdings) {
     const existing =
-      sectorMap.get(
-        holding.sector
-      ) || {
+      sectorsByName.get(
+        holding.sector,
+      );
+
+    if (existing) {
+      existing.holdingCount += 1;
+      existing.marketValue +=
+        holding.marketValue;
+      existing.costBasis +=
+        holding.costBasis;
+      existing.gainLoss +=
+        holding.gainLoss;
+      existing.weight +=
+        holding.portfolioWeight;
+      existing.annualDividendIncome +=
+        holding.annualDividendIncome;
+
+      continue;
+    }
+
+    sectorsByName.set(
+      holding.sector,
+      {
         sector:
           holding.sector,
 
-        holdingCount: 0,
+        holdingCount: 1,
 
-        marketValue: 0,
-        costBasis: 0,
-        gainLoss: 0,
+        marketValue:
+          holding.marketValue,
 
-        weight: 0,
+        costBasis:
+          holding.costBasis,
 
-        annualDividendIncome: 0,
-      };
+        gainLoss:
+          holding.gainLoss,
 
-    existing.holdingCount +=
-      1;
+        weight:
+          holding.portfolioWeight,
 
-    existing.marketValue +=
-      holding.marketValue;
-
-    existing.costBasis +=
-      holding.costBasis;
-
-    existing.gainLoss +=
-      holding.gainLoss;
-
-    existing.annualDividendIncome +=
-      holding.annualDividendIncome;
-
-    sectorMap.set(
-      holding.sector,
-      existing
+        annualDividendIncome:
+          holding.annualDividendIncome,
+      },
     );
   }
 
   const sectors =
     Array.from(
-      sectorMap.values()
-    )
-      .map(
-        (
-          sector
-        ) => ({
-          ...sector,
+      sectorsByName.values(),
+    ).sort(
+      (
+        left,
+        right,
+      ) =>
+        right.marketValue -
+        left.marketValue,
+    );
 
-          weight:
-            marketValue > 0
-              ? (
-                  sector.marketValue /
-                  marketValue
-                ) *
-                100
-              : 0,
-        })
-      )
+  const sortedByMarketValue =
+    [...holdings].sort(
+      (
+        left,
+        right,
+      ) =>
+        right.marketValue -
+        left.marketValue,
+    );
+
+  const returnEligibleHoldings =
+    holdings.filter(
+      (holding) =>
+        holding.gainLossPercent !== null,
+    );
+
+  const bestPerformer =
+    [...returnEligibleHoldings]
       .sort(
         (
           left,
-          right
+          right,
         ) =>
-          right.marketValue -
-          left.marketValue
-      );
+          (
+            right.gainLossPercent ??
+            0
+          ) -
+          (
+            left.gainLossPercent ??
+            0
+          ),
+      )[0] ??
+    null;
+
+  const worstPerformer =
+    [...returnEligibleHoldings]
+      .sort(
+        (
+          left,
+          right,
+        ) =>
+          (
+            left.gainLossPercent ??
+            0
+          ) -
+          (
+            right.gainLossPercent ??
+            0
+          ),
+      )[0] ??
+    null;
 
   const pricedHoldings =
     holdings.filter(
-      (
-        holding
-      ) =>
-        holding.currentPrice !==
-        null
+      (holding) =>
+        holding.marketValue > 0 &&
+        !holding.quoteStatus.includes(
+          "UNAVAILABLE",
+        ),
     );
 
-  const quoteQualityValues =
+  const quoteQualities =
     holdings
       .map(
-        (
-          holding
-        ) =>
-          holding.quoteQuality
+        (holding) =>
+          holding.quoteQuality,
       )
       .filter(
         (
-          value
-        ): value is number =>
-          value !== null
+          quality,
+        ): quality is number =>
+          quality !== null &&
+          Number.isFinite(
+            quality,
+          ),
       );
 
   return {
     holdings,
+
     sectors,
 
     totals: {
       holdingCount:
         holdings.length,
 
-      marketValue,
-      costBasis,
+      marketValue:
+        totalMarketValue,
 
-      gainLoss,
+      costBasis:
+        totalCostBasis,
+
+      gainLoss:
+        totalGainLoss,
 
       gainLossPercent:
         safePercent(
-          gainLoss,
-          costBasis
+          totalGainLoss,
+          totalCostBasis,
         ),
 
       annualDividendIncome,
@@ -687,48 +952,45 @@ export function calculateProfessionalPortfolioOverview(
         12,
 
       dividendYield:
-        safePercent(
-          annualDividendIncome,
-          marketValue
-        ),
+        totalMarketValue > 0 &&
+        annualDividendIncome > 0
+          ? safePercent(
+              annualDividendIncome,
+              totalMarketValue,
+            )
+          : null,
 
       topHoldingWeight:
-        sortedByWeight[0]
-          ?.portfolioWeight ||
+        sortedByMarketValue[0]
+          ?.portfolioWeight ??
         0,
 
       topFiveWeight:
-        sortedByWeight
+        sortedByMarketValue
           .slice(
             0,
-            5
+            5,
           )
           .reduce(
             (
               total,
-              holding
+              holding,
             ) =>
               total +
               holding.portfolioWeight,
-            0
+            0,
           ),
 
       profitableHoldingCount:
         holdings.filter(
-          (
-            holding
-          ) =>
-            holding.gainLoss >
-            0
+          (holding) =>
+            holding.gainLoss > 0,
         ).length,
 
       losingHoldingCount:
         holdings.filter(
-          (
-            holding
-          ) =>
-            holding.gainLoss <
-            0
+          (holding) =>
+            holding.gainLoss < 0,
         ).length,
 
       pricedHoldingCount:
@@ -741,47 +1003,36 @@ export function calculateProfessionalPortfolioOverview(
               holdings.length
             ) *
             100
-          : 100,
+          : 0,
 
       averageQuoteQuality:
         average(
-          quoteQualityValues
+          quoteQualities,
         ),
 
       sectorCount:
         new Set(
           holdings.map(
-            (
-              holding
-            ) =>
-              holding.sector
-          )
+            (holding) =>
+              holding.sector,
+          ),
         ).size,
 
       countryCount:
         new Set(
           holdings.map(
-            (
-              holding
-            ) =>
-              holding.country
-          )
+            (holding) =>
+              holding.country,
+          ),
         ).size,
     },
 
     largestHolding:
-      sortedByWeight[0] ||
+      sortedByMarketValue[0] ??
       null,
 
-    bestPerformer:
-      sortedByPerformance[0] ||
-      null,
+    bestPerformer,
 
-    worstPerformer:
-      sortedByPerformance[
-        sortedByPerformance.length -
-        1
-      ] ||
-      null,
+    worstPerformer,
   };
 }

@@ -1,0 +1,5 @@
+
+> lgrbz-hub-v1@1.0.0 typecheck
+> tsc --noEmit --pretty false
+
+src/app/(dashboard)/reports/page.tsx(327,33): error TS2339: Property 'price' does not exist on type 'TransactionAmounts'.

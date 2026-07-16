@@ -1,0 +1,13 @@
+
+> lgrbz-hub-v1@1.0.0 typecheck
+> tsc --noEmit --pretty false
+
+src/core/portfolio-engine/dashboard/build.ts(1324,5): error TS2554: Expected 3 arguments, but got 2.
+src/core/portfolio-engine/dashboard/build.ts(1330,5): error TS2554: Expected 3 arguments, but got 2.
+src/core/portfolio-engine/dashboard/build.ts(1336,5): error TS2554: Expected 3 arguments, but got 2.
+src/core/portfolio-engine/dashboard/build.ts(1342,5): error TS2554: Expected 3 arguments, but got 2.
+src/core/portfolio-engine/dashboard/build.ts(1348,5): error TS2554: Expected 3 arguments, but got 2.
+src/core/portfolio-engine/dashboard/build.ts(1354,5): error TS2554: Expected 3 arguments, but got 2.
+src/core/portfolio-engine/dashboard/build.ts(1360,5): error TS2554: Expected 3 arguments, but got 2.
+src/core/portfolio-engine/dashboard/build.ts(1366,5): error TS2554: Expected 3 arguments, but got 2.
+src/core/portfolio-engine/dashboard/build.ts(1372,5): error TS2554: Expected 3 arguments, but got 2.

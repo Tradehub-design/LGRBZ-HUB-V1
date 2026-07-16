@@ -1,0 +1,4 @@
+
+> lgrbz-hub-v1@1.0.0 typecheck
+> tsc --noEmit --pretty false
+

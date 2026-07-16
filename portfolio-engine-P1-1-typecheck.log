@@ -1,0 +1,2 @@
+src/core/portfolio-engine/actions.ts(335,28): error TS2339: Property 'reason' does not exist on type 'ActionNormalisationResult'.
+  Property 'reason' does not exist on type '{ ok: true; action: "BUY" | "SELL" | "DIVIDEND" | "DIVIDEND_REINVESTMENT" | "INTEREST" | "DEPOSIT" | "WITHDRAWAL" | "FEE" | "TAX" | "TRANSFER_IN" | "TRANSFER_OUT" | "SPLIT" | "CONSOLIDATION" | "RETURN_OF_CAPITAL" | "ADJUSTMENT"; originalValue: unknown; canonicalValue: string; }'.

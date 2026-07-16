@@ -1,0 +1,716 @@
+----------------------------------------------------------------------
+RUN — scripts/scan-portfolio-engine-P3-placeholders.mjs
+----------------------------------------------------------------------
+
+Sprint P3 placeholder scan passed.
+
+No mock, placeholder or legacy pricing path was detected in the P3 portfolio pages and engine boundary.
+
+----------------------------------------------------------------------
+RUN — scripts/scan-portfolio-engine-P4-placeholders.mjs
+----------------------------------------------------------------------
+
+Sprint P4 placeholder scan passed.
+
+No mock, placeholder, independent or non-deterministic dividend path was detected.
+
+----------------------------------------------------------------------
+RUN — scripts/scan-portfolio-engine-P5-routes.mjs
+----------------------------------------------------------------------
+
+Sprint P5 route scan passed.
+
+No mock, placeholder, legacy or independent portfolio calculation path was detected in the unified P5 routes.
+
+----------------------------------------------------------------------
+RUN — scripts/scan-portfolio-engine-final-routes.mjs
+----------------------------------------------------------------------
+
+Final Portfolio Engine route scan passed.
+
+No legacy, mock, placeholder or route-level portfolio calculation path was detected.
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P1-1.mjs
+----------------------------------------------------------------------
+
+Portfolio Engine P1.1 verification passed.
+
+Verified:
+ - Canonical transaction contract
+ - Portfolio snapshot contract
+ - Holdings and lot contracts
+ - Quote fallback contract
+ - Dividend and income action support
+ - Transaction action normalisation
+ - Safe financial arithmetic
+ - ASX and US security identity
+ - Deterministic transaction ordering
+ - No mock or placeholder portfolio data
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P1-2.mjs
+----------------------------------------------------------------------
+
+Portfolio Engine P1.2 structural verification passed.
+
+Verified:
+ - Raw workbook/manual transaction boundary
+ - Australian and ISO date normalisation
+ - Excel serial date support
+ - Canonical transaction normalisation
+ - ASX and US currency inference
+ - AUD and foreign-currency FX validation
+ - Trade amount reconstruction
+ - Corporate action ratio validation
+ - Deterministic transaction IDs
+ - Duplicate transaction rejection
+ - Pending and cancelled transaction isolation
+ - Raw source audit preservation
+ - No mock or placeholder portfolio records
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P1-3.mjs
+----------------------------------------------------------------------
+
+Portfolio Engine P1.3 structural verification passed.
+
+Verified:
+ - Deterministic transaction replay
+ - Transaction-only position construction
+ - Acquisition lot creation
+ - Average-cost disposal calculations
+ - FIFO disposal calculations
+ - Realised gain and proceeds tracking
+ - Oversell rejection
+ - Transfer-in and transfer-out processing
+ - Share split processing
+ - Share consolidation processing
+ - Return-of-capital cost-base reduction
+ - Dividend and interest income tracking
+ - Multi-currency cash movement tracking
+ - Processed and rejected transaction audit
+ - No mock or placeholder portfolio values
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P1-4.mjs
+----------------------------------------------------------------------
+
+Portfolio Engine P1.4 structural verification passed.
+
+Verified:
+ - Canonical Portfolio Snapshot
+ - Holdings generated from transaction replay
+ - Totals generated from canonical holdings
+ - Allocation generated from canonical holdings
+ - Security weights generated from market value
+ - Supplied quote support
+ - Latest transaction-price fallback
+ - Missing quote data-quality reporting
+ - Holdings/totals reconciliation
+ - Allocation/totals reconciliation
+ - Portfolio value reconciliation
+ - Raw and canonical engine entry points
+ - Single Portfolio Engine facade
+ - No mock portfolio values
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P2-1.mjs
+----------------------------------------------------------------------
+
+Portfolio Engine P2.1 structural verification passed.
+
+Verified:
+ - Existing LedgerRow transaction adapter
+ - Local and AUD amount resolution
+ - Existing FX-rate derivation
+ - ASX and US market inference
+ - Portfolio Store transaction priority
+ - Persisted ledger fallback
+ - Transaction deduplication boundary
+ - Canonical client Portfolio Snapshot hook
+ - Canonical holdings compatibility mapping
+ - Holdings market value selector
+ - Holdings cost-base selector
+ - Realised and unrealised gain selectors
+ - Allocation selectors
+ - No legacy holdings calculator in the new hook
+ - No mock or placeholder portfolio values
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P2-2.mjs
+----------------------------------------------------------------------
+
+Portfolio Engine P2.2 structural verification passed.
+
+Verified:
+ - Holdings uses a canonical Portfolio Engine hook
+ - Base Portfolio Engine hook exists
+ - Live Portfolio Engine hook exists
+ - Canonical snapshot contract exists
+ - Canonical holdings contract exists
+ - Holdings market value is canonical
+ - Holdings cost base is canonical
+ - Holdings realised P/L is canonical
+ - Holdings unrealised P/L is canonical
+ - Holdings portfolio weight is canonical
+ - Holdings selector layer is connected
+ - Holding compatibility mapping is connected
+ - Quote source is exposed
+ - Quote fallback quality is exposed
+ - Unavailable quote coverage is exposed
+ - No legacy holdings calculator
+ - No mock or placeholder portfolio values
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P2-3.mjs
+----------------------------------------------------------------------
+
+Portfolio Engine P2.3 structural verification passed.
+
+Verified:
+ - Professional widgets read marketPriceAud
+ - Professional widgets read marketValueAud
+ - Professional widgets read costBaseAud
+ - Professional widgets read averageCostAud
+ - Professional widgets read canonical unrealised P/L
+ - Professional widgets preserve canonical weights
+ - Missing quotes remain unavailable
+ - Cost base is not substituted as market value
+ - Live quote status is preserved
+ - Cached quote status is preserved
+ - Previous-close quote status is preserved
+ - Transaction fallback is labelled estimated
+ - Historical dividends are not annualised
+ - Future annual income uses explicit forecast fields only
+ - Existing professional UI components remain unchanged
+ - No mock portfolio values
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P2-4.mjs
+----------------------------------------------------------------------
+
+Portfolio Engine P2.4 structural verification passed.
+
+Verified:
+ - Holdings uses an accepted Portfolio Engine hook
+ - Holdings component structure discovered dynamically
+ - Holdings support files discovered: 20
+ - Canonical market price
+ - Canonical market value
+ - Canonical cost base
+ - Canonical average cost
+ - Canonical realised P/L
+ - Canonical unrealised P/L
+ - Canonical portfolio weight
+ - Live quote status
+ - Cached quote status
+ - Previous-close quote status
+ - Transaction fallback status
+ - Unavailable quote coverage
+ - Cost base is not substituted for market value
+ - No legacy holdings calculator
+ - No mock or placeholder values
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P2-complete.mjs
+----------------------------------------------------------------------
+
+Complete Sprint P2 verification passed.
+
+Verified:
+ - P2.1 verifier exists
+ - P2.2 verifier exists
+ - P2.3 verifier exists
+ - P2.4 verifier exists
+ - Canonical transaction contract
+ - Canonical Portfolio Snapshot contract
+ - Canonical holding contract
+ - Existing LedgerRow adapter
+ - Portfolio Engine facade
+ - Portfolio Snapshot totals
+ - Portfolio Snapshot allocation
+ - Portfolio reconciliation
+ - Base Portfolio Engine hook
+ - Live Portfolio Engine hook
+ - Holdings route uses an accepted canonical hook
+ - Holdings market value is canonical
+ - Holdings cost base is canonical
+ - Holdings realised P/L is canonical
+ - Holdings unrealised P/L is canonical
+ - Holdings weights are canonical
+ - Quote source quality is exposed
+ - Fallback quote quality is exposed
+ - Unavailable quote coverage is exposed
+ - Selector layer is connected
+ - Holding compatibility mapping is connected
+ - Cost base is not substituted for market value
+ - No legacy Holdings calculator
+ - No mock or placeholder values
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P3-1.mjs
+----------------------------------------------------------------------
+
+Portfolio Engine P3.1 structural verification passed.
+
+Verified using exact repository symbols:
+ - QuoteSnapshot contract
+ - ResolvedQuote contract
+ - resolveHoldingQuote()
+ - validPositiveNumber()
+ - latestSecurityTrade()
+ - latestTrade.amounts.unitPrice
+ - TRANSACTION_FALLBACK source
+ - portfolio-transaction-ledger provider
+ - LIVE > CACHE > PREVIOUS_CLOSE > TRANSACTION_FALLBACK > UNAVAILABLE
+ - selectBestQuote()
+ - Number.isFinite(quote.price)
+ - quote.price > 0
+ - mergeResilientPortfolioQuotes()
+ - previousValidQuotesRef
+ - persistedQuotes
+ - resilientQuotes feed canonical valuation
+ - liveQuoteCount
+ - retainedQuoteCount
+ - livePricingCoveragePercent
+ - selectPricingSourceSummary()
+ - live/cached/previousClose/transactionFallback/unavailable/retained
+ - provider-failure protected holdings
+ - unavailable holdings remain explicitly identified
+ - provider failure cannot directly force zero over a valid fallback
+ - no mock or placeholder quote values
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P3-2.mjs
+----------------------------------------------------------------------
+
+Portfolio Engine P3.2 structural verification passed.
+
+Verified:
+ - Invalid provider prices are rejected
+ - Zero provider prices are rejected
+ - Provider previous close remains usable
+ - Live quote priority is explicit
+ - Cached quote priority is explicit
+ - Previous-close priority is explicit
+ - Last-known valid quote retention is active
+ - Last-known valid quotes persist across reloads
+ - Retained quotes expire after 72 hours
+ - Weak refreshes cannot overwrite stronger quotes
+ - Failed refreshes cannot clear valid quotes
+ - Transaction fallback remains in the Portfolio Engine
+ - Explicit unavailable state remains final fallback
+ - No mock or placeholder prices
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P3-3.mjs
+----------------------------------------------------------------------
+
+Portfolio Engine P3.3 structural verification passed.
+
+Verified:
+ - Holdings page uses live Portfolio Engine snapshot
+ - Live Prices page uses live Portfolio Engine snapshot
+ - Holdings legacy calculator removed
+ - Live Prices cost-basis placeholder removed
+ - Live market valuation displayed
+ - Unrealised P/L displayed from canonical valuation
+ - Canonical portfolio weights displayed
+ - Manual market refresh connected
+ - Live provider counts displayed
+ - Retained last-known quote counts displayed
+ - Cached quote status displayed
+ - Previous-close status displayed
+ - Transaction fallback status displayed
+ - Unavailable prices are not shown as valid zero quotes
+ - Existing professional holdings components retained
+ - No mock or placeholder prices
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P3-4.mjs
+----------------------------------------------------------------------
+
+Portfolio Engine P3.4 structural verification passed.
+
+Verified:
+ - Complete pricing fallback hierarchy
+ - Live provider quote support
+ - Provider cache support
+ - Last-known valid quote retention
+ - Previous-close fallback
+ - Transaction-price fallback
+ - Explicit unavailable state
+ - Zero and invalid quote rejection
+ - Quantity x local price reconciliation
+ - Local price x FX reconciliation
+ - Quantity x AUD price reconciliation
+ - Holding and total market-value reconciliation
+ - Holding weight reconciliation
+ - Data-quality quote-count reconciliation
+ - Holdings page live snapshot connection
+ - Live Prices page live snapshot connection
+ - No mock or placeholder pricing
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P3-complete.mjs
+----------------------------------------------------------------------
+
+Complete Sprint P3 verification passed.
+
+The existing market-data provider system now feeds one resilient live-valued Portfolio Snapshot used by Holdings and Live Prices.
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P4-1.mjs
+----------------------------------------------------------------------
+
+Portfolio Engine P4.1 structural verification passed.
+
+Verified:
+ - Existing dividend provider infrastructure retained
+ - Existing dividend API route retained
+ - Existing eligibility engine retained
+ - Existing forecast engine retained
+ - Existing received-dividend ledger retained
+ - Canonical live holdings adapted to dividend holdings
+ - Canonical transactions adapted to dividend transactions
+ - Provider events converted to canonical dividend events
+ - Historical and upcoming income remain separate
+ - Announced and forecast income remain separate
+ - Received income remains separate from forecast income
+ - Portfolio dividend yield uses canonical market value
+ - Yield on cost uses canonical transaction cost base
+ - Franking fields included
+ - Withholding-tax fields included
+ - Estimated-tax fields included
+ - Monthly and annual income outputs included
+ - Provider-failure retention included
+ - Request cancellation and stale-response protection included
+ - No mock dividend data used
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P4-2.mjs
+----------------------------------------------------------------------
+
+Portfolio Engine P4.2 structural verification passed.
+
+Verified:
+ - Dividend eligibility rebuilt from transactions
+ - Quantity is measured before the ex-dividend date
+ - Ex-date purchases are excluded
+ - Partial buys and sells affect eligibility
+ - Transfers affect eligibility
+ - Splits and consolidations affect eligibility
+ - Provider events are deduplicated
+ - Received events outrank forecast events
+ - Announced events suppress duplicate forecasts
+ - Australian franking-credit formula added
+ - Grossed-up dividend income added
+ - Foreign withholding tax added
+ - Event-derived monthly forecast added
+ - Holding-derived forward income added
+ - Portfolio dividend reconciliation added
+ - No mock dividend values
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P4-3.mjs
+----------------------------------------------------------------------
+
+Portfolio Engine P4.3 structural verification passed.
+
+Verified:
+ - Dividend Centre uses canonical Dividend Engine
+ - Dividend Forecast uses canonical Dividend Engine
+ - Both routes use the same live Portfolio Snapshot
+ - Historical dividend events displayed
+ - Received dividend events displayed
+ - Upcoming dividend events displayed
+ - Eligible ex-date quantity displayed
+ - Ex-dividend dates displayed
+ - Payment dates displayed
+ - Annual forecast income displayed
+ - Monthly forecast income displayed
+ - Dividend yield uses canonical market value
+ - Yield on cost uses canonical cost base
+ - Franking credits displayed
+ - Withholding tax displayed
+ - Provider status displayed
+ - Manual dividend refresh connected
+ - Dividend reconciliation displayed
+ - No page-level dividend calculations
+ - No mock or placeholder dividend values
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P4-4.mjs
+----------------------------------------------------------------------
+
+Portfolio Engine P4.4 structural verification passed.
+
+Verified:
+ - Dividend snapshot references canonical Portfolio Snapshot
+ - Ex-date ownership audit
+ - Partial buy and sell eligibility
+ - Transfer eligibility
+ - Split and consolidation eligibility
+ - Duplicate-event audit
+ - Announced/forecast overlap audit
+ - Event forward income reconciliation
+ - Holding forward income reconciliation
+ - Monthly forecast reconciliation
+ - Portfolio dividend-yield reconciliation
+ - Yield-on-cost reconciliation
+ - Franking-credit reconciliation
+ - Withholding-tax reconciliation
+ - Provider-failure retention
+ - Dividend Centre canonical data path
+ - Dividend Forecast canonical data path
+ - No mock or placeholder dividend values
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P4-complete.mjs
+----------------------------------------------------------------------
+
+Complete Sprint P4 verification passed.
+
+Transactions, live holdings, provider events, eligibility, forecasts and tax outputs now feed one canonical Portfolio Dividend Snapshot.
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P5-1.mjs
+----------------------------------------------------------------------
+
+Portfolio Engine P5.1 structural verification passed.
+
+Verified:
+ - One canonical dashboard contract
+ - Live Portfolio Snapshot connected
+ - Portfolio Dividend Snapshot connected
+ - Canonical market value connected
+ - Canonical portfolio value connected
+ - Canonical open cost base connected
+ - Canonical realised P/L connected
+ - Canonical unrealised P/L connected
+ - Canonical total return connected
+ - Canonical allocation connected
+ - Canonical pricing coverage connected
+ - Canonical dividend forecast connected
+ - Canonical dividend yield connected
+ - Canonical yield on cost connected
+ - Cross-engine reconciliation added
+ - Dashboard selectors added
+ - No mock or placeholder values
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P5-2.mjs
+----------------------------------------------------------------------
+
+Portfolio Engine P5.2 structural verification passed.
+
+Verified:
+ - Dashboard route uses unified Portfolio Dashboard Snapshot
+ - Allocation route uses unified Portfolio Dashboard Snapshot
+ - Dashboard market value is canonical
+ - Dashboard portfolio value is canonical
+ - Dashboard cost base is canonical
+ - Dashboard realised P/L is canonical
+ - Dashboard unrealised P/L is canonical
+ - Dashboard total return is canonical
+ - Dashboard dividend forecast is canonical
+ - Dashboard pricing coverage is canonical
+ - Dashboard holdings are canonical
+ - Security allocation is canonical
+ - Sector allocation is canonical
+ - Country allocation is canonical
+ - Platform allocation is canonical
+ - Allocation weights are canonical
+ - Dashboard and allocation reconciliation are displayed
+ - Manual unified refresh is connected
+ - Legacy dashboard data hooks are removed
+ - Page-level allocation calculations are removed
+ - No mock or placeholder portfolio values
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P5-3.mjs
+----------------------------------------------------------------------
+
+Portfolio Engine P5.3 structural verification passed.
+
+Verified:
+ - Ledger adapter parser-safe currency implementation
+ - Trailing-comma-safe membership verification
+ - Portfolio Health uses unified Dashboard Snapshot
+ - Performance Attribution uses unified Dashboard Snapshot
+ - Legacy seed portfolio hook removed
+ - Legacy dashboard data hook removed
+ - Page-level attribution calculations removed
+ - Diversification derives from canonical holdings
+ - Concentration derives from canonical allocation
+ - Liquidity derives from canonical cash
+ - Pricing reliability derives from canonical coverage
+ - Data-quality score derives from reconciliation
+ - Realised attribution is canonical
+ - Unrealised attribution is canonical
+ - Income attribution is canonical
+ - Recorded fees derive from posted transactions
+ - Holding attribution is canonical
+ - Sector attribution is canonical
+ - Strategy attribution is canonical
+ - No mock or placeholder portfolio values
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P5-4.mjs
+----------------------------------------------------------------------
+
+Portfolio Engine P5.4 structural verification passed.
+
+Verified:
+ - Unified Portfolio Dashboard contract
+ - Canonical Dashboard builder
+ - Canonical cross-page reconciliation
+ - Dashboard uses unified snapshot
+ - Portfolio Allocation uses unified snapshot
+ - Portfolio Health uses unified snapshot
+ - Performance Attribution uses unified snapshot
+ - Dividend Centre uses canonical Dividend Snapshot
+ - Dividend Forecast uses canonical Dividend Snapshot
+ - Holdings consumes a Portfolio Engine hook
+ - Canonical market value
+ - Canonical cost base
+ - Canonical realised P/L
+ - Canonical unrealised P/L
+ - Canonical total return
+ - Canonical allocation weights
+ - Canonical dividend values
+ - No page-level portfolio calculations
+ - No mock or placeholder portfolio values
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P5-complete.mjs
+----------------------------------------------------------------------
+
+Complete Sprint P5 verification passed.
+
+Dashboard, Allocation, Portfolio Health and Performance Attribution now consume one unified Portfolio Dashboard Snapshot.
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P6-1.mjs
+----------------------------------------------------------------------
+
+Portfolio Engine P6.1 structural verification passed.
+
+Verified:
+ - Canonical analytics contract
+ - Holding performance analytics
+ - Sector performance analytics
+ - Industry performance analytics
+ - Country performance analytics
+ - Strategy performance analytics
+ - Platform performance analytics
+ - Winners and losers
+ - Contribution reconciliation
+ - Canonical income analytics
+ - Canonical tax contract
+ - Australian financial-year filtering
+ - Posted-transaction tax rows
+ - Dividend and interest income separation
+ - Franking and withholding separation
+ - Canonical report snapshot
+ - Unified Portfolio Intelligence hook
+ - No invented performance history
+ - No mock or placeholder values
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P6-2.mjs
+----------------------------------------------------------------------
+
+Portfolio Engine P6.2 structural verification passed.
+
+Verified:
+ - Analytics uses Portfolio Intelligence
+ - Reports uses Portfolio Intelligence
+ - Canonical portfolio value displayed
+ - Canonical total return displayed
+ - Canonical realised P/L displayed
+ - Canonical unrealised P/L displayed
+ - Canonical income displayed
+ - Canonical sector analytics displayed
+ - Canonical country analytics displayed
+ - Canonical strategy analytics displayed
+ - Canonical winners and losers displayed
+ - Canonical report summary displayed
+ - Canonical financial-year tax summary displayed
+ - JSON report export connected
+ - Holdings CSV export connected
+ - Transactions CSV export connected
+ - Snapshot lineage displayed
+ - Legacy analytics hooks removed
+ - Legacy report mock data removed
+ - No page-level portfolio calculations
+ - No mock or placeholder values
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P6-3.mjs
+----------------------------------------------------------------------
+
+Portfolio Engine P6.3 structural verification passed.
+
+Verified:
+ - Tax Centre uses Portfolio Intelligence
+ - Australian financial-year filtering
+ - Posted transactions only
+ - Capital gains and losses separated
+ - Dividend income separated
+ - Interest income separated
+ - Franking credits separated
+ - Foreign withholding separated
+ - Transaction fees separated
+ - Recorded tax separated
+ - Gross assessable income reconciled
+ - Unresolved disposal gains are disclosed
+ - Dividend fallback use is disclosed
+ - Tax rows reconcile with tax totals
+ - Report snapshot lineage is enforced
+ - Tax CSV export connected
+ - No personal tax payable estimate
+ - No invented CGT discount
+ - No mock or placeholder tax values
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-P6-4.mjs
+----------------------------------------------------------------------
+
+Final Portfolio Engine structural verification passed.
+
+Verified:
+ - Transactions remain the master record
+ - Portfolio Snapshot is canonical
+ - Holdings consume Portfolio Engine data
+ - Live valuation hook is connected
+ - Dividend Engine consumes canonical portfolio data
+ - Dashboard consumes unified dashboard data
+ - Allocation consumes unified dashboard data
+ - Portfolio Health consumes unified dashboard data
+ - Performance Attribution consumes unified dashboard data
+ - Analytics consumes Portfolio Intelligence
+ - Reports consume Portfolio Intelligence
+ - Tax Centre consumes Portfolio Intelligence
+ - Portfolio, Dashboard, Analytics, Tax and Report lineage exists
+ - No legacy seeded portfolio hooks remain on final routes
+ - No mock or placeholder portfolio values detected
+ - No invented performance history or tax payable detected
+
+----------------------------------------------------------------------
+RUN — scripts/verify-portfolio-engine-lineage.mjs
+----------------------------------------------------------------------
+
+Portfolio Engine lineage verification passed.
+
+Verified lineage:
+ Transactions
+   -> Portfolio Snapshot
+   -> Live-valued Holdings
+   -> Dividend Snapshot
+   -> Dashboard Snapshot
+   -> Analytics Snapshot
+   -> Tax Snapshot
+   -> Report Snapshot
+

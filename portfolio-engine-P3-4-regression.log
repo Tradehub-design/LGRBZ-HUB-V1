@@ -1,0 +1,112 @@
+RUN  — scripts/verify-portfolio-engine-P1-1.mjs
+
+Portfolio Engine P1.1 verification passed.
+
+Verified:
+ - Canonical transaction contract
+ - Portfolio snapshot contract
+ - Holdings and lot contracts
+ - Quote fallback contract
+ - Dividend and income action support
+ - Transaction action normalisation
+ - Safe financial arithmetic
+ - ASX and US security identity
+ - Deterministic transaction ordering
+ - No mock or placeholder portfolio data
+
+RUN  — scripts/verify-portfolio-engine-P1-2.mjs
+
+Portfolio Engine P1.2 structural verification passed.
+
+Verified:
+ - Raw workbook/manual transaction boundary
+ - Australian and ISO date normalisation
+ - Excel serial date support
+ - Canonical transaction normalisation
+ - ASX and US currency inference
+ - AUD and foreign-currency FX validation
+ - Trade amount reconstruction
+ - Corporate action ratio validation
+ - Deterministic transaction IDs
+ - Duplicate transaction rejection
+ - Pending and cancelled transaction isolation
+ - Raw source audit preservation
+ - No mock or placeholder portfolio records
+
+RUN  — scripts/verify-portfolio-engine-P1-3.mjs
+
+Portfolio Engine P1.3 structural verification passed.
+
+Verified:
+ - Deterministic transaction replay
+ - Transaction-only position construction
+ - Acquisition lot creation
+ - Average-cost disposal calculations
+ - FIFO disposal calculations
+ - Realised gain and proceeds tracking
+ - Oversell rejection
+ - Transfer-in and transfer-out processing
+ - Share split processing
+ - Share consolidation processing
+ - Return-of-capital cost-base reduction
+ - Dividend and interest income tracking
+ - Multi-currency cash movement tracking
+ - Processed and rejected transaction audit
+ - No mock or placeholder portfolio values
+
+RUN  — scripts/verify-portfolio-engine-P1-4.mjs
+
+Portfolio Engine P1.4 structural verification passed.
+
+Verified:
+ - Canonical Portfolio Snapshot
+ - Holdings generated from transaction replay
+ - Totals generated from canonical holdings
+ - Allocation generated from canonical holdings
+ - Security weights generated from market value
+ - Supplied quote support
+ - Latest transaction-price fallback
+ - Missing quote data-quality reporting
+ - Holdings/totals reconciliation
+ - Allocation/totals reconciliation
+ - Portfolio value reconciliation
+ - Raw and canonical engine entry points
+ - Single Portfolio Engine facade
+ - No mock portfolio values
+
+RUN  — scripts/portfolio-engine-P1-smoke.mjs
+
+Portfolio Engine P1 smoke test passed.
+
+The P1 transaction-to-snapshot pipeline is present.
+
+RUN  — scripts/verify-portfolio-engine-P2-1.mjs
+
+Portfolio Engine P2.1 structural verification passed.
+
+Verified:
+ - Existing LedgerRow transaction adapter
+ - Local and AUD amount resolution
+ - Existing FX-rate derivation
+ - ASX and US market inference
+ - Portfolio Store transaction priority
+ - Persisted ledger fallback
+ - Transaction deduplication boundary
+ - Canonical client Portfolio Snapshot hook
+ - Canonical holdings compatibility mapping
+ - Holdings market value selector
+ - Holdings cost-base selector
+ - Realised and unrealised gain selectors
+ - Allocation selectors
+ - No legacy holdings calculator in the new hook
+ - No mock or placeholder portfolio values
+
+RUN  — scripts/verify-portfolio-engine-P2-2.mjs
+
+Portfolio Engine P2.2 verification FAILED:
+
+ - Holdings page is missing canonical token: usePortfolioEngineSnapshot
+ - Holdings page does not identify the canonical engine data flow.
+ - Holdings page does not expose fallback quote quality.
+ - Holdings page does not expose unavailable quote count.
+

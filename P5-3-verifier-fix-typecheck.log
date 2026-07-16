@@ -1,0 +1,18 @@
+
+> lgrbz-hub-v1@1.0.0 typecheck
+> tsc --noEmit --pretty false
+
+src/core/portfolio-engine/actions.ts(335,28): error TS2339: Property 'reason' does not exist on type 'ActionNormalisationResult'.
+  Property 'reason' does not exist on type '{ ok: true; action: "BUY" | "SELL" | "DIVIDEND" | "DIVIDEND_REINVESTMENT" | "INTEREST" | "DEPOSIT" | "WITHDRAWAL" | "FEE" | "TAX" | "TRANSFER_IN" | "TRANSFER_OUT" | "SPLIT" | "CONSOLIDATION" | "RETURN_OF_CAPITAL" | "ADJUSTMENT"; originalValue: unknown; canonicalValue: string; }'.
+src/core/portfolio-engine/dashboard/build.ts(3,3): error TS2724: '"../contracts"' has no exported member named 'PortfolioAllocationSlice'. Did you mean 'PortfolioAllocation'?
+src/core/portfolio-engine/dashboard/build.ts(346,30): error TS2339: Property 'disposedCostBaseAud' does not exist on type 'PortfolioTotals'.
+src/core/portfolio-engine/dashboard/build.ts(349,30): error TS2339: Property 'realisedProceedsAud' does not exist on type 'PortfolioTotals'.
+src/core/portfolio-engine/dashboard/build.ts(815,12): error TS2339: Property 'cashBalanceAud' does not exist on type 'PortfolioTotals'.
+src/core/portfolio-engine/dashboard/build.ts(847,12): error TS2339: Property 'netContributionsAud' does not exist on type 'PortfolioTotals'.
+src/core/portfolio-engine/dates.ts(280,28): error TS2339: Property 'reason' does not exist on type 'DateNormalisationResult'.
+  Property 'reason' does not exist on type '{ ok: true; isoDate: string; isoTimestamp: string; originalValue: unknown; }'.
+src/core/portfolio-engine/dividends/deduplicate.ts(133,10): error TS2678: Type '"UNKNOWN"' is not comparable to type 'DividendEventConfidence'.
+src/core/portfolio-engine/normalise.ts(587,29): error TS2339: Property 'reason' does not exist on type 'ActionNormalisationResult'.
+  Property 'reason' does not exist on type '{ ok: true; action: "BUY" | "DIVIDEND_REINVESTMENT" | "SELL" | "DIVIDEND" | "INTEREST" | "DEPOSIT" | "WITHDRAWAL" | "FEE" | "TAX" | "TRANSFER_IN" | "TRANSFER_OUT" | "SPLIT" | "CONSOLIDATION" | "RETURN_OF_CAPITAL" | "ADJUSTMENT"; originalValue: unknown; canonicalValue: string; }'.
+src/core/portfolio-engine/normalise.ts(609,32): error TS2339: Property 'reason' does not exist on type 'DateNormalisationResult'.
+  Property 'reason' does not exist on type '{ ok: true; isoDate: string; isoTimestamp: string; originalValue: unknown; }'.

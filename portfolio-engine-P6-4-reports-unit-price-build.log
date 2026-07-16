@@ -1,0 +1,106 @@
+
+> lgrbz-hub-v1@1.0.0 build
+> next build
+
+  ▲ Next.js 14.2.35
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Skipping linting
+   Checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/72) ...
+   Generating static pages (18/72) 
+   Generating static pages (36/72) 
+   Generating static pages (54/72) 
+ ✓ Generating static pages (72/72)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+┌ ○ /                                    182 B          87.8 kB
+├ ○ /_not-found                          182 B          87.8 kB
+├ ○ /account                             2.31 kB         169 kB
+├ ○ /accountant-export                   4.18 kB        94.9 kB
+├ ○ /accounts                            183 B          87.8 kB
+├ ○ /admin                               183 B          87.8 kB
+├ ○ /ai-insights                         1.56 kB         125 kB
+├ ○ /analysis                            182 B          87.8 kB
+├ ○ /analytics                           3.85 kB         140 kB
+├ ƒ /api/dividend-data                   0 B                0 B
+├ ƒ /api/market-data/cache               0 B                0 B
+├ ƒ /api/market-data/health              0 B                0 B
+├ ƒ /api/market-data/market-hours        0 B                0 B
+├ ƒ /api/market-data/quote               0 B                0 B
+├ ƒ /api/market-data/quotes              0 B                0 B
+├ ƒ /api/market-data/refresh             0 B                0 B
+├ ○ /app-search                          972 B          88.6 kB
+├ ○ /auth                                182 B          87.8 kB
+├ ○ /broker-sync                         2.27 kB         126 kB
+├ ○ /business-model                      2.74 kB         126 kB
+├ ○ /calendar                            182 B          87.8 kB
+├ ○ /cashflow-planner                    1.66 kB         125 kB
+├ ○ /company                             4.58 kB         213 kB
+├ ○ /country-intelligence                2.15 kB         224 kB
+├ ○ /currency-intelligence               2.05 kB         224 kB
+├ ○ /daily-brief                         1.79 kB         126 kB
+├ ○ /dashboard                           4.67 kB         148 kB
+├ ○ /database                            2.46 kB         170 kB
+├ ○ /db-portfolios                       2.73 kB         170 kB
+├ ○ /db-transactions                     3.83 kB         171 kB
+├ ○ /dividend-forecast                   3.78 kB         129 kB
+├ ○ /dividends                           4.02 kB         129 kB
+├ ○ /fire-calculator                     1.47 kB         125 kB
+├ ○ /forecast                            182 B          87.8 kB
+├ ○ /goals                               1.93 kB         126 kB
+├ ○ /holdings                            33.4 kB         258 kB
+├ ○ /import                              182 B          87.8 kB
+├ ○ /import-centre                       116 kB          203 kB
+├ ○ /income-intelligence                 2.11 kB         224 kB
+├ ○ /live-prices                         5.39 kB         140 kB
+├ ○ /live-valuation                      4.36 kB         128 kB
+├ ○ /login                               2.42 kB         170 kB
+├ ○ /market                              4.56 kB         109 kB
+├ ○ /market-calendar                     2.87 kB         108 kB
+├ ƒ /market-data-health                  7.39 kB         101 kB
+├ ○ /market-intelligence                 2.76 kB         108 kB
+├ ○ /market-movers                       1.35 kB         111 kB
+├ ○ /market-watchlist                    1.81 kB         111 kB
+├ ○ /net-worth                           1.44 kB         125 kB
+├ ○ /notifications                       1.43 kB         106 kB
+├ ○ /performance-attribution             5.66 kB         252 kB
+├ ○ /portfolio-allocation                3.33 kB         138 kB
+├ ○ /portfolio-health                    6.46 kB         155 kB
+├ ○ /position-sizing                     1.95 kB         126 kB
+├ ○ /preferences                         2.45 kB         107 kB
+├ ○ /production-checklist                2.92 kB         108 kB
+├ ○ /reports                             3.54 kB         139 kB
+├ ○ /research                            182 B          87.8 kB
+├ ○ /research-lab                        2.17 kB         126 kB
+├ ○ /responsive                          183 B          87.8 kB
+├ ○ /retirement-planner                  1.67 kB         125 kB
+├ ○ /reviews                             2.17 kB        92.9 kB
+├ ○ /risk                                2.1 kB         92.8 kB
+├ ○ /scenario-simulator                  1.74 kB         125 kB
+├ ○ /search                              2.26 kB         107 kB
+├ ○ /sector-intelligence                 2.07 kB         224 kB
+├ ○ /security                            182 B          87.8 kB
+├ ○ /settings                            2.33 kB         126 kB
+├ ○ /stock-screener                      1.66 kB         111 kB
+├ ○ /system-health                       4.13 kB        94.9 kB
+├ ○ /tax                                 3.74 kB         139 kB
+├ ○ /tax-report                          1.71 kB         125 kB
+├ ○ /technicals                          3.82 kB         212 kB
+├ ○ /timeline                            1.47 kB         125 kB
+├ ○ /transactions                        33.1 kB         121 kB
+├ ○ /user-profile                        182 B          87.8 kB
+└ ○ /watchlist                           2.94 kB         127 kB
++ First Load JS shared by all            87.6 kB
+  ├ chunks/2117-1e731258c755c5de.js      31.9 kB
+  ├ chunks/fd9d1056-3617c4fb417cc21b.js  53.6 kB
+  └ other shared chunks (total)          2.07 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

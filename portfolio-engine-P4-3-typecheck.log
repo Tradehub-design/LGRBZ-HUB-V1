@@ -1,0 +1,6 @@
+src/core/portfolio-engine/adapters/ledger-row-adapter.ts(102,9): error TS1005: ')' expected.
+src/core/portfolio-engine/adapters/ledger-row-adapter.ts(102,12): error TS1128: Declaration or statement expected.
+src/core/portfolio-engine/adapters/ledger-row-adapter.ts(102,28): error TS1011: An element access expression should take an argument.
+src/core/portfolio-engine/adapters/ledger-row-adapter.ts(103,5): error TS1128: Declaration or statement expected.
+src/core/portfolio-engine/adapters/ledger-row-adapter.ts(103,6): error TS1128: Declaration or statement expected.
+src/core/portfolio-engine/adapters/ledger-row-adapter.ts(104,3): error TS1128: Declaration or statement expected.

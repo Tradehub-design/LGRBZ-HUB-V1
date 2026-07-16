@@ -1,0 +1,8 @@
+
+> lgrbz-hub-v1@1.0.0 typecheck
+> tsc --noEmit --pretty false
+
+src/core/portfolio-engine/dashboard/build.ts(497,15): error TS2339: Property 'costBaseAud' does not exist on type 'AllocationSlice'.
+src/core/portfolio-engine/dashboard/build.ts(500,15): error TS2339: Property 'unrealisedGainAud' does not exist on type 'AllocationSlice'.
+src/core/portfolio-engine/dashboard/build.ts(503,15): error TS2339: Property 'realisedGainAud' does not exist on type 'AllocationSlice'.
+src/core/portfolio-engine/dashboard/build.ts(506,15): error TS2339: Property 'weightPercent' does not exist on type 'AllocationSlice'.
